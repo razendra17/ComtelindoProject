@@ -15,16 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->integer('number');
+            $table->string('number');
             $table->string('address');
-            $table->foreignId('city_id')->constrained(
-                table: 'city',
-                indexName: 'data_city_id'
-            );
-            $table->foreignId('package_id')->constrained(
-                table: 'package',
-                indexName: 'data_package_id'
-            );
+            $table->foreignId('package_id')
+            ->constrained()
+            ->cascadeOnDelete();
             $table->timestamps();
         });
     }

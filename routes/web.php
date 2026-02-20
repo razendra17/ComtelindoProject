@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::controller(DataController::class)->prefix('forms')->group(function(){
+Route::controller(DataController::class)->prefix('data')->group(function(){
     Route::post('/', 'create')->name('form.create'); 
 });
 
