@@ -16,23 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/welcome', function () {
-    return view('pages.forms.welcome');
-});
-
-Route::get('/form', function () {
-    return view('pages.forms.index');
-});
-
-
-
-Route::get('/form', [DataController::class, 'create']);
-Route::post('/form', [DataController::class, 'store'])->name('data.store');
-Route::post('/set-city', [DataController::class, 'session'])->name('set.city');
 
 Route::middleware('auth')->group(function () {
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
@@ -50,7 +33,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(DataController::class)->prefix('data')->group(function(){
-    Route::post('/', 'create')->name('form.create'); 
+    Route::get('/', 'index')->name('data.index'); 
 });
 
 require __DIR__ . '/auth.php';

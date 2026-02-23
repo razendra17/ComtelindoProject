@@ -9,29 +9,35 @@ use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
-    public function index() // INI INDEX MODAL CITY
+    // HALAMAN UTAMA
+    public function index()
     {
         $cities = City::all();
-        return view('welcome', compact('cities'));
+        $packages = Packages::all();
+
+        return view('welcome', compact('cities', 'packages'));
     }
 
-    public function session(Request $request) // INI BUAT SESSION MODAL
+    // SESSION CITY
+    public function session(Request $request)
     {
         $request->validate([
             'city_id' => 'required'
         ]);
+
         session(['city_id' => $request->city_id]);
 
         return back();
     }
 
+    // FORM PAGE
     public function create()
     {
         $packages = Packages::all();
-        
         return view('pages.forms.index', compact('packages'));
     }
 
+    // SIMPAN DATA
     public function store(Request $request)
     {
         $request->validate([
