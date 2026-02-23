@@ -16,7 +16,6 @@ class DashboardController extends Controller
     {
 
             $query = Data::with('package.city');
-
             return DataTables::of($query)
                 ->addColumn('package_name', function ($row) {
                     return $row->package?->name;

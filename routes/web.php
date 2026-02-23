@@ -36,7 +36,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(DataController::class)->prefix('data')->group(function(){
-    Route::post('/', 'create')->name('form.create'); 
+    Route::get('/', 'index')->name('data.index'); 
+    Route::get('/cities/search','search')->name('citiy.search');
 });
 
 require __DIR__ . '/auth.php';
