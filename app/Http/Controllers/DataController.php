@@ -9,19 +9,29 @@ use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
-    public function index() {
-        return view('pages.data.index');
-    }
-
-    public function search(Request $request)
+    public function index(Request $request)
     {
-        $keyword = $request->q;
-
-        $cities = City::where('name', 'LIKE', "%{$keyword}%")
-            ->limit(5)
-            ->get();
-
-        return response()->json($cities);
+        $cities = City::all();
+        return view('pages.data.index', compact('cities'));
     }
-    public function create(Request $request) {}
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'number' => 'required',
+            'address' => 'required',
+            'package_id' => 'required|exists:packages,id',
+        ]);
+
+        Data::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'number' => $request->number,
+            'address' => $request->address,
+            'package_id' => $request->package_id,
+        ]);
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+    }
 }

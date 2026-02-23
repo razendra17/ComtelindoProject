@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware('auth')->group(function () {
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         Route::get('/', 'edit')->name('profile.edit');
@@ -37,7 +33,6 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(DataController::class)->prefix('data')->group(function(){
     Route::get('/', 'index')->name('data.index'); 
-    Route::get('/cities/search','search')->name('citiy.search');
 });
 
 require __DIR__ . '/auth.php';
