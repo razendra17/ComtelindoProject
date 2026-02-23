@@ -2,15 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Data;
 use App\Models\Packages;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
+    public function index() // INI INDEX MODAL CITY
+    {
+        $cities = City::all();
+        return view('welcome', compact('cities'));
+    }
+
+    public function session(Request $request) // INI BUAT SESSION MODAL
+    {
+        $request->validate([
+            'city_id' => 'required'
+        ]);
+        session(['city_id' => $request->city_id]);
+
+        return back();
+    }
+
     public function create()
     {
         $packages = Packages::all();
+        
         return view('pages.forms.index', compact('packages'));
     }
 

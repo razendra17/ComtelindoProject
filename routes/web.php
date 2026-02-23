@@ -28,10 +28,11 @@ Route::get('/form', function () {
     return view('pages.forms.index');
 });
 
+
+
 Route::get('/form', [DataController::class, 'create']);
 Route::post('/form', [DataController::class, 'store'])->name('data.store');
-
-
+Route::post('/set-city', [DataController::class, 'session'])->name('set.city');
 
 Route::middleware('auth')->group(function () {
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {

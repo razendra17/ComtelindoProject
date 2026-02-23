@@ -1,4 +1,5 @@
 @include ('layouts.app')
+@include('pages.forms.modal.city')
 
 <body class="min-h-screen flex items-center justify-center bg-[#EC9223]">
 

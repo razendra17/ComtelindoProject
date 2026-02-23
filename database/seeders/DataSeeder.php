@@ -17,7 +17,7 @@ class DataSeeder extends Seeder
     {
         $city= City::create([
             'name' => 'balikpapan',
-            'area' => 'sepinggan',
+            'area' => 'kalimantan timur',
         ]);
         $package= Packages::create([
             'name' => 'hemat banget',
