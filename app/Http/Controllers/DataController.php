@@ -11,7 +11,7 @@ class DataController extends Controller
 {
     public function index(Request $request)
     {
-        $cities = City::all();
+        $cities = City::with('packages')->get();
         return view('pages.data.index', compact('cities'));
     }
     public function store(Request $request)

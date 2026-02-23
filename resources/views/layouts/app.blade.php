@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,26 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
     @vite('resources/css/app.css')
 </head>
-<body>
+
+<body class="bg-[#ff8421] min-h-screen">
+    @include('layouts.header.index')
+
+    <div class="max-w-[95%] mx-auto bg-[#F4F4F4] min-h-screen px-6 py-6">
+            <main>
+                @yield('content')
+            </main>
+            <div class="flex my-auto mx-auto">
+                @yield('modal')
+            </div>
+            @yield('script')
+    </div>
     
+    <!-- TOASTR JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- SWAL -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </body>
+
 </html>
