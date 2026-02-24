@@ -16,6 +16,10 @@ class DataController extends Controller
         return view('pages.data.index', compact('cities'));
     }
 
+    public function area(){
+        return view('pages.data.modal.area');
+    }
+
     public function filter($cityId){
         $packages = Package::where('city_id', $cityId)->get();
         return view('pages.data.package', compact('packages'))->render();
