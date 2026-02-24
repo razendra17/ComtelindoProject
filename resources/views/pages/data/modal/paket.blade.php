@@ -52,7 +52,7 @@
 
         <!-- BUTTON -->
         <div class="mt-8 flex justify-center">
-            <button id="choose-package"
+            <a href="{{ route('area.index') }}" id="choose-package"
                 class="bg-orange-500 hover:bg-orange-600 
                        transition 
                        text-white 
@@ -61,7 +61,7 @@
                        font-semibold 
                        shadow-lg">
                 pilih paket
-            </button>
+        </a>
         </div>
 
         <!-- CLOSE ICON -->
