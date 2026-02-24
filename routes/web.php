@@ -31,8 +31,12 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::controller(DataController::class)->prefix('data')->group(function(){
-    Route::get('/', 'index')->name('data.index'); 
+Route::controller(DataController::class)->group(function () {
+    Route::get('/', 'index')->name('data.index');
+    Route::prefix('data')->group(function () {
+        Route::get('/', 'index')->name('data.index'); 
+        Route::get('/by-city/{city}','filter');
+    });
 });
 
 require __DIR__ . '/auth.php';

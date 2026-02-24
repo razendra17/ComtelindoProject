@@ -8,12 +8,14 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
     @vite('resources/css/app.css')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body class="bg-[#ff8421] min-h-screen">
-    @include('layouts.header.index')
-
-    <div class="max-w-[95%] mx-auto bg-[#F4F4F4] min-h-screen px-6 py-6">
+<body class="">
+    <div class="
+    bg-[#ff8521] min-h-screen">
+        @include('layouts.header.index')
+        <div class="max-w-[98%] mx-auto bg-[#F4F4F4] min-h-screen px-6 py-6">
             <main>
                 @yield('content')
             </main>
@@ -21,8 +23,8 @@
                 @yield('modal')
             </div>
             @yield('script')
+        </div>
     </div>
-    
     <!-- TOASTR JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- SWAL -->

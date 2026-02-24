@@ -14,6 +14,6 @@ class City extends Model
     ];
     use HasFactory;
     public function packages():HasMany{
-        return $this->hasMany(Packages::class);
+        return $this->hasMany(Package::class);
     }
 }

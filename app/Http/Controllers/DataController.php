@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Data;
-use App\Models\Packages;
+use App\Models\Package;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
@@ -13,6 +13,11 @@ class DataController extends Controller
     {
         $cities = City::with('packages')->get();
         return view('pages.data.index', compact('cities'));
+    }
+
+    public function filter($cityId){
+        $packages = Package::where('city_id', $cityId)->get();
+        return response()->json($packages);
     }
     public function store(Request $request)
     {
