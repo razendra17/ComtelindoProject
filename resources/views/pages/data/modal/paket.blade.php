@@ -1,6 +1,8 @@
 <div id="packageModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
     <div class="bg-white p-6 rounded-xl w-[400px]">
 
+        
+
         <h2 id="modalName" class="text-xl font-bold"></h2>
         <p><span id="modalSpeed"></span> Mbps</p>
         <p>Perangkat terhubung: <span id="modalDevice"></span></p>
@@ -46,3 +48,17 @@
         modal.classList.add('hidden');
     }
 </script>
+
+{{-- @foreach($packages as $package)
+    <button 
+        class="open-modal"
+        data-name="{{ $package->name }}"
+        data-price="{{ $package->price }}"
+        data-speed="{{ $package->speed }}"
+        data-device="{{ $package->device }}"
+    >
+        {{ ucfirst($package->name) }}
+    </button>
+@endforeach --}}
+
+
