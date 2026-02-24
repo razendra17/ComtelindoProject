@@ -25,8 +25,8 @@ class DataController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'number' => 'required',
-            'address' => 'required',
+            'number' => 'required|integer|max:11',
+            'address' => 'required|max:100',
             'package_id' => 'required|exists:packages,id',
         ]);
 

@@ -28,7 +28,7 @@
         $('#select-location').on('click', function() {
             let cityId = $('#citySelect').val();
             if (!cityId) {
-                alert('Pilih kota dulu');
+                toastr.error('Pilih kota dulu!', 'Lokasi Belum Dipilih');
                 return;
             }
 
@@ -36,6 +36,8 @@
                 url: '/data/by-city/' + cityId,
                 type: 'GET',
                 success: function(response) {
+
+                    toastr.success('Paket berhasil dimuat 🎉', 'Berhasil');
 
                     let html = '';
 
@@ -53,7 +55,5 @@
             let cityName = $('#citySelect option:selected').text();
             $('#current-city').text(cityName);
         });
-
-
     </script>
 @endsection
