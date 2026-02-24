@@ -15,6 +15,7 @@
     <div class="
     bg-[#ff8521] min-h-screen">
         @include('layouts.header.index')
+        @include('layouts.sidebar.sidebar')
         <div class="max-w-[98%] mx-auto bg-[#F4F4F4] min-h-screen px-6 py-6">
             <main>
                 @yield('content')
@@ -32,6 +33,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- SWAL -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 
 </body>
