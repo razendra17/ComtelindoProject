@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
-    public function index(Request $request)
+    // HALAMAN UTAMA
+    public function index()
     {
         $cities = City::with('packages')->get();
         return view('pages.data.index', compact('cities'));
