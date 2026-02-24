@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div id="city-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
     <div class="bg-[#ffffff] w-[420px] rounded-3xl p-8 relative shadow-xl">
 

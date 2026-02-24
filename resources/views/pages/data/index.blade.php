@@ -7,17 +7,18 @@
 
     <button id="city-open-modal"
         class="max-w-5xl mx-auto flex mt-6 cursor-pointer border border-amber-500 rounded-xl shadow-2xl ">
-        <div class="w-5xl px-4 py-3 text-left">
+        <div class="w-5xl px-4 py-3 text-left text-black">
             <p>Pilih Kota anda</p>
             <p id="current-city" class="text-gray-700"></p>
         </div>
     </button>
 
-    <div id="packageList" class="grid md:grid-cols-3 gap-4 mt-6 max-w-5xl mx-auto p-4">
 
+    <div id="packageList" class="open-modal grid md:grid-cols-3 gap-4 mt-6 max-w-5xl mx-auto p-4">
     </div>
 @endsection
 @include('pages.data.modal.city')
+@include('pages.data.modal.paket')
 
 @section('script')
     <script>
@@ -26,7 +27,9 @@
         });
 
         $('#select-location').on('click', function() {
+
             let cityId = $('#citySelect').val();
+
             if (!cityId) {
                 alert('Pilih kota dulu');
                 return;
@@ -37,23 +40,31 @@
                 type: 'GET',
                 success: function(response) {
 
-                    let html = '';
-
-                    response.forEach(function(pkg) {
-                        html += `
-                    @include('pages.data.package')
-                `;
-                    });
-
-                    $('#packageList').html(html);
-
+                    $('#packageList').html(response);
                     $('#city-modal').addClass('hidden');
                 }
             });
+
             let cityName = $('#citySelect option:selected').text();
             $('#current-city').text(cityName);
         });
 
+        $(document).on('click', '.package-card', function() {
 
+            const pkg = JSON.parse($(this).attr('data-package'));
+
+            $('#modalName').text(pkg.name);
+            $('#modalSpeed').text(pkg.speed);
+            $('#modalDevice').text(pkg.device);
+            $('#modalPrice').text(
+                new Intl.NumberFormat('id-ID').format(pkg.price)
+            );
+
+            $('#packageModal').removeClass('hidden');
+        });
+
+        $('#close-modal').on('click', function() {
+            $('#packageModal').addClass('hidden');
+        });
     </script>
 @endsection

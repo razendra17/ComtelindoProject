@@ -1,53 +1,99 @@
-<div id="packageModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
-    <div class="bg-white p-6 rounded-xl w-[400px]">
-        
-        <h2 id="modalName" class="text-xl font-bold"></h2>
-        <p><span id="modalSpeed"></span> Mbps</p>
-        <p>Perangkat terhubung: <span id="modalDevice"></span></p>
-        <p class="font-bold text-right">Rp <span id="modalPrice"></span></p>
+<div id="packageModal" 
+     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
 
-        <hr class="my-4">
+    <div class="relative w-full max-w-xl 
+                bg-[#ffffff] 
+                rounded-[40px] 
+                p-8 
+                shadow-2xl 
+                animate-fadeIn">
 
-        <p class="font-semibold">Biaya pasang Gratis</p>
+        <!-- HEADER -->
+        <div class="flex justify-between items-start my-4">
+            <div>
+                <h2 id="modalName" class="text-lg font-semibold text-gray-800">
+                </h2>
+                <p class="text-2xl font-bold text-gray-900">
+                    <span id="modalSpeed"></span> Mbps
+                </p>
+            </div>
 
-        <hr class="my-4">
+            <div class="text-right">
+                <p id="modalPrice" class="text-xl font-semibold text-gray-900">
+                </p>
+                <p class="text-sm text-gray-700">
+                    optimal device: <span id="modalDevice"></span>
+                </p>
+            </div>
+        </div>
 
-        <p class="font-semibold">Petunjuk umum</p>
-        <p class="text-sm">
-            1. Pembayaran internet terdiri dari biaya instalasi dan tagihan bulanan.
-            2. Instalasi dibayarkan setelah selesai.
-            3. Tagihan bulanan tanggal 5-20.
+        <hr class="my-5 border-gray-500/40">
+
+        <!-- INSTALLATION -->
+        <p class="text-base font-medium text-gray-800">
+            Biaya pasang
+        </p>
+        <p class="text-base text-gray-900 font-semibold">
+            Gratis
         </p>
 
-        <button onclick="closeModal()" class="mt-4 bg-orange-500 text-white px-4 py-2 rounded">
-            pilih paket
+        <hr class="my-5 border-gray-500/40">
+
+        <!-- PETUNJUK -->
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            Petunjuk umum
+        </h3>
+
+        <ol class="text-sm text-gray-800 space-y-1 leading-relaxed">
+            <li>1. Pembayaran internet terdiri dari biaya instalasi & tagihan bulanan.</li>
+            <li>2. Instalasi dibayarkan setelah selesai.</li>
+            <li>3. Tagihan bulanan setiap tanggal 5–20.</li>
+        </ol>
+
+        <!-- BUTTON -->
+        <div class="mt-8 flex justify-center">
+            <button id="choose-package"
+                class="bg-orange-500 hover:bg-orange-600 
+                       transition 
+                       text-white 
+                       px-8 py-3 
+                       rounded-full 
+                       font-semibold 
+                       shadow-lg">
+                pilih paket
+            </button>
+        </div>
+
+        <!-- CLOSE ICON -->
+        <button id="close-modal"
+            class="absolute top-5 right-6 text-gray-700 hover:text-black text-xl">
+            ✕
         </button>
 
     </div>
 </div>
-
 <script>
-    const modal = document.getElementById('packageModal');
+    // const modal = document.getElementById('packageModal');
 
-    document.querySelectorAll('.open-modal').forEach(button => {
-        button.addEventListener('click', function() {
+    // document.querySelectorAll('.open-modal').forEach(button => {
+    //     button.addEventListener('click', function() {
 
-            document.getElementById('modalName').innerText = this.dataset.name;
-            document.getElementById('modalSpeed').innerText = this.dataset.speed;
-            document.getElementById('modalDevice').innerText = this.dataset.device;
-            document.getElementById('modalPrice').innerText =
-                new Intl.NumberFormat('id-ID').format(this.dataset.price);
+    //         $('#modalName').innerText = this.dataset.name;
+    //         $('#modalSpeed').innerText = this.dataset.speed;
+    //         $('#modalDevice').innerText = this.dataset.device;
+    //         $('#modalPrice').innerText =
+    //             new Intl.NumberFormat('id-ID').format(this.dataset.price);
 
-            modal.classList.remove('hidden');
-        });
-    });
+    //         modal.classList.remove('hidden');
+    //     });
+    // });
 
-    function closeModal() {
-        modal.classList.add('hidden');
-    }
+    // function closeModal() {
+    //     modal.classList.add('hidden');
+    // }
 </script>
 
-{{-- @foreach($packages as $package)
+{{-- @foreach ($packages as $package)
     <button 
         class="open-modal"
         data-name="{{ $package->name }}"
@@ -58,5 +104,3 @@
         {{ ucfirst($package->name) }}
     </button>
 @endforeach --}}
-
-

@@ -18,7 +18,7 @@ class DataController extends Controller
 
     public function filter($cityId){
         $packages = Package::where('city_id', $cityId)->get();
-        return response()->json($packages);
+        return view('pages.data.package', compact('packages'))->render();
     }
     public function store(Request $request)
     {
