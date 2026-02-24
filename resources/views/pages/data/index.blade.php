@@ -59,12 +59,15 @@
             $('#modalPrice').text(
                 new Intl.NumberFormat('id-ID').format(pkg.price)
             );
-
+            const slug = pkg.name.replace(/\s+/g, '-').toLowerCase();
+            document.getElementById('choose-package').href = `/data/area/${slug}-${pkg.id}`;
             $('#packageModal').removeClass('hidden');
         });
 
         $('#close-modal').on('click', function() {
             $('#packageModal').addClass('hidden');
         });
+
+        
     </script>
 @endsection

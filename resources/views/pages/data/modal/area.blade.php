@@ -133,8 +133,9 @@
             }
 
             // 🔍 Forward Geocoding
+            const defaultCity = "{{ $city }}";
             function searchLocation(query) {
-                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=id&limit=1`)
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}, ${defaultCity}&countrycodes=id&limit=1`)
                     .then(res => res.json())
                     .then(data => {
 
@@ -176,6 +177,7 @@
                 marker.setLatLng(e.latlng);
                 getAddress(e.latlng.lat, e.latlng.lng);
             });
+            
         });
     </script>
 @endsection

@@ -36,7 +36,7 @@ Route::controller(DataController::class)->group(function () {
     Route::get('/', 'index')->name('data.index');
     Route::prefix('data')->group(function () {
         Route::get('/', 'index')->name('data.index'); 
-        Route::get('/personal', 'area')->name('area.index'); 
+        Route::get('/area/{slug}', 'area')->name('area.index'); 
         Route::get('/by-city/{city}','filter');
     });
 });

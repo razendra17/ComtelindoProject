@@ -16,11 +16,21 @@ class DataController extends Controller
         return view('pages.data.index', compact('cities'));
     }
 
-    public function area(){
-        return view('pages.data.modal.area');
+    public function area(Package $package, $slug)
+    {
+        $id = explode('-', $slug);
+        $id = end($id);
+
+        $package = Package::with('city')->findOrFail($id);
+        $city= $package->city->name;
+        return view('pages.data.modal.area', [
+            'package' => $package,
+            'city' => $city,
+        ]);
     }
 
-    public function filter($cityId){
+    public function filter($cityId)
+    {
         $packages = Package::where('city_id', $cityId)->get();
         return view('pages.data.package', compact('packages'))->render();
     }
