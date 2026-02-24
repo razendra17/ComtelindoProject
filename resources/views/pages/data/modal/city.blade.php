@@ -1,4 +1,6 @@
+
 <div id="city-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+
     <div class="bg-[#ffffff] w-[420px] rounded-3xl p-8 relative shadow-xl">
 
         {{-- SLOT GAMBAR --}}
@@ -27,10 +29,10 @@
         </div>
 
         <button id="select-location" class="flex py-2 mx-auto my-auto cursor-pointer">
-            <div class=" bg-amber-400 w-34 h-10 rounded-2xl text-amber-50 alingn-middle items-center justify-center flex">
+            <div
+                class=" bg-amber-400 w-34 h-10 rounded-2xl text-amber-50 alingn-middle items-center justify-center flex">
                 <p class="mx-auto my-auto flex">Pilih lokasi</p>
             </div>
         </button>
     </div>
-</div>
-
+    </div>

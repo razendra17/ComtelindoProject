@@ -72,35 +72,3 @@
 
     </div>
 </div>
-<script>
-    // const modal = document.getElementById('packageModal');
-
-    // document.querySelectorAll('.open-modal').forEach(button => {
-    //     button.addEventListener('click', function() {
-
-    //         $('#modalName').innerText = this.dataset.name;
-    //         $('#modalSpeed').innerText = this.dataset.speed;
-    //         $('#modalDevice').innerText = this.dataset.device;
-    //         $('#modalPrice').innerText =
-    //             new Intl.NumberFormat('id-ID').format(this.dataset.price);
-
-    //         modal.classList.remove('hidden');
-    //     });
-    // });
-
-    // function closeModal() {
-    //     modal.classList.add('hidden');
-    // }
-</script>
-
-{{-- @foreach ($packages as $package)
-    <button 
-        class="open-modal"
-        data-name="{{ $package->name }}"
-        data-price="{{ $package->price }}"
-        data-speed="{{ $package->speed }}"
-        data-device="{{ $package->device }}"
-    >
-        {{ ucfirst($package->name) }}
-    </button>
-@endforeach --}}
