@@ -16,6 +16,7 @@ class DataController extends Controller
         return view('pages.data.index', compact('cities'));
     }
 
+
     public function area(Package $package, $slug)
     {
         $id = explode('-', $slug);
