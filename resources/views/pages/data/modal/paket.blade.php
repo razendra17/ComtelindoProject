@@ -19,7 +19,7 @@
             </div>
 
             <div class="text-right">
-                <p id="modalPrice" class="text-xl font-semibold text-gray-900">
+                <p class="text-xl text-red-700">Rp <span id="modalPrice" ></span>
                 </p>
                 <p class="text-sm text-gray-700">
                     optimal device: <span id="modalDevice"></span>
