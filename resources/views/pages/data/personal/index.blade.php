@@ -14,21 +14,59 @@
                         alt="" srcset="">
                 </div>
 
-                <!-- Kata2 Box -->
-                <div class="bg-[#ffffff] rounded-2xl h-32 flex items-center justify-center text-black w-3/4">
-                    <p class="w-[90%] text-gray-700">
-                        Nikmati koneksi stabil dengan kecepatan tinggi untuk streaming, gaming, dan bekerja tanpa gangguan.
-                        Saatnya beralih ke jaringan yang benar-benar bisa diandalkan.
-                    </p>
-                </div>
+                <!-- Icon Block -->
+                <div class="bg-white p-6 rounded-xl shadow-md space-y-8">
 
+                    <!-- Icon Block -->
+                    <div class="flex gap-x-5">
+                        <svg class="shrink-0 mt-1 size-6 text-[#DE5727]" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg>
+
+                        <div class="grow">
+                            <h3 class="text-lg font-semibold text-gray-800">
+                                Your One Stop Internet Solutions
+                            </h3>
+                            <p class="mt-1 text-gray-500">
+                                Solusi jaringan satu atap untuk mendukung aktivitas Anda dengan layanan internet berkualitas,
+                                dan infrastruktur jaringan yang terpercaya.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Icon Block -->
+                    <div class="flex gap-x-5">
+                        <svg class="shrink-0 mt-1 size-6 text-[#DE5727]" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+
+                        <div class="grow">
+                            <h3 class="text-lg font-semibold text-gray-800">
+                                Internet Cepat Anti Lelet
+                            </h3>
+                            <p class="mt-1 text-gray-500">
+                                Internetmu lelet? Nikmati internet cepat anti lelet yang Intynet berikan. 
+                         
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <!-- RIGHT SIDE (Form) -->
             <div class="w-full bg-white rounded-2xl shadow-xl p-3">
 
                 <h2 class="text-2xl font-bold text-center text-[#DE5727] mb-6">
-                   Data Diri
+                    Data Pelanggan
                 </h2>
 
                 <form action="#" method="POST" class="space-y-5">
