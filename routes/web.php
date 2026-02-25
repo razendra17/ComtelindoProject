@@ -35,9 +35,11 @@ Route::middleware('auth')->group(function () {
 Route::controller(DataController::class)->group(function () {
     Route::get('/', 'index')->name('data.index');
     Route::prefix('data')->group(function () {
-        Route::get('/', 'index')->name('data.index'); 
-        Route::get('/area/{slug}', 'area')->name('area.index'); 
-        Route::get('/by-city/{city}','filter');
+        Route::get('/', 'index')->name('data.index');
+        Route::get('/area/{slug}/personal', 'personal')->name('personal.index');
+        Route::get('/area/{slug}', 'area')->name('area.index');
+        Route::post('/area/{slug}', 'storeAddress')->name('area.store');
+        Route::get('/by-city/{city}', 'filter');
     });
 });
 

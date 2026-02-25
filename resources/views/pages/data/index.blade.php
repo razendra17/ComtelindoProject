@@ -12,7 +12,7 @@
 
     <!-- Button Pilih Kota -->
     <div class="max-w-5xl w-full px-4 mx-auto mt-6">
-        <button id="city-open-modal"
+        <button id="city-open-modal" type="submit"
             class="w-full border border-amber-500 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
             
             <div class="px-4 py-3 text-left">
