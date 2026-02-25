@@ -25,7 +25,30 @@
                 </div> <!-- Package -->
                 <div> <label class="block text-sm font-medium text-[#DE5727] mb-1"> Paket </label> <select name="package_id"
                         class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720]">
-                        {{-- @foreach ($packages as $package) <option value="{{ $package->id }}"> {{ $package->name }} </option> @endforeach --}} </select> </div>
+                    </div>
+
+                    <!-- Alamat -->
+                    <div>
+                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
+                            Alamat
+                        </label>
+
+                        <textarea class="w-full px-4 py-2 border border-[#ED9720] rounded-lg bg-gray-100" readonly>{{ $address }}</textarea>
+
+                        <input type="hidden" name="address" value="{{ $address }}">
+                    </div>
+
+                    <!-- Package -->
+                    <div>
+                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
+                            Paket
+                        </label>
+
+                        <input type="text" value="{{ $package->name }}"
+                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg bg-gray-100" readonly>
+
+                        <input type="hidden" name="package_id" value="{{ $package->id }}">
+                    </div>
 
                 <button type="submit"
                     class="w-full bg-[#DE5727] text-white font-semibold py-2.5 rounded-xl hover:bg-[#c94e1f] transition">
