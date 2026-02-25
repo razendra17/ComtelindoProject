@@ -31,7 +31,7 @@
                    Data Diri
                 </h2>
 
-                <form action="#" method="POST" class="space-y-5">
+                <form action="{{ route('personal.store', $slug) }}" method="POST" class="space-y-5">
                     @csrf
 
                     <!-- Nama -->

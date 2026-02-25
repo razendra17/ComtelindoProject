@@ -65,8 +65,34 @@ class DataController extends Controller
 
         return view('pages.data.personal.index', [
             'package' => $package,
-            'address' => $address
+            'address' => $address,
+            'slug' => $slug
         ]);
+    }
+
+    public function packageStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'number' => 'required|string|max:20',
+            'address' => 'required|string',
+            'package_id' => 'required|exists:packages,id',
+        ]);
+    
+        Data::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'number' => $request->number,
+            'address' => $request->address,
+            'package_id' => $request->package_id,
+        ]);
+    
+        // hapus session sementara
+        session()->forget('temp');
+    
+        return redirect()->route('data.index')
+            ->with('success', 'Data berhasil dikirim!');
     }
 
     public function store(Request $request)
