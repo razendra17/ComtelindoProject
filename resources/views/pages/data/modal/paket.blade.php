@@ -1,7 +1,7 @@
-<div id="packageModal" 
-     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+<div id="packageModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
 
-    <div class="relative w-full max-w-xl 
+    <div
+        class="relative w-full max-w-xl 
                 bg-[#ffffff] 
                 rounded-[40px] 
                 p-8 
@@ -19,7 +19,7 @@
             </div>
 
             <div class="text-right">
-                <p class="text-xl text-red-700">Rp <span id="modalPrice" ></span>
+                <p class="text-xl text-red-700">Rp <span id="modalPrice"></span>
                 </p>
                 <p class="text-sm text-gray-700">
                     optimal device: <span id="modalDevice"></span>
@@ -52,7 +52,7 @@
 
         <!-- BUTTON -->
         <div class="mt-8 flex justify-center">
-            <a href="{{ route('area.index') }}" id="choose-package"
+            <a href="#" id="choose-package"
                 class="bg-orange-500 hover:bg-orange-600 
                        transition 
                        text-white 
@@ -61,12 +61,11 @@
                        font-semibold 
                        shadow-lg">
                 pilih paket
-        </a>
+            </a>
         </div>
 
         <!-- CLOSE ICON -->
-        <button id="close-modal"
-            class="absolute top-5 right-6 text-gray-700 hover:text-black text-xl">
+        <button id="close-modal" class="absolute top-5 right-6 text-gray-700 hover:text-black text-xl">
             ✕
         </button>
 

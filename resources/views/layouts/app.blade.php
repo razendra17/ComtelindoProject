@@ -14,20 +14,27 @@
 </head>
 
 <body class="">
-    <div class="
-    bg-[#ff8521] min-h-screen">
+    <div class="bg-[rgb(255,133,33)] min-h-screen py-0.5 ">
         @include('layouts.header.index')
-        @include('layouts.sidebar.sidebar')
-        <div class="max-w-[98%] mx-auto bg-[#F4F4F4] min-h-screen px-6 py-6">
-            <main>
+
+        <div
+            class="relative max-w-[96%] mx-auto mb-6 bg-[#F4F4F4] min-h-screen px-6 py-6 overflow-hidden flex flex-col">
+            @include('layouts.sidebar.sidebar')
+
+            <main class="flex-grow">
                 @yield('content')
-            </main>
-            <div class="flex my-auto mx-auto">
-                @yield('modal')
-            </div>
-            @yield('script')
+
+
+
+                <div class="flex my-auto mx-auto">
+                    @yield('modal')
+                </div>
+
+                @yield('script')
         </div>
     </div>
+    @include('layouts.footer.index')
+
 
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />

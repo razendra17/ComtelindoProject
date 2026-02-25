@@ -1,5 +1,5 @@
-<div class="text-center text-sm h-46 opacity-70 mx-auto my-auto items-center align-middle justify-center">
-    <div>
-    © {{ date('Y') }} Comtelindo. All rights reserved.
-</div>
-</div>
+<footer class=" bottom-0 left-0 right-0 bg-[rgb(255,133,33)] p-4  flex justify-center">
+    <div class="text-center text-white mb-5 text-sm opacity-70">
+        © {{ date('Y') }} Comtelindo. All rights reserved.
+    </div>
+</footer>
