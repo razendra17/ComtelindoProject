@@ -106,15 +106,21 @@
         document.addEventListener('DOMContentLoaded', function() {
 
             // INIT MAP
-            var map = L.map('map').setView([-6.200000, 106.816666], 13);
+            let lat = {{ $lat }}
+            let lng = {{ $long }}
+            var map = L.map('map').setView([lat, lng], 13);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
 
-            var marker = L.marker([-6.200000, 106.816666], {
-                draggable: true
-            }).addTo(map);
+
+            var marker = L.marker([lat, lng]).addTo(map);
+
+            // setiap map digeser
+            map.on('move', function() {
+                marker.setLatLng(map.getCenter());
+            });
 
             var searchInput = document.getElementById('searchAddress');
 
@@ -132,10 +138,14 @@
                     });
             }
 
+            getAddress(lat, lng);
+
             // 🔍 Forward Geocoding
-            const defaultCity = "{{ $city }}";
+
             function searchLocation(query) {
-                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}, ${defaultCity}&countrycodes=id&limit=1`)
+                fetch(
+                        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=id&limit=1`
+                    )
                     .then(res => res.json())
                     .then(data => {
 
@@ -156,28 +166,37 @@
             }
 
             // ENTER SEARCH
-            let timeout = null;
+            let searchTimeout = null;
+            let geoTimeout = null;
+            let lastRequestTime = 0;
+
             searchInput.addEventListener('keyup', function() {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
                     let query = searchInput.value.trim();
                     if (!query) return;
                     searchLocation(query);
-                }, 1000); // tunggu 1 detik sebelum request
+                }, 500); // tunggu 1 detik sebelum request
             });
 
-            // DRAG MARKER
-            marker.on('dragend', function() {
-                var latlng = marker.getLatLng();
-                getAddress(latlng.lat, latlng.lng);
+            map.on('moveend', function() {
+                clearTimeout(geoTimeout);
+
+                geoTimeout = setTimeout(() => {
+
+                    let now = Date.now();
+
+                    // Batasi minimal 1.2 detik antar request
+                    if (now - lastRequestTime < 1200) return;
+
+                    lastRequestTime = now;
+
+                    var center = map.getCenter();
+                    getAddress(center.lat, center.lng);
+
+                }, 100);
             });
 
-            // CLICK MAP
-            map.on('click', function(e) {
-                marker.setLatLng(e.latlng);
-                getAddress(e.latlng.lat, e.latlng.lng);
-            });
-            
         });
     </script>
 @endsection

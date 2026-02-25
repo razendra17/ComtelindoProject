@@ -22,10 +22,13 @@ class DataController extends Controller
         $id = end($id);
 
         $package = Package::with('city')->findOrFail($id);
-        $city= $package->city->name;
+        $city= $package->city;
+        // return response()->json([$city->latitude]);
         return view('pages.data.modal.area', [
             'package' => $package,
-            'city' => $city,
+            'city' => $city->name,
+            'lat' => $city->latitude,
+            'long' => $city->longitude,
         ]);
     }
 

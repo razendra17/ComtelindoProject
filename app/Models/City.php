@@ -10,7 +10,9 @@ class City extends Model
 {
     protected $fillable = [
         'name',
-        'area'
+        'area',
+        'latitude',
+        'longitude'
     ];
     use HasFactory;
     public function packages():HasMany{
