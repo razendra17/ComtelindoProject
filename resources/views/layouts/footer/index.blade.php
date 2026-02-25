@@ -1,25 +1,45 @@
-<footer class="bg-[#f5f5f5] rounded-base">
-    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-        <div class="sm:flex sm:items-center sm:justify-between">
-            <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                <img src="{{ asset('assets/Logo-Full-Color.png') }}" class="h-5" alt="Flowbite Logo" />
+<footer class="bg-gray-100">
+    <div class="max-w-7xl w-full mx-auto px-4 py-8">
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+
+            <!-- Logo -->
+            <a href="/" class="flex justify-center sm:justify-start">
+                <img src="{{ asset('assets/Logo-Full-Color.png') }}" class="h-8 w-auto" alt="Intynet Logo" />
             </a>
-            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-body sm:mb-0">
+
+            <!-- Menu -->
+            <ul class="flex flex-wrap justify-center sm:justify-end gap-4 text-sm font-medium text-gray-600">
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                    <a href="#" class="hover:text-black transition">
+                        About
+                    </a>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                    <a href="#" class="hover:text-black transition">
+                        Privacy Policy
+                    </a>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+                    <a href="#" class="hover:text-black transition">
+                        Licensing
+                    </a>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline">Contact</a>
+                    <a href="#" class="hover:text-black transition">
+                        Contact
+                    </a>
                 </li>
             </ul>
+
         </div>
-        <span class="block text-sm text-body sm:text-center">© {{ date('Y') }} <a href="https://flowbite.com/" class="hover:underline">Intynet</a>. All Rights Reserved.</span>
+
+        <!-- Copyright -->
+        <div class="mt-6 border-t pt-6 text-center text-sm text-gray-500">
+            © {{ date('Y') }}
+            <span class="font-medium text-gray-700">Intynet</span>.
+            All Rights Reserved.
+        </div>
+
     </div>
 </footer>
-

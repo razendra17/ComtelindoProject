@@ -1,61 +1,69 @@
 @extends('layouts.app')
-
 @section('content')
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-gray-100 pb-24">
 
         <!-- HEADER -->
-        <div class="bg-white shadow-sm px-8 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <span class="text-xl cursor-pointer">←</span>
-                <h1 class="font-semibold text-lg">
-                    Atur Lokasi Pemasangan
-                </h1>
-            </div>
+        <div class="bg-white shadow-sm px-4 md:px-8 py-4">
 
-            <!-- STEP PROGRESS -->
-            <div class="flex items-center gap-6 text-sm">
-                <div class="flex items-center gap-2 text-green-600 font-medium">
-                    <span class="w-6 h-6 flex items-center justify-center rounded-full border-2 border-green-600">
-                        1
-                    </span>
-                    Lokasi Pemasangan
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                <!-- Title -->
+                <div class="flex items-center gap-3">
+                    <span class="text-xl cursor-pointer">←</span>
+                    <h1 class="font-semibold text-lg">
+                        Atur Lokasi Pemasangan
+                    </h1>
                 </div>
 
-                <div class="flex items-center gap-2 text-gray-400">
-                    <span class="w-6 h-6 flex items-center justify-center rounded-full border">
-                        2
-                    </span>
-                    Data Diri
+                <!-- STEP PROGRESS -->
+                <div class="flex items-center gap-4 text-xs sm:text-sm overflow-x-auto">
+
+                    <div class="flex items-center gap-2 text-green-600 font-medium whitespace-nowrap">
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full border-2 border-green-600">
+                            1
+                        </span>
+                        Lokasi
+                    </div>
+
+                    <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full border">
+                            2
+                        </span>
+                        Data Diri
+                    </div>
+
+                    <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full border">
+                            3
+                        </span>
+                        Checkout
+                    </div>
+
                 </div>
 
-                <div class="flex items-center gap-2 text-gray-400">
-                    <span class="w-6 h-6 flex items-center justify-center rounded-full border">
-                        3
-                    </span>
-                    Checkout
-                </div>
             </div>
         </div>
 
+
         <!-- CONTENT -->
-        <div class="p-8 grid grid-cols-12 gap-6">
+        <div class="p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             <!-- LEFT: MAP -->
+            <div class="lg:col-span-8 bg-white rounded-xl shadow-sm overflow-hidden relative">
 
-            <div class="col-span-8 bg-white rounded-xl shadow-sm overflow-hidden relative">
-                <div class="absolute top-4 left-4 right-4 z-10">
-                    <input id="searchAddress" type="text" placeholder="Cari alamat"
-                        class="w-[90%] mx-auto flex bg-white rounded-full px-5 py-3 shadow focus:outline-none">
-                </div>
                 <!-- SEARCH BAR -->
-
+                <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-center">
+                    <input id="searchAddress" type="text" placeholder="Cari alamat"
+                        class="w-[80%] bg-white rounded-full px-5 py-3 shadow focus:outline-none focus:ring-2 focus:ring-red-400 ">
+                </div>
 
                 <!-- MAP -->
-                <div id="map" class="h-[500px] w-full rounded-xl z-0"></div>
+                <div id="map" class="h-[350px] md:h-[500px] w-full z-1"></div>
+
             </div>
 
             <!-- RIGHT: FORM -->
-            <div class="col-span-4">
+            <div class="lg:col-span-4">
 
                 <div class="bg-white p-6 rounded-xl shadow-sm space-y-6">
 
@@ -69,33 +77,34 @@
                         <label class="block font-semibold mb-2">
                             Alamat Lengkap*
                         </label>
+
                         <p class="text-xs text-gray-500 mb-2">
                             Lengkapi alamat dengan Kel, Kec, RT/RW, dan Kode Pos
                         </p>
 
-                        <textarea id="adress" rows="4"
+                        <textarea id="adress" rows="4" maxlength="200"
                             class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-400"
-                            placeholder="Masukkan alamat lengkap..."></textarea>
-
-                        <div class="text-right text-xs text-gray-400 mt-1">
-                            0/200
+                            placeholder="Masukkan alamat lengkap...">></textarea>
                         </div>
                     </div>
+
                     <input type="hidden" name="latitude" id="latitude">
                     <input type="hidden" name="longitude" id="longitude">
 
                 </div>
-
             </div>
 
         </div>
 
+
         <!-- BOTTOM FIXED BUTTON -->
-        <div class="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-inner flex justify-end">
-            <button
-                class="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-md transition">
-                Simpan Alamat
-            </button>
+        <div class=" bg-white p-4 shadow-inner">
+            <div class="max-w-7xl mx-auto flex justify-center md:justify-end">
+                <button
+                    class="w-full md:w-auto bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-md transition">
+                    Simpan Alamat
+                </button>
+            </div>
         </div>
 
     </div>

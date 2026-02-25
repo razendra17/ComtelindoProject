@@ -1,21 +1,35 @@
 @extends('layouts.app')
 @section('content')
-    <div class="w-5xl py-3 align-middle justify-center items-center mx-auto flex  ">
-        <img src="{{ asset('assets/Gemini_Generated_Image_8es1qg8es1qg8es1.png') }}" alt="" srcset=""
-            class="rounded-3xl">
+
+    <!-- Banner -->
+    <div class="max-w-5xl w-full px-4 py-3 mx-auto flex justify-center">
+        <img 
+            src="{{ asset('assets/Gemini_Generated_Image_8es1qg8es1qg8es1.png') }}" 
+            alt=""
+            class="w-full rounded-3xl object-cover"
+        >
     </div>
 
-    <button id="city-open-modal"
-        class="max-w-5xl mx-auto flex mt-6 cursor-pointer border border-amber-500 rounded-xl shadow-2xl ">
-        <div class="w-5xl px-4 py-3 text-left text-black">
-            <p>Pilih Kota anda</p>
-            <p id="current-city" class="text-gray-700"></p>
-        </div>
-    </button>
+    <!-- Button Pilih Kota -->
+    <div class="max-w-5xl w-full px-4 mx-auto mt-6">
+        <button id="city-open-modal"
+            class="w-full border border-amber-500 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+            
+            <div class="px-4 py-3 text-left">
+                <p class="font-medium text-black">
+                    Pilih Kota anda
+                </p>
+                <p id="current-city" class="text-gray-600 text-sm mt-1"></p>
+            </div>
 
-
-    <div id="packageList" class="open-modal grid md:grid-cols-3 gap-4 mt-6 max-w-5xl mx-auto p-4">
+        </button>
     </div>
+
+    <!-- Package List -->
+    <div id="packageList"
+        class="max-w-5xl w-full mx-auto mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    </div>
+
 @endsection
 @include('pages.data.modal.city')
 @include('pages.data.modal.paket')
