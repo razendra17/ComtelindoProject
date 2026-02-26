@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex items-center justify-center min-h-[70vh]">
-        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+    <div class="min-h-screen flex items-center justify-center px-4 py-10">
+
+        <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+            <!-- LEFT SIDE (Hidden on Mobile) -->
+            <div class="hidden lg:flex flex-col gap-6">
 
             <!-- Title -->
             <h2 class="text-2xl font-bold text-center text-[#DE5727] mb-6"> Submit Form </h2>
