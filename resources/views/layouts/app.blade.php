@@ -28,8 +28,6 @@
                 <div class="flex my-auto mx-auto">
                     @yield('modal')
                 </div>
-
-                @yield('script')
             </main>
         </div>
     </div>
@@ -44,6 +42,10 @@
     <!-- SWAL -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    {{-- chart js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    @yield('script')
 
     
 </body>
