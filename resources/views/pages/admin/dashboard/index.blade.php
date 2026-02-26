@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="mb-8 flex justify-center">
-    <h1 class="text-3xl font-bold text-gray-800 tracking-wide">
-        DASHBOARD
-    </h1>
-</div>
+    <div class="mb-8 flex justify-center">
+        <h1 class="text-3xl font-bold text-gray-800 tracking-wide">
+            DASHBOARD
+        </h1>
+    </div>
     <div class="min-h-screen bg-gray-200/60 backdrop-blur-md flex justify-center p-6 rounded-3xl">
 
         <div class="w-full max-w-6xl">
@@ -20,8 +20,9 @@
                 </div>
 
                 {{-- Graph --}}
-                <div class="col-span-2 bg-white rounded-2xl shadow-md p-6 flex items-center justify-center">
-                    <p class="text-gray-400">Graph total pengajuan</p>
+                <div class="col-span-2 bg-white rounded-2xl shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4">Total Pengajuan</h2>
+                    <canvas id="pengajuanChart"></canvas>
                 </div>
 
             </div>
@@ -66,21 +67,16 @@
                         </div>
 
                         {{-- Alasan Dominan --}}
-                        <div class="flex-1 border-2 border-red-400 rounded-2xl p-4 shadow-sm">
-                            <p class="text-red-400 text-sm mb-3 text-center">Alasan dominan</p>
-
-                            <div class="space-y-2">
+                        <div class="space-y-2 w-full">
+                            @forelse ($dominantReasons as $reason)
                                 <div class="border border-red-300 rounded-lg p-2 text-xs text-red-400 text-center">
-                                    daerah belum tercover provider
+                                    {{ $reason->rejection }} ({{ $reason->total }})
                                 </div>
-                                <div class="border border-red-300 rounded-lg p-2 text-xs text-red-400 text-center">
-                                    daerah belum tercover provider
+                            @empty
+                                <div class="text-xs text-gray-400 text-center">
+                                    Belum ada data penolakan
                                 </div>
-                                <div class="border border-red-300 rounded-lg p-2 text-xs text-red-400 text-center">
-                                    daerah belum tercover provider
-                                </div>
-                            </div>
-
+                            @endforelse
                         </div>
 
                     </div>
@@ -91,4 +87,37 @@
         </div>
 
     </div>
+@endsection
+
+@section('script')
+    <script>
+        const ctx = document.getElementById('pengajuanChart');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @json($labels),
+                datasets: [{
+                    label: 'Total Pengajuan',
+                    data: @json($totals),
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 @endsection

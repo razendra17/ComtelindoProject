@@ -18,8 +18,6 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('speed');
             $table->integer('device');
-            $table->string('status')->default(Constant::status['pending']);
-            $table->string('rejection')->nullable();
             $table->foreignId('city_id')
             ->constrained()
             ->cascadeOnDelete();
