@@ -1,6 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="bg-white shadow-sm px-4 md:px-8 py-4">
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+            <!-- Title -->
+            <div class="flex items-center gap-3">
+                <span class="text-xl cursor-pointer">←</span>
+                <h1 class="font-semibold text-lg">
+                    Atur Lokasi Pemasangan
+                </h1>
+            </div>
+
+            <!-- STEP PROGRESS -->
+            <div class="flex items-center gap-4 text-xs sm:text-sm overflow-x-auto">
+
+                <div class="flex items-center gap-2 text-gray-400 font-medium whitespace-nowrap">
+                    <span class="w-6 h-6 flex items-center justify-center rounded-full border border-gray-400">
+                        1
+                    </span>
+                    Lokasi
+                </div>
+
+                <div class="flex items-center gap-2 text-green-600 whitespace-nowrap">
+                    <span class="w-6 h-6 flex items-center justify-center rounded-full border-2 border-green-600">
+                        2
+                    </span>
+                    Data Diri
+                </div>
+
+                <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
+                    <span class="w-6 h-6 flex items-center justify-center rounded-full border border-gray-400">
+                        3
+                    </span>
+                    Kirim
+                </div>
+
+            </div>
+
+        </div>
+    </div>
     <div class="min-h-screen flex items-center justify-center px-4 py-10">
 
         <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
