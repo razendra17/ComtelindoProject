@@ -123,12 +123,12 @@
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
                     </div>
 
-                <button type="submit"
-                    class="w-full bg-[#DE5727] text-white font-semibold py-2.5 rounded-xl hover:bg-[#c94e1f] transition">
-                    Submit
-                </button>
+                    <button type="submit"
+                        class="w-full bg-[#DE5727] text-white font-semibold py-2.5 rounded-xl hover:bg-[#c94e1f] transition">
+                        Submit
+                    </button>
 
-            </form>
+                </form>
             </div>
 
         </div>
