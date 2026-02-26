@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Data;
 use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DataController extends Controller
 {
@@ -72,47 +73,32 @@ class DataController extends Controller
 
     public function packageStore(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'number' => 'required|string|max:20',
+            'number' => ['required', 'regex:/^(\+62|62|0)[0-9]{9,13}$/'],
             'address' => 'required|string',
             'package_id' => 'required|exists:packages,id',
-        ]);
-    
-        Data::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'number' => $request->number,
-            'address' => $request->address,
-            'package_id' => $request->package_id,
-        ]);
-    
-        // hapus session sementara
-        session()->forget('temp');
-    
-        return redirect()->route('data.index')
-            ->with('success', 'Data berhasil dikirim!');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'number' => 'required|integer|max:11',
-            'address' => 'required|max:100',
-            'package_id' => 'required|exists:packages,id',
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'number.required' => 'Nomor HP wajib diisi',
+            'number.regex' => 'Format nomor HP tidak valid',
+            'address.required' => 'Alamat wajib ada',
         ]);
 
-        Data::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'number' => $request->number,
-            'address' => $request->address,
-            'package_id' => $request->package_id,
-        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+        Data::create($validator->validated());
+
+        return response()->json([
+            'message' => 'Data berhasil dikirim!',
+            'redirect' => route('data.index') // halaman awal
+        ], 200);
     }
 }

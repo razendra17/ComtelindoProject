@@ -110,34 +110,34 @@
                     Data Pelanggan
                 </h2>
 
-                <form action="{{ route('personal.store', $slug) }}" method="POST" class="space-y-5">
+                <form id="personalForm" action="{{ route('personal.store', $slug) }}" method="POST" class="space-y-5">
                     @csrf
 
                     <!-- Nama -->
                     <div>
                         <label class="block text-sm font-medium text-[#DE5727] mb-1">
-                            Nama Lengkap
+                            Nama Lengkap <span class="bintang">*</span>
                         </label>
-                        <input type="text" name="name"
-                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720]">
+                        <input type="text" name="name" placeholder="Nama Lengkap Anda"
+                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720]  placeholder:text-gray-400">
                     </div>
 
                     <!-- Email -->
                     <div>
                         <label class="block text-sm font-medium text-[#DE5727] mb-1">
-                            Email
+                            Email <span class="bintang">*</span>
                         </label>
-                        <input type="email" name="email"
-                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720]">
+                        <input type="email" name="email" placeholder="Example@mail.com"
+                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720]  placeholder:text-gray-400">
                     </div>
 
                     <!-- Nomor HP -->
                     <div>
                         <label class="block text-sm font-medium text-[#DE5727] mb-1">
-                            Nomor Hp
+                            Nomor Hp <span class="bintang">*</span>
                         </label>
                         <input type="tel" name="number" placeholder="+62"
-                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720]">
+                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720] placeholder:text-gray-400">
                     </div>
 
                     <!-- Alamat -->
@@ -173,4 +173,47 @@
 
         </div>
     </div>
+@endsection
+@section('script')
+@section('script')
+    <script>
+        $(document).ready(function() {
+
+            $('#personalForm').on('submit', function(e) {
+                    e.preventDefault(); // CEGAH RELOAD
+
+                    let form = $(this);
+
+                    $.ajax({
+                            url: form.attr('action'),
+                            type: "POST",
+                            data: form.serialize(),
+                            success: function(response) {
+
+                                toastr.success(response.message);
+
+                                setTimeout(function() {
+                                    window.location.href = response.redirect;
+                                }, 1500); // delay 1.5 detik biar toastr sempat kebaca
+                        },
+                        error: function(xhr) {
+
+                            if (xhr.status === 422) {
+
+                                let errors = xhr.responseJSON.errors;
+
+                                // ambil error pertama saja
+                                let firstError = Object.values(errors)[0][0];
+
+                                toastr.error(firstError);
+                            } else {
+                                toastr.error("Terjadi kesalahan server");
+                            }
+                        }
+                    });
+
+            });
+
+        });
+    </script>
 @endsection

@@ -1,7 +1,12 @@
-
 <div id="city-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
 
     <div class="bg-[#ffffff] w-[420px] rounded-3xl p-8 relative shadow-xl">
+
+
+        <!-- TOMBOL CLOSE -->
+        <button id="city-close-btn" class="absolute top-4 right-4 text-gray-400 text-2xl hidden">
+            &times;
+        </button>
 
         {{-- SLOT GAMBAR --}}
         <div class="flex justify-center mb-4">
@@ -16,6 +21,7 @@
         <p class="text-center text-sm text-gray-700 mb-6">
             tentukan lokasi anda untuk paket yang tersedia!
         </p>
+
         <div class="max-w-5xl justify-center items-center mx-auto flex mt-6">
             <select id="citySelect"
                 class="w-5xl border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
@@ -35,4 +41,4 @@
             </div>
         </button>
     </div>
-    </div>
+</div>
