@@ -26,7 +26,7 @@ class DataController extends Controller
         $package = Package::with('city')->findOrFail($id);
         $city = $package->city;
         // return response()->json([$city->latitude]);
-        return view('pages.data.modal.area', [
+        return view('pages.data.area.index', [
             'package' => $package,
             'city' => $city->name,
             'lat' => $city->latitude,
@@ -38,7 +38,7 @@ class DataController extends Controller
     public function filter($cityId)
     {
         $packages = Package::where('city_id', $cityId)->get();
-        return view('pages.data.package', compact('packages'))->render();
+        return view('pages.data.assets.Package', compact('packages'))->render();
     }
 
 
