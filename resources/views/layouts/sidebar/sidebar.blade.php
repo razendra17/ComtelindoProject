@@ -88,7 +88,7 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
@@ -99,7 +99,7 @@
                                 <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
                             </div>
                         </button>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

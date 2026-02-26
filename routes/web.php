@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('dashboard.index');
         Route::get('/addcity', 'indexCity')->name('city.index');
         Route::get('/addpackage', 'indexPackage')->name('package.index');
+        Route::post('/cities','storeCity')->name('cities.store');
         Route::get('/data', 'data')->name('dashboard.data');
         Route::post('/', 'create')->name('dashboard.create');
         Route::patch('/', 'update')->name('dashboard.update');
