@@ -7,7 +7,9 @@
 @source "../**/*.js";
 @source "../../node_modules/flowbite";
 
-
+body {
+    overflow: auto !important;
+}
 .bintang {
     color: crimson;
 }

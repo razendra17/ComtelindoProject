@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     });
     Route::middleware(['auth', 'role:admin'])->controller(DashboardController::class)->prefix('dashboard')->group(function () {
         Route::get('/', 'index')->name('dashboard.index');
+        Route::get('/addcity', 'indexCity')->name('city.index');
+        Route::get('/addpackage', 'indexPackage')->name('package.index');
         Route::get('/data', 'data')->name('dashboard.data');
         Route::post('/', 'create')->name('dashboard.create');
         Route::patch('/', 'update')->name('dashboard.update');
@@ -34,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(DataController::class)->group(function () {
     Route::get('/', 'index')->name('data.index');
-     Route::get('/form', 'form')->name('form.index');
+    Route::get('/form', 'form')->name('form.index');
     Route::prefix('data')->group(function () {
         Route::get('/', 'index')->name('data.index');
         Route::get('/area/{slug}/personal', 'personal')->name('personal.index');
