@@ -14,7 +14,7 @@
         </div>
 
         <!-- Form -->
-        <form action="#" method="POST">
+        <form id="cityForm" action="{{ route('cities.store') }}" method="POST">
             @csrf
 
             <div class="grid gap-4 mb-4 sm:grid-cols-2">
@@ -32,7 +32,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-700">
                         Area / Provinsi
                     </label>
-                    <input type="text" name="brand"
+                    <input type="text" name="area"
                         class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
                         placeholder="Masukkan nama Provinsi">
                 </div>
@@ -41,7 +41,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-700">
                         Latitude
                     </label>
-                    <input type="text" name="brand"
+                    <input type="text" name="latitude"
                         class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
                         placeholder="Masukkan Latitude">
                 </div>
@@ -50,7 +50,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-700">
                         Longitude
                     </label>
-                    <input type="text" name="brand"
+                    <input type="text" name="longitude"
                         class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
                         placeholder="Masukkan Longitude">
                 </div>
@@ -66,4 +66,43 @@
         </form>
 
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+
+            $('#cityForm').on('submit', function(e) {
+                e.preventDefault();
+
+                let form = $(this);
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: "POST",
+                    data: form.serialize(),
+                    success: function(response) {
+
+                        toastr.success(response.message);
+
+                        setTimeout(function() {
+                            window.location.href = response.redirect;
+                        }, 1200);
+                    },
+                    error: function(xhr) {
+
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            let firstError = Object.values(errors)[0][0];
+                            toastr.error(firstError);
+                        } else {
+                            toastr.error("Terjadi kesalahan server");
+                        }
+                    }
+                });
+
+            });
+
+        });
+    </script>
 @endsection
