@@ -16,7 +16,7 @@
                 {{-- Total Pengajuan --}}
                 <div class="bg-white rounded-2xl shadow-md p-6">
                     <p class="text-gray-400 text-sm mb-2">Total Pengajuan</p>
-                    <h2 class="text-3xl font-semibold text-amber-500">{{ $data }} data</h2>
+                    <h2 class="text-3xl font-semibold text-amber-500">{{ $alldata }} data</h2>
                 </div>
 
                 {{-- Graph --}}

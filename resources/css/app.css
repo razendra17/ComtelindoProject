@@ -13,3 +13,57 @@ body {
 .bintang {
     color: crimson;
 }
+
+/* Hapus default datatable */
+.dataTables_wrapper .dataTables_paginate,
+.dataTables_wrapper .dataTables_info {
+    display: none;
+}
+
+table.dataTable {
+    border-collapse: separate !important;
+    border-spacing: 0 12px !important;
+}
+
+/* Row capsule */
+table.dataTable tbody tr {
+    background-color: #d1d5db;
+    border-radius: 14px;
+    box-shadow: 0 5px 6px rgba(0,0,0,0.05);
+}
+
+/* Cell styling */
+table.dataTable tbody td {
+    padding: 14px 20px;
+    border: none !important;
+}
+
+/* Rounded row effect */
+table.dataTable tbody tr td:first-child {
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+
+table.dataTable tbody tr td:last-child {
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+}
+
+/* Remove default header border */
+table.dataTable thead th {
+    border-bottom: none !important;
+}
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-scaleIn {
+    animation: scaleIn 0.2s ease-out;
+}

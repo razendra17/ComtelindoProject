@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
+use App\Models\City;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,15 +28,22 @@ Route::middleware('auth')->group(function () {
         Route::patch('/', 'update')->name('profile.update');
         Route::delete('/', 'destroy')->name('profile.destroy');
     });
-    Route::middleware(['auth', 'role:admin'])->controller(DashboardController::class)->prefix('dashboard')->group(function () {
-        Route::get('/', 'index')->name('dashboard.index');
-        Route::get('/addcity', 'indexCity')->name('city.index');
-        Route::get('/addpackage', 'indexPackage')->name('package.index');
-        Route::post('/cities','storeCity')->name('cities.store');
-        Route::get('/data', 'data')->name('dashboard.data');
-        Route::post('/', 'create')->name('dashboard.create');
-        Route::patch('/', 'update')->name('dashboard.update');
-        Route::delete('/', 'destroy')->name('dashboard.destroy');
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+        Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
+            Route::get('/', 'index')->name('dashboard.index');
+            Route::get('/data', 'dataIndex')->name('dataAdmin.index');
+            Route::get('/data/datas', 'data')->name('dashboard.data');
+            Route::put('/data/{id}/approve','approve');
+            Route::put('/data/{id}/reject','reject');
+        });
+        Route::controller(PackageController::class)->prefix('package')->group(function () {
+            Route::get('/add/package', 'indexPackage')->name('package.index');
+            Route::post('/add/package', 'storePackage')->name('package.store');
+        });
+        Route::controller(CityController::class)->prefix('city')->group(function () {
+            Route::get('/add/city', 'indexCity')->name('city.index');
+            Route::post('/add/city', 'storeCity')->name('citiy.store');
+        });
     });
 });
 

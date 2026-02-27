@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Constant;
 use App\Http\Controllers\Controller;
-use App\Models\City;
 use App\Models\Data;
 use App\Models\Package;
 use Illuminate\Http\Request;
@@ -14,164 +13,110 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class DashboardController extends Controller
 {
-    public function index(Data $data)
+    public function index(Request $request)
     {
-        $data = Data::all();
-        $alldata = $data->count();
+        //filter waktu
+        $start = $request->start_date
+            ? Carbon::parse($request->start_date)->startOfDay()
+            : Carbon::now()->subDays(7)->startOfDay();
 
-        $approved = Data::where('status', Constant::status['approved'])->count();
-        $rejected = Data::where('status', Constant::status['rejected'])->count();
-        $pending  = Data::where('status', Constant::status['pending'])->count();
+        $end = $request->end_date
+            ? Carbon::parse($request->end_date)->endOfDay()
+            : Carbon::now()->endOfDay();
 
+        $statusCounts = Data::select('status', DB::raw('COUNT(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status');
 
-        // return response()->json([
-        //     $alldata,
-        //     $approved,
-        //     $rejected,
-        //     $pending
-        // ]);
+        $alldata  = $statusCounts->sum();
+        $approved = $statusCounts[Constant::status['approved']] ?? 0;
+        $rejected = $statusCounts[Constant::status['rejected']] ?? 0;
+        $pending  = $statusCounts[Constant::status['pending']] ?? 0;
 
-        $start = $request->start_date ?? Carbon::now()->subDays(7);
-        $end   = $request->end_date ?? Carbon::now();
-
-        $data = DB::table('data')
-            ->select(
-                DB::raw('DATE(created_at) as tanggal'),
-                DB::raw('COUNT(*) as total')
-            )
+        $chartData = Data::selectRaw('DATE(created_at) as tanggal, COUNT(*) as total')
             ->whereBetween('created_at', [$start, $end])
             ->groupBy('tanggal')
             ->orderBy('tanggal')
             ->get();
 
-        $labels = $data->pluck('tanggal');
-        $totals = $data->pluck('total');
+        $labels = $chartData->pluck('tanggal');
+        $totals = $chartData->pluck('total');
 
-        // Ambil alasan paling sering muncul
-        $dominantReasons = DB::table('data')
-            ->where('data.status', 'rejected')
-            ->select('data.rejection', DB::raw('COUNT(*) as total'))
-            ->groupBy('data.rejection')
+        $dominantReasons = Data::where('status', Constant::status['rejected'])
+            ->select('rejection', DB::raw('COUNT(*) as total'))
+            ->groupBy('rejection')
             ->orderByDesc('total')
-            ->take(3) // ambil 3 teratas
+            ->limit(3)
             ->get();
 
 
-        return view('pages.admin.dashboard.index', [
-            'data' => $alldata,
-            'approved' => $approved,
-            'rejected' => $rejected,
-            'pending' => $pending,
-            'labels' => $labels,
-            'totals' => $totals,
-            'dominantReasons' => $dominantReasons,
+        return view('pages.admin.dashboard.index', compact(
+            'alldata',
+            'approved',
+            'rejected',
+            'pending',
+            'labels',
+            'totals',
+            'dominantReasons'
+        ));
+    }
 
+    public function dataIndex()
+    {
+        return view('pages.admin.data.index', [
+            'rejectionMessages' => Constant::rejectionMessage
         ]);
     }
+
     public function data()
     {
+        $data = Data::with('package.city');
 
-        $query = Data::with('package.city');
-        return DataTables::of($query)
-            ->addColumn('package_name', function ($row) {
-                return $row->package?->name;
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->editColumn('status', function ($row) {
+                return '<span class="font-semibold text-gray-700">' . $row->status . '</span>';
             })
-            ->addColumn('city_name', function ($row) {
-                return $row->package?->city?->name;
+            ->addColumn('action', function ($row) {
+
+                return view('pages.admin.data.button.action', compact('row'))->render();
             })
+            ->rawColumns(['status', 'action'])
             ->make(true);
     }
 
-
-    public function indexCity()
+    public function approve($id)
     {
-        return view('pages.admin.add.city.index');
-    }
+        $data = Data::findOrFail($id);
+        $data->status = Constant::status['approved']; // atau 'approved'
+        $data->save();
 
-    public function indexPackage()
-    {
-        $cities = City::with('packages')->get();
-        return view('pages.admin.add.package.index', compact('cities'));
-    }
-    public function storePackage(Request $request)
-    {
-      $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:225',
-        'price' => 'required|int|max:99999999|min:50000',
-        'speed' => 'required|int|max:9999',
-        'device' => 'required|int|max:99',
-        'city_id' => 'required|int|exists:cities,id',
-      ],[
-        'name.required' => 'Nama paket wajib diisi!',
-        'price.required' => 'Harga paket wajib diisi!',
-        'speed.required' => 'Kecepatan paket wajib diisi!',
-        'device.required' => 'Jumlah optimal deivce wajib diisi!',
-        'city_id.required' => 'Kota paket wajib diisi!',
-
-        'name.string' => 'Masukan nama yang benar!',
-        'price.integer' => 'Masukan harga yang benar!',
-        'speed.integer' => 'Masukan kecepatan yang benar!',
-        'device.integer' => 'Masukan divice yang benar!',
-        'city_id.integer' => 'Masukan kota yang benar!',    
-
-        'name.max' => 'Masukan nama yang benar!',
-        'price.max' => 'Maximal harga telah di capai!',
-        'price.min' => 'Maximal harga adalah Rp50.000!',
-        '*.max' => 'Masukan angka yang benar!',
-    ]);
-
-      if ($validator->fails()) {
         return response()->json([
-            'errors' => $validator->errors()
-        ], 422);
+            'success' => true,
+            'message' => 'Package approved successfully'
+        ]);
     }
 
-    Package::create($validator->validated());
-
-    return response()->json([
-        'message' => 'Data berhasil dikirim!',
-        'redirect' => route('package.index'),
-    ], 200);
-    }
-
-    public function storeCity(Request $request)
+    public function reject(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => [
+        $validated = $request->validate([
+            'reason' => [
                 'required',
-                'string',
-                'max:255',
-                Rule::unique('cities')->where(function ($query) use ($request) {
-                    return $query->where('area', $request->area);
-                }),
-            ],
-            'area' => 'required|string|max:255',
-            'latitude' => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numeric|between:-180,180',
-        ], [
-            'name.required' => 'Nama kota wajib diisi',
-            'area.required' => 'Provinsi wajib diisi',
-            'latitude.required' => 'Latitude wajib diisi',
-            'latitude.numeric' => 'Latitude harus berupa angka',
-            'latitude.between' => 'Latitude harus di antara -90 sampai 90',
-            'longitude.required' => 'Longitude wajib diisi',
-            'longitude.numeric' => 'Longitude harus berupa angka',
-            'longitude.between' => 'Longitude harus di antara -180 sampai 180',
+                Rule::in(array_values(Constant::rejectionMessage))
+            ]
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        City::create($validator->validated());
+        $data = Data::findOrFail($id);
+        $data->status = Constant::status['rejected'];
+        $data->rejection = $validated['reason'];
+        $data->save();
 
         return response()->json([
-            'message' => 'City berhasil dikirim!',
-            'redirect' => route('city.index') // halaman awal
-        ], 200);
+            'success' => true,
+            'message' => 'Rejection success'
+        ]);
     }
 }

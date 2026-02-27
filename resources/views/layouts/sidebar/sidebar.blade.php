@@ -75,7 +75,7 @@
                 </li>
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('dataAdmin.index') }}"
                         class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23] group">
                         <i class="fa-regular fa-hard-drive group-hover:text-[#eb8e23]"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Data</span>
