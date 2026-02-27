@@ -9,4 +9,14 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+
+    public function home()
+    {
+        $user = auth()->user();
+        if ($user) {
+            return redirect()->route('dashboard.index');
+        } else {
+            return redirect()->route('data.index');
+        }
+    }
 }

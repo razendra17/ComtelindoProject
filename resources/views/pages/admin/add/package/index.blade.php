@@ -14,7 +14,7 @@
         </div>
 
         <!-- Form -->
-        <form action="#" method="POST">
+        <form action="{{ route('package.store') }}" method="POST" id="storePackage">
             @csrf
 
             <div class="grid gap-4 mb-4 sm:grid-cols-2">
@@ -32,7 +32,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-700">
                         Speed
                     </label>
-                    <input type="text" name="brand"
+                    <input type="text" name="speed"
                         class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500focus:outline-none"
                         placeholder="Masukkan speed Internet">
                 </div>
@@ -41,7 +41,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-700">
                         Device
                     </label>
-                    <input type="text" name="brand"
+                    <input type="text" name="device"
                         class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
                         placeholder="Masukkan device">
                 </div>
@@ -59,7 +59,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-700">
                         Kota
                     </label>
-                    <select name="city"
+                    <select name="city_id"
                         class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none">
                         <option value="">Pilih Kota</option>
                         @foreach ($cities as $city)
@@ -80,4 +80,47 @@
         </form>
 
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+
+            $('#storePackage').on('submit', function(e) {
+                    e.preventDefault(); // CEGAH RELOAD
+
+                    let form = $(this);
+
+                    $.ajax({
+                            url: form.attr('action'),
+                            type: "POST",
+                            data: form.serialize(),
+                            success: function(response) {
+
+                                toastr.success(response.message);
+
+                                setTimeout(function() {
+                                    window.location.href = response.redirect;
+                                }, 1500); // delay 1.5 detik biar toastr sempat kebaca
+                        },
+                        error: function(xhr) {
+
+                            if (xhr.status === 422) {
+
+                                let errors = xhr.responseJSON.errors;
+
+                                // ambil error pertama saja
+                                let firstError = Object.values(errors)[0][0];
+
+                                toastr.error(firstError);
+                            } else {
+                                toastr.error("Terjadi kesalahan server");
+                            }
+                        }
+                    });
+
+            });
+
+        });
+    </script>
 @endsection

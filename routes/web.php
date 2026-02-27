@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\ProfileController;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [Controller::class, 'home'])->name('home.index');
 
 Route::middleware('auth')->group(function () {
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
@@ -27,6 +29,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('dashboard.index');
         Route::get('/addcity', 'indexCity')->name('city.index');
         Route::get('/addpackage', 'indexPackage')->name('package.index');
+        Route::post('/addpackage', 'storePackage')->name('package.store');
         Route::get('/data', 'data')->name('dashboard.data');
         Route::post('/', 'create')->name('dashboard.create');
         Route::patch('/', 'update')->name('dashboard.update');
@@ -35,7 +38,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(DataController::class)->group(function () {
-    Route::get('/', 'index')->name('data.index');
     Route::get('/form', 'form')->name('form.index');
     Route::prefix('data')->group(function () {
         Route::get('/', 'index')->name('data.index');

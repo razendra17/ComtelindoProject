@@ -14,6 +14,7 @@ class DataController extends Controller
     public function index()
     {
         $cities = City::with('packages')->get();
+        $user = auth()->user();
         return view('pages.data.index', compact('cities'));
     }
 

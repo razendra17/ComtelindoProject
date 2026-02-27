@@ -91,7 +91,6 @@
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-
                         <button type="submit"
                             class="flex items-start px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#ff2020] group w-full">
                             <div>
@@ -99,6 +98,7 @@
                                 <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
                             </div>
                         </button>
+                    </form>
                 </li>
 
             </ul>
