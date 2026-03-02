@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Constant;
 use App\Http\Controllers\Controller;
+use App\Mail\StatusUpdateMail;
 use App\Models\City;
 use App\Models\Data;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
@@ -110,6 +112,9 @@ class DashboardController extends Controller
         $data = Data::findOrFail($id);
         $data->status = Constant::status['approved']; // atau 'approved'
         $data->save();
+        Mail::to($data->email)
+            ->send(new StatusUpdateMail($data, 'approved'));
+
 
         return response()->json([
             'success' => true,
@@ -127,14 +132,30 @@ class DashboardController extends Controller
         ]);
 
         $data = Data::findOrFail($id);
-        $data->status = Constant::status['rejected'];
-        $data->rejection = $validated['reason'];
-        $data->save();
+        try {
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Rejection success'
-        ]);
+            Mail::to($data->email)
+                ->send(new StatusUpdateMail($data, 'rejected'));
+    
+            // kalau tidak error → email berhasil
+            $data->status = Constant::status['rejected'];
+            $data->rejection = $validated['reason'];
+            $data->save();
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Request berhasil di tolak',
+                'emailsent' => 'Berhasil mengirim email'
+            ]);
+    
+        } catch (\Exception $e) {
+    
+            return response()->json([
+                'success' => false,
+                'message' => 'Email gagal dikirim',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function destroy($id)

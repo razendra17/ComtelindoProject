@@ -71,6 +71,11 @@
                                 class="pl-10 flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
                                 <i class="fa-regular fa-folder px-2"></i></i>Package</a>
                         </li>
+                        <li>
+                              <a href="{{ route('data.index') }}"
+                                class="pl-10 flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
+                                <i class="fa-regular fa-hard-drive px-2"></i></i>Data</a>
+                        </li>
                     </ul>
                 </li>
 

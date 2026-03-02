@@ -330,8 +330,8 @@
             // APPROVE
             // ===============================
 
-            $(document).on('click', '#bApprove', function() {
-
+            $(document).on('click', '#bApprove', function(e) {
+                e.preventDefault();
                 let id = $(this).data('id');
 
                 confirmAction({
@@ -348,10 +348,10 @@
                             },
                             success: function() {
                                 table.ajax.reload();
-                                toastr.success('Request berhasil diterima!');
+                                toastr.success('Pengajuan berhasil disetujui & berhasil mengirim email ke user');
                             },
                             error: function() {
-                                toastr.error('Gagal approve!');
+                                toastr.error('Gagal menyetujui atau gagal mengirim email!');
                             }
                         });
 
@@ -442,10 +442,10 @@
                                 $('#rejectModal').addClass('hidden').removeClass(
                                     'flex');
                                 table.ajax.reload();
-                                toastr.success('Request berhasil ditolak!');
+                                toastr.success('Request berhasil ditolak & berhasil mengirim email!');
                             },
                             error: function() {
-                                toastr.error('Gagal reject!');
+                                toastr.error('Gagal reject atau gagal emngirim email!');
                             }
                         });
 
