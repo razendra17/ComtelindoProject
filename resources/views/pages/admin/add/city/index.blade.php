@@ -14,7 +14,7 @@
         </div>
 
         <!-- Form -->
-        <form id="cityForm" action="{{ route('cities.store') }}" method="POST">
+        <form id="cityForm" action="{{ route('city.store') }}" method="POST">
             @csrf
 
             <div class="grid gap-4 mb-4 sm:grid-cols-2">

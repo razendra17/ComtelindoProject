@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/data/datas', 'data')->name('dashboard.data');
             Route::put('/data/{id}/approve','approve');
             Route::put('/data/{id}/reject','reject');
+            Route::delete('/data/{id}','destroy');
         });
         Route::controller(PackageController::class)->prefix('package')->group(function () {
             Route::get('/add/package', 'indexPackage')->name('package.index');
@@ -42,7 +43,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::controller(CityController::class)->prefix('city')->group(function () {
             Route::get('/add/city', 'indexCity')->name('city.index');
-            Route::post('/add/city', 'storeCity')->name('citiy.store');
+            Route::post('/add/city', 'storeCity')->name('city.store');
         });
     });
 });

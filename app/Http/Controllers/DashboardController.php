@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constant;
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Data;
 use App\Models\Package;
 use Illuminate\Http\Request;
@@ -63,28 +64,44 @@ class DashboardController extends Controller
             'dominantReasons'
         ));
     }
-
     public function dataIndex()
     {
+        $cities = City::orderBy('name')->get();
+        $packages = Package::orderBy('name')->get();
+
         return view('pages.admin.data.index', [
-            'rejectionMessages' => Constant::rejectionMessage
+            'rejectionMessages' => Constant::rejectionMessage,
+            'cities' => $cities,
+            'packages' => $packages,
         ]);
     }
 
-    public function data()
+    public function data(Request $request)
     {
         $data = Data::with('package.city');
 
+        // FILTER STATUS
+        if ($request->status) {
+            $data->where('status', $request->status);
+        }
+
+        // FILTER CITY
+        if ($request->city_id) {
+            $data->whereHas('package.city', function ($q) use ($request) {
+                $q->where('id', $request->city_id);
+            });
+        }
+
+        // FILTER PACKAGE
+        if ($request->package_id) {
+            $data->where('package_id', $request->package_id);
+        }
+
         return DataTables::of($data)
             ->addIndexColumn()
-            ->editColumn('status', function ($row) {
-                return '<span class="font-semibold text-gray-700">' . $row->status . '</span>';
-            })
             ->addColumn('action', function ($row) {
-
                 return view('pages.admin.data.button.action', compact('row'))->render();
             })
-            ->rawColumns(['status', 'action'])
             ->make(true);
     }
 
@@ -117,6 +134,19 @@ class DashboardController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Rejection success'
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        DB::transaction(function () use ($id) {
+            $data = Data::findOrFail($id);
+            $data->delete();
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil dihapus'
         ]);
     }
 }
