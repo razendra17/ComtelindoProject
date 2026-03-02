@@ -11,7 +11,7 @@
 
                     <!-- Title -->
                     <div class="flex items-center gap-3">
-                        <span class="text-xl cursor-pointer">←</span>
+                        <span><a href="{{ url()->previous() }}"class="text-xl cursor-pointer">←</a></span>
                         <h1 class="font-semibold text-lg">
                             Atur Lokasi Pemasangan
                         </h1>
@@ -122,7 +122,9 @@
             // INIT MAP
             let lat = {{ $lat }}
             let lng = {{ $long }}
-            var map = L.map('map').setView([lat, lng], 13);
+            var map = L.map('map', {
+        zoomControl: true,     
+    }).setView([lat, lng], 13);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'

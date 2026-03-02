@@ -6,7 +6,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
-use App\Models\City;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,11 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
             Route::get('/', 'index')->name('dashboard.index');
-            Route::get('/data', 'dataIndex')->name('dataAdmin.index');
-            Route::get('/data/datas', 'data')->name('dashboard.data');
-            Route::put('/data/{id}/approve','approve');
-            Route::put('/data/{id}/reject','reject');
-            Route::delete('/data/{id}','destroy');
+            Route::prefix('data')->group(function () {
+                Route::get('/', 'dataIndex')->name('dataAdmin.index');
+                Route::get('/datas', 'data')->name('dashboard.data');
+                Route::put('/{id}/approve', 'approve');
+                Route::put('/{id}/reject', 'reject');
+                Route::delete('/{id}', 'destroy');
+                Route::get('/details/{slug}', 'details')->name('details.index');
+            });
         });
         Route::controller(PackageController::class)->prefix('package')->group(function () {
             Route::get('/add/package', 'indexPackage')->name('package.index');

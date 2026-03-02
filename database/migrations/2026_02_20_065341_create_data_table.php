@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('number');
             $table->string('address');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->string('status')->default(Constant::status['pending']);
             $table->string('rejection')->nullable();
             $table->foreignId('package_id')

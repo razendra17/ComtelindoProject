@@ -7,9 +7,9 @@
 
             <!-- Title -->
             <div class="flex items-center gap-3">
-                <span class="text-xl cursor-pointer">←</span>
+                <span><a href="{{ url()->previous() }}"class="text-xl cursor-pointer">←</a></span>
                 <h1 class="font-semibold text-lg">
-                    Atur Lokasi Pemasangan
+                    Data diri anda
                 </h1>
             </div>
 
@@ -162,11 +162,19 @@
 
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
                     </div>
+                        <input type="hidden" name="latitude" value="{{ $latitude }}">
+                    </div>
+                    </div>
+                        <input type="hidden" name="longitude" value="{{ $longitude }}">
+                    </div>
+
+
 
                     <button type="submit"
                         class="w-full bg-[#DE5727] text-white font-semibold py-2.5 rounded-xl hover:bg-[#c94e1f] transition">
                         Submit
                     </button>
+                    
 
                 </form>
             </div>

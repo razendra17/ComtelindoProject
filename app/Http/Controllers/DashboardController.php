@@ -149,4 +149,15 @@ class DashboardController extends Controller
             'message' => 'Data berhasil dihapus'
         ]);
     }
+    public function details($slug)
+    {
+        $id = explode('-', $slug);
+        $id = end($id);
+
+        $data = Data::with('package.city')->findOrFail($id);
+        $package = $data->package;
+        $city = $package->city;
+
+        return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
+    }
 }

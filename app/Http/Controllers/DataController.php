@@ -51,6 +51,8 @@ class DataController extends Controller
         session([
             'temp.package_id' => $id,
             'temp.address' => $request->address,
+            'temp.latitude' => $request->latitude,
+            'temp.longitude' => $request->longitude,
         ]);
 
         return redirect()->route('personal.index', ['slug' => $slug]);
@@ -64,11 +66,15 @@ class DataController extends Controller
         $package = Package::findOrFail($id);
 
         $address = session('temp.address');
+        $latitude = session('temp.latitude');
+        $longitude = session('temp.longitude');
 
         return view('pages.data.personal.index', [
             'package' => $package,
             'address' => $address,
-            'slug' => $slug
+            'slug' => $slug,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
         ]);
     }
 
@@ -79,6 +85,8 @@ class DataController extends Controller
             'email' => 'required|email',
             'number' => ['required', 'regex:/^(\+62|62|0)[0-9]{9,13}$/'],
             'address' => 'required|string',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'package_id' => 'required|exists:packages,id',
         ], [
             'name.required' => 'Nama wajib diisi',
