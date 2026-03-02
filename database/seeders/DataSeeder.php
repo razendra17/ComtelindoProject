@@ -76,12 +76,5 @@ class DataSeeder extends Seeder
             'device' => 15,
             'city_id' => 4
         ]);
-        Data::create([
-            'name' => 'daffa',
-            'email' => 'daffa@gmail.com',
-            'number' => '081927384123',
-            'address' => 'sepinggna balikpapan rt29 jalan sudirman',
-            'package_id' => $package->id
-        ]);
     }
 }
