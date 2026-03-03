@@ -101,9 +101,17 @@ class DashboardController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                return view('pages.admin.data.button.action', compact('row'))->render();
+
+            ->addColumn('status_badge', function ($row) {
+                return view('pages.admin.data.partials.status-badge', compact('row'))->render();
             })
+
+            ->addColumn('action', function ($row) {
+                return view('pages.admin.data.partials.action', compact('row'))->render();
+            })
+
+            ->rawColumns(['status_badge', 'action'])
+
             ->make(true);
     }
 
@@ -136,20 +144,19 @@ class DashboardController extends Controller
 
             Mail::to($data->email)
                 ->send(new StatusUpdateMail($data, 'rejected'));
-    
+
             // kalau tidak error → email berhasil
             $data->status = Constant::status['rejected'];
             $data->rejection = $validated['reason'];
             $data->save();
-    
+
             return response()->json([
                 'success' => true,
                 'message' => 'Request berhasil di tolak',
                 'emailsent' => 'Berhasil mengirim email'
             ]);
-    
         } catch (\Exception $e) {
-    
+
             return response()->json([
                 'success' => false,
                 'message' => 'Email gagal dikirim',

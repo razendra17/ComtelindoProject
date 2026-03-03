@@ -169,29 +169,10 @@
                         name: 'package.city.name'
                     },
                     {
-                        data: 'status',
+                        data: 'status_badge',
                         name: 'status',
-                        render: function(data) {
-
-                            let badgeClass = '';
-
-                            if (data === 'approved') {
-                                badgeClass = 'bg-green-300 text-green-700';
-                            } else if (data === 'rejected') {
-                                badgeClass = 'bg-red-300 text-red-700';
-                            } else {
-                                badgeClass = 'bg-yellow-300 text-yellow-700';
-                            }
-
-                            let formattedStatus =
-                                data.charAt(0).toUpperCase() + data.slice(1);
-
-                            return `
-                        <span class="px-3 py-1 rounded-full text-sm font-semibold ${badgeClass}">
-                            ${formattedStatus}
-                        </span>
-                    `;
-                        }
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'action',
@@ -221,17 +202,16 @@
             // ===============================
             // ACTIVE FILTER INDICATOR
             // ===============================
-
             function renderActiveFilters() {
 
                 let container = $('#activeFilters');
-                container.html('');
+                container.empty();
 
                 if (selectedStatus) {
                     container.append(`
-            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm flex items-center gap-2">
+            <span class="filter-badge filter-status">
                 Status: ${capitalize(selectedStatus)}
-                <button class="remove-filter font-bold" data-type="status">✕</button>
+                <button class="remove-filter filter-remove" data-type="status">✕</button>
             </span>
         `);
                 }
@@ -240,9 +220,9 @@
                     let cityText = $('.city-option[data-value="' + selectedCity + '"]').text().trim();
 
                     container.append(`
-            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm flex items-center gap-2">
+            <span class="filter-badge filter-city">
                 City: ${cityText}
-                <button class="remove-filter font-bold" data-type="city">✕</button>
+                <button class="remove-filter filter-remove" data-type="city">✕</button>
             </span>
         `);
                 }
@@ -251,9 +231,9 @@
                     let packageText = $('.package-option[data-value="' + selectedPackage + '"]').text().trim();
 
                     container.append(`
-            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm flex items-center gap-2">
+            <span class="filter-badge filter-package">
                 Package: ${packageText}
-                <button class="remove-filter font-bold" data-type="package">✕</button>
+                <button class="remove-filter filter-remove" data-type="package">✕</button>
             </span>
         `);
                 }
@@ -348,10 +328,14 @@
                             },
                             success: function() {
                                 table.ajax.reload();
-                                toastr.success('Pengajuan berhasil disetujui & berhasil mengirim email ke user');
+                                toastr.success(
+                                    'Pengajuan berhasil disetujui & berhasil mengirim email ke user'
+                                );
                             },
                             error: function() {
-                                toastr.error('Gagal menyetujui atau gagal mengirim email!');
+                                toastr.error(
+                                    'Gagal menyetujui atau gagal mengirim email!'
+                                );
                             }
                         });
 
@@ -442,10 +426,13 @@
                                 $('#rejectModal').addClass('hidden').removeClass(
                                     'flex');
                                 table.ajax.reload();
-                                toastr.success('Request berhasil ditolak & berhasil mengirim email!');
+                                toastr.success(
+                                    'Request berhasil ditolak & berhasil mengirim email!'
+                                );
                             },
                             error: function() {
-                                toastr.error('Gagal reject atau gagal emngirim email!');
+                                toastr.error(
+                                    'Gagal reject atau gagal emngirim email!');
                             }
                         });
 
