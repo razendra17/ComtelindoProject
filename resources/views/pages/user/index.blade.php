@@ -25,8 +25,8 @@
     <div id="packageList" class="max-w-5xl w-full mx-auto mt-8 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     </div>
 @endsection
-@include('pages.data.modal.city')
-@include('pages.data.modal.paket')
+@include('pages.user.modal.city')
+@include('pages.user.modal.paket')
 
 @section('script')
     <script>

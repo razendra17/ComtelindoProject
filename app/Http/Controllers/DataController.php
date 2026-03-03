@@ -15,7 +15,7 @@ class DataController extends Controller
     {
         $cities = City::with('packages')->get();
         $user = auth()->user();
-        return view('pages.data.index', compact('cities'));
+        return view('pages.user.index', compact('cities'));
     }
 
 
@@ -28,7 +28,7 @@ class DataController extends Controller
 
             $package = Package::with('city')->findOrFail($id);
             $city = $package->city;
-            return view('pages.data.area.index', [
+            return view('pages.user.area.index', [
                 'package' => $package,
                 'city' => $city->name,
                 'lat' => $city->latitude,
@@ -43,7 +43,7 @@ class DataController extends Controller
     public function filter($cityId)
     {
         $packages = Package::where('city_id', $cityId)->get();
-        return view('pages.data.assets.Package', compact('packages'))->render();
+        return view('pages.user.assets.Package', compact('packages'))->render();
     }
 
 
@@ -80,7 +80,7 @@ class DataController extends Controller
             $latitude = session('temp.latitude');
             $longitude = session('temp.longitude');
 
-            return view('pages.data.personal.index', [
+            return view('pages.user.personal.index', [
                 'package' => $package,
                 'address' => $address,
                 'slug' => $slug,
