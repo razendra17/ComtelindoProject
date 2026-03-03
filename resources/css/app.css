@@ -14,23 +14,56 @@ body {
     color: crimson;
 }
 
-/* Hapus default datatable */
-.dataTables_wrapper .dataTables_paginate,
-.dataTables_wrapper .dataTables_info {
-    display: none;
-}
+.dataTables_wrapper .dataTables_paginate {
+
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding: 1rem;
+  }
+  
+  /* Button */
+  .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #e5e7eb !important;
+    background-color: rgb(236, 139, 20);
+    padding: 0.5rem 1rem !important;
+    margin: 0 .125rem;
+    border-radius: .375rem;
+    cursor: pointer;
+  }
+  /* Hover */
+  .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: rgb(168, 122, 30);
+  }
+  
+  /* Active */
+  .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #b56402 !important;
+    color: white !important;
+  }
+  
+  /* Disabled */
+  .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    opacity: .4 !important;
+    cursor: not-allowed;
+  }
 
 table.dataTable {
     border-collapse: separate !important;
     border-spacing: 0 12px !important;
 }
+table.dataTable thead {
+    border-radius: 14px;
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.56);
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.56);
+}
 
 /* Row capsule */
 table.dataTable tbody tr {
-    background-color: #d1d5db;
+    background-color: #f2f0f000;
     border-radius: 14px;
-    box-shadow: 0 5px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.356)
 }
+
 
 /* Cell styling */
 table.dataTable tbody td {

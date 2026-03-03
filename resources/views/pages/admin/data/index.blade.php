@@ -120,9 +120,7 @@
             </div>
 
         </div>
-
     </div>
-
     </div>
 @endsection
 
@@ -139,6 +137,9 @@
             let table = $('#packageTable').DataTable({
                 processing: true,
                 serverSide: true,
+                paging: true,
+                dom: 'rtp',
+                
                 ajax: {
                     url: "{{ route('dashboard.data') }}",
                     data: function(d) {
@@ -148,9 +149,8 @@
                     }
                 },
                 searching: true,
-                paging: false,
-                dom: 'rtp',
                 info: false,
+
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
@@ -198,7 +198,8 @@
                         orderable: false,
                         searchable: false
                     }
-                ]
+                ],
+                pageLength: 5,
             });
 
             // ===============================
@@ -348,10 +349,14 @@
                             },
                             success: function() {
                                 table.ajax.reload();
-                                toastr.success('Pengajuan berhasil disetujui & berhasil mengirim email ke user');
+                                toastr.success(
+                                    'Pengajuan berhasil disetujui & berhasil mengirim email ke user'
+                                );
                             },
                             error: function() {
-                                toastr.error('Gagal menyetujui atau gagal mengirim email!');
+                                toastr.error(
+                                    'Gagal menyetujui & gagal mengirim email!'
+                                );
                             }
                         });
 
@@ -442,10 +447,13 @@
                                 $('#rejectModal').addClass('hidden').removeClass(
                                     'flex');
                                 table.ajax.reload();
-                                toastr.success('Request berhasil ditolak & berhasil mengirim email!');
+                                toastr.success(
+                                    'Request berhasil ditolak & berhasil mengirim email!'
+                                );
                             },
                             error: function() {
-                                toastr.error('Gagal reject atau gagal emngirim email!');
+                                toastr.error(
+                                    'Gagal reject & gagal emngirim email!');
                             }
                         });
 
