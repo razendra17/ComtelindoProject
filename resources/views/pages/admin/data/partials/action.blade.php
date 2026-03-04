@@ -10,7 +10,7 @@
                            <i class="fa fa-times text-xs"></i>
                        </a>
                    @endif
-                   <a href="{{ route('details.index', $row->name . '-' . $row->id) }}" data-id="{{ $row->id }}"
+                   <a href="{{ route('details.index', $row->customer_id . '-' . $row->id) }}" data-id="{{ $row->id }}"
                        id="bDetails" class="bg-yellow-400 hover:bg-yellow-500 text-white px-2 py-1 rounded-md">
                        <i class="fa fa-eye text-xs"></i>
                    </a>

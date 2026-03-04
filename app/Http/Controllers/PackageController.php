@@ -9,11 +9,14 @@ use Illuminate\Support\Facades\Validator;
 
 class PackageController extends Controller
 {
+    // Page store package
     public function indexPackage()
     {
         $cities = City::with('packages')->get();
         return view('pages.admin.add.package.index', compact('cities'));
     }
+
+    // Store new package
     public function storePackage(Request $request)
     {
         try {

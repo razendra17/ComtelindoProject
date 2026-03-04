@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class DataController extends Controller
 {
-    // HALAMAN UTAMA
+    // Main page, use for user temp package
     public function index()
     {
         $cities = City::with('packages')->get();
@@ -18,7 +18,7 @@ class DataController extends Controller
         return view('pages.user.index', compact('cities'));
     }
 
-
+    // temp user area, get from selected user package
     public function area(Package $package, $slug)
     {
         try {
@@ -40,6 +40,7 @@ class DataController extends Controller
         }
     }
 
+    // filter package by city
     public function filter($cityId)
     {
         $packages = Package::where('city_id', $cityId)->get();
@@ -47,6 +48,7 @@ class DataController extends Controller
     }
 
 
+    // temp user store adress
     public function storeAddress(Request $request, $slug)
     {
         try {
@@ -67,7 +69,8 @@ class DataController extends Controller
         }
     }
 
-    public function personal($slug)
+    // Personal user forms
+    public function personalForms($slug)
     {
         try {
 
@@ -92,7 +95,9 @@ class DataController extends Controller
         }
     }
 
-    public function packageStore(Request $request)
+
+    // store user data
+    public function dataStore(Request $request)
     {
         try {
 

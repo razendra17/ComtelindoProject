@@ -18,6 +18,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class DashboardController extends Controller
 {
+
+    // dashboard index page
     public function index(Request $request)
     {
         try {
@@ -68,6 +70,8 @@ class DashboardController extends Controller
             return $this->errorResponse($e, 'internal server error', 500);
         }
     }
+
+    // dashboard Data pages
     public function dataIndex()
     {
         try {
@@ -85,11 +89,11 @@ class DashboardController extends Controller
         }
     }
 
-    public function data(Request $request)
+    // dashboard data for datatables yajra
+    public function dataTables(Request $request)
     {
         try {
             $data = Data::with('package.city');
-
             // FILTER STATUS
             if ($request->status) {
                 $data->where('status', $request->status);
@@ -145,6 +149,24 @@ class DashboardController extends Controller
             ->make(true);
     }
 
+    // Dashboard data datails
+    public function details($slug)
+    {
+        try {
+            $id = explode('-', $slug);
+            $id = end($id);
+
+            $data = Data::with('package.city')->findOrFail($id);
+            $package = $data->package;
+            $city = $package->city;
+
+            return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
+    }
+
+    // dashboard approval 
     public function approve($id)
     {
         try {
@@ -153,7 +175,6 @@ class DashboardController extends Controller
                 ->send(new StatusUpdateMail($data, 'approved'));
             $data->status = Constant::status['approved']; // atau 'approved'
             $data->save();
-
 
             return response()->json([
                 'success' => true,
@@ -164,6 +185,7 @@ class DashboardController extends Controller
         }
     }
 
+    //dashboard rejection
     public function reject(Request $request, $id)
     {
         try {
@@ -178,7 +200,6 @@ class DashboardController extends Controller
             $data = Data::findOrFail($id);
             Mail::to($data->email)
                 ->send(new StatusUpdateMail($data, 'rejected', $reason));
-            // kalau tidak error → email berhasil
             $data->status = Constant::status['rejected'];
             $data->rejection = $validated['reason'];
             $data->save();
@@ -193,6 +214,7 @@ class DashboardController extends Controller
         }
     }
 
+    //dashboard deletion data
     public function destroy($id)
     {
         try {
@@ -205,21 +227,6 @@ class DashboardController extends Controller
                 'error' => false,
                 'message' => 'Data berhasil dihapus'
             ]);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-    public function details($slug)
-    {
-        try {
-            $id = explode('-', $slug);
-            $id = end($id);
-
-            $data = Data::with('package.city')->findOrFail($id);
-            $package = $data->package;
-            $city = $package->city;
-
-            return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }

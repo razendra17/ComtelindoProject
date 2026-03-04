@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'index')->name('dashboard.index');
             Route::prefix('data')->group(function () {
                 Route::get('/', 'dataIndex')->name('dataAdmin.index');
-                Route::get('/datas', 'data')->name('dashboard.data');
+                Route::get('/datas', 'dataTables')->name('dashboard.data');
                 Route::put('/{id}/approve', 'approve');
                 Route::put('/{id}/reject', 'reject');
                 Route::delete('/{id}', 'destroy');
@@ -54,8 +54,8 @@ Route::controller(DataController::class)->group(function () {
     Route::get('/form', 'form')->name('form.index');
     Route::prefix('data')->group(function () {
         Route::get('/', 'index')->name('data.index');
-        Route::get('/area/{slug}/personal', 'personal')->name('personal.index');
-        Route::post('/area/{slug}/personal', 'packageStore')->name('personal.store');
+        Route::get('/area/{slug}/personal', 'personalForms')->name('personal.index');
+        Route::post('/area/{slug}/personal', 'dataStore')->name('personal.store');
         Route::get('/area/{slug}', 'area')->name('area.index');
         Route::post('/area/{slug}', 'storeAddress')->name('area.store');
         Route::get('/by-city/{city}', 'filter');
