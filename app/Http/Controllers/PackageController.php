@@ -19,7 +19,7 @@ class PackageController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:225',
-            'price' => 'required|int|max:99999999|min:50000',
+            'price' => 'required|int|max:999999|min:50000',
             'speed' => 'required|int|max:9999',
             'device' => 'required|int|max:99',
             'city_id' => 'required|int|exists:cities,id',
@@ -39,7 +39,6 @@ class PackageController extends Controller
             'name.max' => 'Masukan nama yang benar!',
             'price.max' => 'Maximal harga telah di capai!',
             'price.min' => 'Maximal harga adalah Rp50.000!',
-            '*.max' => 'Masukan angka yang benar!',
         ]);
 
         if ($validator->fails()) {
