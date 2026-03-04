@@ -10,13 +10,27 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
+    private function errorResponse(\Exception $e, $message, $code)
+    {
+        return response()->json([
+            'error' => true,
+            'message' => $message,
+            'debug' => $e->getMessage()
+        ], $code);
+    }
     public function home()
     {
-        $user = auth()->user();
-        if ($user) {
-            return redirect()->route('dashboard.index');
-        } else {
-            return redirect()->route('data.index');
+        try {
+
+            $user = auth()->user();
+            if ($user) {
+                return redirect()->route('dashboard.index');
+            } else {
+                return redirect()->route('data.index');
+            }
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
         }
     }
+
 }

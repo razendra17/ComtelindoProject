@@ -15,99 +15,118 @@ class DataController extends Controller
     {
         $cities = City::with('packages')->get();
         $user = auth()->user();
-        return view('pages.data.index', compact('cities'));
+        return view('pages.user.index', compact('cities'));
     }
 
 
     public function area(Package $package, $slug)
     {
-        $id = explode('-', $slug);
-        $id = end($id);
+        try {
 
-        $package = Package::with('city')->findOrFail($id);
-        $city = $package->city;
-        // return response()->json([$city->latitude]);
-        return view('pages.data.area.index', [
-            'package' => $package,
-            'city' => $city->name,
-            'lat' => $city->latitude,
-            'long' => $city->longitude,
-            'slug' => $slug
-        ]);
+            $id = explode('-', $slug);
+            $id = end($id);
+
+            $package = Package::with('city')->findOrFail($id);
+            $city = $package->city;
+            return view('pages.user.area.index', [
+                'package' => $package,
+                'city' => $city->name,
+                'lat' => $city->latitude,
+                'long' => $city->longitude,
+                'slug' => $slug
+            ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
     }
 
     public function filter($cityId)
     {
         $packages = Package::where('city_id', $cityId)->get();
-        return view('pages.data.assets.Package', compact('packages'))->render();
+        return view('pages.user.assets.Package', compact('packages'))->render();
     }
 
 
     public function storeAddress(Request $request, $slug)
     {
-        $id = explode('-', $slug);
-        $id = end($id);
+        try {
 
-        session([
-            'temp.package_id' => $id,
-            'temp.address' => $request->address,
-            'temp.latitude' => $request->latitude,
-            'temp.longitude' => $request->longitude,
-        ]);
+            $id = explode('-', $slug);
+            $id = end($id);
 
-        return redirect()->route('personal.index', ['slug' => $slug]);
+            session([
+                'temp.package_id' => $id,
+                'temp.address' => $request->address,
+                'temp.latitude' => $request->latitude,
+                'temp.longitude' => $request->longitude,
+            ]);
+
+            return redirect()->route('personal.index', ['slug' => $slug]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
     }
 
     public function personal($slug)
     {
-        $id = explode('-', $slug);
-        $id = end($id);
+        try {
 
-        $package = Package::findOrFail($id);
+            $id = explode('-', $slug);
+            $id = end($id);
 
-        $address = session('temp.address');
-        $latitude = session('temp.latitude');
-        $longitude = session('temp.longitude');
+            $package = Package::findOrFail($id);
 
-        return view('pages.data.personal.index', [
-            'package' => $package,
-            'address' => $address,
-            'slug' => $slug,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-        ]);
+            $address = session('temp.address');
+            $latitude = session('temp.latitude');
+            $longitude = session('temp.longitude');
+
+            return view('pages.user.personal.index', [
+                'package' => $package,
+                'address' => $address,
+                'slug' => $slug,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
     }
 
     public function packageStore(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'number' => ['required', 'regex:/^(\+62|62|0)[0-9]{9,13}$/'],
-            'address' => 'required|string',
-            'latitude' => 'required',
-            'longitude' => 'required',
-            'package_id' => 'required|exists:packages,id',
-        ], [
-            'name.required' => 'Nama wajib diisi',
-            'email.required' => 'Email wajib diisi',
-            'email.email' => 'Format email tidak valid',
-            'number.required' => 'Nomor HP wajib diisi',
-            'number.regex' => 'Format nomor HP tidak valid',
-            'address.required' => 'Alamat wajib ada',
-        ]);
+        try {
 
-        if ($validator->fails()) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email',
+                'number' => ['required', 'regex:/^(\+62|62|0)[0-9]{9,13}$/'],
+                'address' => 'required|string',
+                'latitude' => 'required',
+                'longitude' => 'required',
+                'package_id' => 'required|exists:packages,id',
+            ], [
+                'name.required' => 'Nama wajib diisi',
+                'email.required' => 'Email wajib diisi',
+                'email.email' => 'Format email tidak valid',
+                'number.required' => 'Nomor HP wajib diisi',
+                'number.regex' => 'Format nomor HP tidak valid',
+                'address.required' => 'Alamat wajib ada',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            Data::create($validator->validated());
+
             return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
+                'message' => 'Data berhasil dikirim!',
+                'redirect' => route('data.index') // halaman awal
+            ], 200);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
         }
-
-        Data::create($validator->validated());
-
-        return response()->json([
-            'message' => 'Data berhasil dikirim!',
-            'redirect' => route('data.index') // halaman awal
-        ], 200);
     }
 }

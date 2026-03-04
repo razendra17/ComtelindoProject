@@ -120,9 +120,7 @@
             </div>
 
         </div>
-
     </div>
-
     </div>
 @endsection
 
@@ -139,6 +137,9 @@
             let table = $('#packageTable').DataTable({
                 processing: true,
                 serverSide: true,
+                paging: true,
+                dom: 'rtp',
+                
                 ajax: {
                     url: "{{ route('dashboard.data') }}",
                     data: function(d) {
@@ -148,9 +149,8 @@
                     }
                 },
                 searching: true,
-                paging: false,
-                dom: 'rtp',
                 info: false,
+
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
@@ -169,8 +169,7 @@
                         name: 'package.city.name'
                     },
                     {
-                        data: 'status_badge',
-                        name: 'status',
+                        data: 'status',
                         orderable: false,
                         searchable: false
                     },
@@ -179,7 +178,8 @@
                         orderable: false,
                         searchable: false
                     }
-                ]
+                ],
+                pageLength: 5,
             });
 
             // ===============================
@@ -334,7 +334,7 @@
                             },
                             error: function() {
                                 toastr.error(
-                                    'Gagal menyetujui atau gagal mengirim email!'
+                                    'Gagal menyetujui & gagal mengirim email!'
                                 );
                             }
                         });
@@ -432,7 +432,7 @@
                             },
                             error: function() {
                                 toastr.error(
-                                    'Gagal reject atau gagal emngirim email!');
+                                    'Gagal reject & gagal emngirim email!');
                             }
                         });
 

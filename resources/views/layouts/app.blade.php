@@ -47,8 +47,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- datatble --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
     @yield('script')
