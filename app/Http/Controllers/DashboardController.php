@@ -118,6 +118,33 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
+
+        // FILTER CITY
+        if ($request->city_id) {
+            $data->whereHas('package.city', function ($q) use ($request) {
+                $q->where('id', $request->city_id);
+            });
+        }
+
+        // FILTER PACKAGE
+        if ($request->package_id) {
+            $data->where('package_id', $request->package_id);
+        }
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+
+            ->addColumn('status', function ($row) {
+                return view('pages.admin.data.partials.status-badge', compact('row'))->render();
+            })
+
+            ->addColumn('action', function ($row) {
+                return view('pages.admin.data.partials.action', compact('row'))->render();
+            })
+
+            ->rawColumns(['status_badge', 'action'])
+
+            ->make(true);
     }
 
     public function approve($id)
