@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Constant;
-use App\Http\Controllers\Controller;
 use App\Mail\StatusUpdateMail;
 use App\Models\City;
 use App\Models\Data;
@@ -89,7 +88,6 @@ class DashboardController extends Controller
     public function data(Request $request)
     {
         try {
-
             $data = Data::with('package.city');
 
             // FILTER STATUS
@@ -112,7 +110,7 @@ class DashboardController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return view('pages.admin.data.button.action', compact('row'))->render();
+                    return view('pages.admin.data.partials.action', compact('row'))->render();
                 })
                 ->make(true);
         } catch (\Exception $e) {
@@ -176,10 +174,10 @@ class DashboardController extends Controller
                 ]
             ]);
 
+            $reason = $validated['reason'];
             $data = Data::findOrFail($id);
             Mail::to($data->email)
-                ->send(new StatusUpdateMail($data, 'rejected'));
-                
+                ->send(new StatusUpdateMail($data, 'rejected', $reason));
             // kalau tidak error → email berhasil
             $data->status = Constant::status['rejected'];
             $data->rejection = $validated['reason'];

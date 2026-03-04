@@ -17,7 +17,7 @@
                 <!-- Logo -->
                 <tr>
                     <td style="padding-bottom:30px;">
-                        <img src="{{ asset('assets/Logo-Full-Color.png') }}" alt="Logo" width="140">
+                        <img src="{{ $message->embed(public_path('assets/Logo-Full-Color.png')) }}" width="140">
                     </td>
                 </tr>
 
