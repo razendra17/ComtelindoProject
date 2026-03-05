@@ -3,31 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Constant;
+use App\Http\Requests\DashboardDataRequest;
 use App\Models\Data;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-
-
 
 class DashboardController extends Controller
 {
-
-
-
     // dashboard index page
-    public function index(Request $request)
+    public function index(DashboardDataRequest $request)
     {
         try {
             //filter waktu
-            $start = $request->start_date
-                ? Carbon::parse($request->start_date)->startOfDay()
-                : Carbon::now()->subDays(7)->startOfDay();
+            $start = $request->startDate();
+            $end = $request->endDate();
 
-            $end = $request->end_date
-                ? Carbon::parse($request->end_date)->endOfDay()
-                : Carbon::now()->endOfDay();
-            
             $statusCounts = Data::statusSummary();
 
             $alldata  = $statusCounts->sum();
