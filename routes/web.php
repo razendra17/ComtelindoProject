@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(DataController::class)->group(function () {
     Route::get('/form', 'form')->name('form.index');
+    Route::get('/redirect', 'redirect')->name('redirect.index');
     Route::prefix('data')->group(function () {
         Route::get('/', 'index')->name('data.index');
         Route::get('/area/{slug}/personal', 'personal')->name('personal.index');
