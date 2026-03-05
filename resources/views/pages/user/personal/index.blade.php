@@ -202,7 +202,7 @@
 
                                 setTimeout(function() {
                                     window.location.href = response.redirect;
-                                }, 1500); // delay 1.5 detik biar toastr sempat kebaca
+                                }, 1000); // delay 1 detik biar toastr sempat kebaca
                         },
                         error: function(xhr) {
 

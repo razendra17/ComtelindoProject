@@ -183,7 +183,7 @@ class DataController extends Controller
                 'temp.longitude' => $request->longitude,
             ]);
 
-            return redirect()->route('personal.index', ['slug' => $slug]);
+            return redirect()->route('personal.index', compact('slug'));
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -203,7 +203,7 @@ class DataController extends Controller
             $latitude = session('temp.latitude');
             $longitude = session('temp.longitude');
 
-            return view('pages.user.personal.index', compact('latitude', 'longitude', 'package', 'address', 'id'));
+            return view('pages.user.personal.index', compact('latitude', 'longitude', 'package', 'address', 'id', 'slug'));
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -218,7 +218,7 @@ class DataController extends Controller
 
             return response()->json([
                 'message' => 'Data berhasil dikirim!',
-                'redirect' => route('data.index') // halaman awal
+                'redirect' => route('redirect.index') // halaman awal
             ], 200);
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
@@ -242,4 +242,10 @@ class DataController extends Controller
             return $this->errorResponse($e, 'internal server error', 500);
         }
     }
+    public function redirect()
+        {
+          return view('pages.user.redirect');
+
+        }
+    
 }
