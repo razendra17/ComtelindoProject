@@ -27,31 +27,20 @@ class DashboardController extends Controller
             $end = $request->end_date
                 ? Carbon::parse($request->end_date)->endOfDay()
                 : Carbon::now()->endOfDay();
-
-            $statusCounts = Data::select('status', DB::raw('COUNT(*) as total'))
-                ->groupBy('status')
-                ->pluck('total', 'status');
+            
+            $statusCounts = Data::statusSummary();
 
             $alldata  = $statusCounts->sum();
             $approved = $statusCounts[Constant::status['approved']] ?? 0;
             $rejected = $statusCounts[Constant::status['rejected']] ?? 0;
             $pending  = $statusCounts[Constant::status['pending']] ?? 0;
 
-            $chartData = Data::selectRaw('DATE(created_at) as tanggal, COUNT(*) as total')
-                ->whereBetween('created_at', [$start, $end])
-                ->groupBy('tanggal')
-                ->orderBy('tanggal')
-                ->get();
+            $chartData = Data::dashboardData($start, $end);
 
             $labels = $chartData->pluck('tanggal');
             $totals = $chartData->pluck('total');
 
-            $dominantReasons = Data::where('status', Constant::status['rejected'])
-                ->select('rejection', DB::raw('COUNT(*) as total'))
-                ->groupBy('rejection')
-                ->orderByDesc('total')
-                ->limit(3)
-                ->get();
+            $dominantReasons = Data::dominantReason();
 
             return view('pages.admin.dashboard.index', compact(
                 'alldata',

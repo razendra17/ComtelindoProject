@@ -11,8 +11,6 @@ use App\Models\Package;
 use App\Services\StatusService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class DataController extends Controller
@@ -34,7 +32,6 @@ class DataController extends Controller
             $packages = Package::orderBy('name')->get();
             $reason = Constant::rejectionMessage;
             return view('pages.admin.data.index', compact('cities', 'packages', 'reason'));
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -89,7 +86,6 @@ class DataController extends Controller
             $city = $package->city;
 
             return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -172,7 +168,6 @@ class DataController extends Controller
     public function storeAddress(Request $request, $slug)
     {
         try {
-
             $id = explode('-', $slug);
             $id = end($id);
 
@@ -193,7 +188,6 @@ class DataController extends Controller
     public function personalForms($slug)
     {
         try {
-
             $id = explode('-', $slug);
             $id = end($id);
 
@@ -208,7 +202,6 @@ class DataController extends Controller
             return $this->errorResponse($e, 'internal server error', 500);
         }
     }
-
 
     // store user data
     public function dataStore(StoreDataRequest $request)
@@ -229,11 +222,8 @@ class DataController extends Controller
     public function destroy($id)
     {
         try {
-            DB::transaction(function () use ($id) {
-                $data = Data::findOrFail($id);
-                $data->delete();
-            });
-
+            $data = Data::findOrFail($id);
+            $data->delete();
             return response()->json([
                 'error' => false,
                 'message' => 'Data berhasil dihapus'
@@ -243,9 +233,7 @@ class DataController extends Controller
         }
     }
     public function redirect()
-        {
-          return view('pages.user.redirect');
-
-        }
-    
+    {
+        return view('pages.user.redirect');
+    }
 }

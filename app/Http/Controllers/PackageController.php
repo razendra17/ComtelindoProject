@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddPackageRequest;
 use App\Models\City;
 use App\Models\Package;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PackageController extends Controller
 {
@@ -18,7 +16,6 @@ class PackageController extends Controller
     public function storePackage(AddPackageRequest $request)
     {
         try {
-            
             Package::create( $request->validated());
 
             return response()->json([
