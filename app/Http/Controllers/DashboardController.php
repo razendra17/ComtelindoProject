@@ -3,21 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Constant;
-use App\Mail\StatusUpdateMail;
-use App\Models\City;
 use App\Models\Data;
-use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Yajra\DataTables\Facades\DataTables;
+
 
 
 class DashboardController extends Controller
 {
+
+
 
     // dashboard index page
     public function index(Request $request)
@@ -66,167 +62,6 @@ class DashboardController extends Controller
                 'totals',
                 'dominantReasons'
             ));
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-    // dashboard Data pages
-    public function dataIndex()
-    {
-        try {
-
-            $cities = City::orderBy('name')->get();
-            $packages = Package::orderBy('name')->get();
-
-            return view('pages.admin.data.index', [
-                'rejectionMessages' => Constant::rejectionMessage,
-                'cities' => $cities,
-                'packages' => $packages,
-            ]);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-    // dashboard data for datatables yajra
-    public function dataTables(Request $request)
-    {
-        try {
-            $data = Data::with('package.city');
-            // FILTER STATUS
-            if ($request->status) {
-                $data->where('status', $request->status);
-            }
-
-            // FILTER CITY
-            if ($request->city_id) {
-                $data->whereHas('package.city', function ($q) use ($request) {
-                    $q->where('id', $request->city_id);
-                });
-            }
-
-            // FILTER PACKAGE
-            if ($request->package_id) {
-                $data->where('package_id', $request->package_id);
-            }
-
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    return view('pages.admin.data.partials.action', compact('row'))->render();
-                })
-                ->make(true);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-
-        // FILTER CITY
-        if ($request->city_id) {
-            $data->whereHas('package.city', function ($q) use ($request) {
-                $q->where('id', $request->city_id);
-            });
-        }
-
-        // FILTER PACKAGE
-        if ($request->package_id) {
-            $data->where('package_id', $request->package_id);
-        }
-
-        return DataTables::of($data)
-            ->addIndexColumn()
-
-            ->addColumn('status', function ($row) {
-                return view('pages.admin.data.partials.status-badge', compact('row'))->render();
-            })
-
-            ->addColumn('action', function ($row) {
-                return view('pages.admin.data.partials.action', compact('row'))->render();
-            })
-
-            ->rawColumns(['status_badge', 'action'])
-
-            ->make(true);
-    }
-
-    // Dashboard data datails
-    public function details($slug)
-    {
-        try {
-            $id = explode('-', $slug);
-            $id = end($id);
-
-            $data = Data::with('package.city')->findOrFail($id);
-            $package = $data->package;
-            $city = $package->city;
-
-            return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-    // dashboard approval 
-    public function approve($id)
-    {
-        try {
-            $data = Data::findOrFail($id);
-            Mail::to($data->email)
-                ->send(new StatusUpdateMail($data, 'approved'));
-            $data->status = Constant::status['approved']; // atau 'approved'
-            $data->save();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Package approved successfully'
-            ]);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-    //dashboard rejection
-    public function reject(Request $request, $id)
-    {
-        try {
-            $validated = $request->validate([
-                'reason' => [
-                    'required',
-                    Rule::in(array_values(Constant::rejectionMessage))
-                ]
-            ]);
-
-            $reason = $validated['reason'];
-            $data = Data::findOrFail($id);
-            Mail::to($data->email)
-                ->send(new StatusUpdateMail($data, 'rejected', $reason));
-            $data->status = Constant::status['rejected'];
-            $data->rejection = $validated['reason'];
-            $data->save();
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Request berhasil di tolak',
-                'emailsent' => 'Berhasil mengirim email'
-            ]);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-    //dashboard deletion data
-    public function destroy($id)
-    {
-        try {
-            DB::transaction(function () use ($id) {
-                $data = Data::findOrFail($id);
-                $data->delete();
-            });
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Data berhasil dihapus'
-            ]);
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }

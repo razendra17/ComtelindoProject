@@ -170,7 +170,6 @@
                     },
                     {
                         data: 'status',
-                        name: 'status',
                         orderable: false,
                         searchable: false
                     },
@@ -322,7 +321,7 @@
                     onConfirm: function() {
 
                         $.ajax({
-                            url: `/dashboard/data/${id}/approve`,
+                            url: `/admin/data/${id}/approve`,
                             type: "PUT",
                             headers: {
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -360,7 +359,7 @@
                     onConfirm: function() {
 
                         $.ajax({
-                            url: `/dashboard/data/${id}`,
+                            url: `/admin/data/${id}`,
                             type: "DELETE",
                             headers: {
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -415,7 +414,7 @@
                     onConfirm: function() {
 
                         $.ajax({
-                            url: `/dashboard/data/${id}/reject`,
+                            url: `/admin/data/${id}/reject`,
                             type: "PUT",
                             data: {
                                 reason: reason

@@ -2,16 +2,136 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant;
+use App\Http\Requests\RejectDataRequest;
+use App\Http\Requests\StoreDataRequest;
 use App\Models\City;
 use App\Models\Data;
 use App\Models\Package;
+use App\Services\StatusService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Yajra\DataTables\Facades\DataTables;
 
 class DataController extends Controller
 {
-    // Main page, use for user temp package
+
+    protected $statusService;
+
+    public function __construct(StatusService $statusService)
+    {
+        $this->statusService = $statusService;
+    }
+
+    // Data pages        
     public function index()
+    {
+        try {
+
+            $cities = City::orderBy('name')->get();
+            $packages = Package::orderBy('name')->get();
+            $reason = Constant::rejectionMessage;
+            return view('pages.admin.data.index', compact('cities', 'packages', 'reason'));
+
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
+    }
+
+    // data for datatables yajra
+    public function indexTables(Request $request)
+    {
+        try {
+            $data = Data::with('package.city');
+            // FILTER STATUS
+            if ($request->status) {
+                $data->where('status', $request->status);
+            }
+
+            // FILTER CITY
+            if ($request->city_id) {
+                $data->whereHas('package.city', function ($q) use ($request) {
+                    $q->where('id', $request->city_id);
+                });
+            }
+
+            // FILTER PACKAGE
+            if ($request->package_id) {
+                $data->where('package_id', $request->package_id);
+            }
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('status', function ($row) {
+                    return view('pages.admin.data.partials.status-badge', compact('row'))->render();
+                })
+                ->addColumn('action', function ($row) {
+                    return view('pages.admin.data.partials.action', compact('row'))->render();
+                })
+                ->rawColumns(['status', 'action'])
+                ->make(true);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
+    }
+
+    // data datails
+    public function details($slug)
+    {
+        try {
+            $id = explode('-', $slug);
+            $id = end($id);
+
+            $data = Data::with('package.city')->findOrFail($id);
+            $package = $data->package;
+            $city = $package->city;
+
+            return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
+
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
+    }
+
+
+    // dashboard approval 
+    public function approve($id)
+    {
+        try {
+            $data = Data::findOrFail($id);
+            $this->statusService->approve($data);
+            return response()->json([
+                'success' => true,
+                'message' => 'Package approved successfully'
+            ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
+    }
+
+    //dashboard rejection
+    public function reject(RejectDataRequest $request, $id)
+    {
+        try {
+            $reason = $request->validated()['reason'];
+            $data = Data::findOrFail($id);
+
+            $this->statusService->reject($data, $reason);
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Request berhasil di tolak',
+            ]);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
+    }
+
+
+    // Main page, use for user temp package
+    public function userIndex()
     {
         $cities = City::with('packages')->get();
         $user = auth()->user();
@@ -83,13 +203,7 @@ class DataController extends Controller
             $latitude = session('temp.latitude');
             $longitude = session('temp.longitude');
 
-            return view('pages.user.personal.index', [
-                'package' => $package,
-                'address' => $address,
-                'slug' => $slug,
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-            ]);
+            return view('pages.user.personal.index', compact('latitude', 'longitude', 'package', 'address', 'id'));
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -97,39 +211,33 @@ class DataController extends Controller
 
 
     // store user data
-    public function dataStore(Request $request)
+    public function dataStore(StoreDataRequest $request)
     {
         try {
-
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|email',
-                'number' => ['required', 'regex:/^(\+62|62|0)[0-9]{9,13}$/'],
-                'address' => 'required|string',
-                'latitude' => 'required',
-                'longitude' => 'required',
-                'package_id' => 'required|exists:packages,id',
-            ], [
-                'name.required' => 'Nama wajib diisi',
-                'email.required' => 'Email wajib diisi',
-                'email.email' => 'Format email tidak valid',
-                'number.required' => 'Nomor HP wajib diisi',
-                'number.regex' => 'Format nomor HP tidak valid',
-                'address.required' => 'Alamat wajib ada',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            Data::create($validator->validated());
+            Data::create($request->validated());
 
             return response()->json([
                 'message' => 'Data berhasil dikirim!',
                 'redirect' => route('data.index') // halaman awal
             ], 200);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e, 'internal server error', 500);
+        }
+    }
+
+    //dashboard deletion data
+    public function destroy($id)
+    {
+        try {
+            DB::transaction(function () use ($id) {
+                $data = Data::findOrFail($id);
+                $data->delete();
+            });
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Data berhasil dihapus'
+            ]);
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }

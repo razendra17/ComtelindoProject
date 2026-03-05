@@ -31,7 +31,6 @@ class Controller extends BaseController
     public function home()
     {
         try {
-
             $user = auth()->user();
             if ($user) {
                 return redirect()->route('dashboard.index');

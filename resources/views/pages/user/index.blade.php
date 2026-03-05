@@ -59,7 +59,7 @@
                 }
 
                 $.ajax({
-                    url: '/data/by-city/' + cityId,
+                    url: '/user/by-city/' + cityId,
                     type: 'GET',
                     success: function(response) {
 
@@ -90,8 +90,7 @@
                 );
 
                 const slug = pkg.name.replace(/\s+/g, '-').toLowerCase();
-                document.getElementById('choose-package').href =
-                    `/data/area/${slug}-${pkg.id}`;
+                document.getElementById('choose-package').href = `/user/area/${slug}-${pkg.id}`;
 
                 $('#packageModal').removeClass('hidden');
             });

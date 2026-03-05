@@ -17,7 +17,7 @@
         
                 <option value="">Select rejection message</option>
         
-                @foreach($rejectionMessages as $key => $message)
+                @foreach($reason as $key => $message)
                     <option value="{{ $message }}">{{ $message }}</option>
                 @endforeach
         
