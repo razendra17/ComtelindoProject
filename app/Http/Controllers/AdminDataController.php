@@ -64,8 +64,7 @@ class AdminDataController extends Controller
     public function details($slug)
     {
         try {
-            $id = explode('-', $slug);
-            $id = end($id);
+            $id = $this->getIdFromSlug($slug);
 
             $data = Data::with('package.city')->findOrFail($id);
             $package = $data->package;

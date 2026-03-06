@@ -21,15 +21,13 @@ class DataController extends Controller
         $cities = City::with('packages')->get();
         $user = auth()->user();
         return view('pages.user.index', compact('cities'));
-
     }
 
     // temp user area, get from selected user package
-    public function area(Package $package, $slug)
+    public function area($slug)
     {
         try {
-            $id = explode('-', $slug);
-            $id = end($id);
+            $id = $this->getIdFromSlug($slug);
 
             $package = Package::with('city')->findOrFail($id);
             $city = $package->city;
@@ -40,7 +38,6 @@ class DataController extends Controller
                 'long' => $city->longitude,
                 'slug' => $slug
             ]);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -51,15 +48,13 @@ class DataController extends Controller
     {
         $packages = Package::where('city_id', $cityId)->get();
         return view('pages.user.assets.Package', compact('packages'))->render();
-        
     }
 
     // temp user store adress
     public function storeAddress(Request $request, $slug)
     {
         try {
-            $id = explode('-', $slug);
-            $id = end($id);
+            $id = $this->getIdFromSlug($slug);
 
             session([
                 'temp.package_id' => $id,
@@ -68,7 +63,7 @@ class DataController extends Controller
                 'temp.longitude' => $request->longitude,
             ]);
 
-            return redirect()->route('personal.index', compact('slug'));
+            return redirect()->route('personal.index', ['slug'=>$slug]);
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -78,8 +73,7 @@ class DataController extends Controller
     public function personalForms($slug)
     {
         try {
-            $id = explode('-', $slug);
-            $id = end($id);
+            $id = $this->getIdFromSlug($slug);
 
             $package = Package::findOrFail($id);
 
@@ -103,7 +97,6 @@ class DataController extends Controller
                 'message' => 'Data berhasil dikirim!',
                 'redirect' => route('redirect.index') // halaman awal
             ], 200);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -112,6 +105,5 @@ class DataController extends Controller
     public function redirect()
     {
         return view('pages.user.redirect');
-
     }
 }

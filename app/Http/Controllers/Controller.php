@@ -20,15 +20,14 @@ class Controller extends BaseController
             'user_id' => auth()->id(),
             'url' => request()->fullUrl(),
             'method' => request()->method(),
-            
+
         ]);
-        
+
         return response()->json([
             'error' => true,
             'message' => $message,
             'debug' => $e->getMessage()
         ], $code);
-
     }
     public function home()
     {
@@ -43,4 +42,8 @@ class Controller extends BaseController
         }
     }
 
+    private function getIdFromSlug($slug)
+    {
+        return (int) last(explode('-', $slug));
+    }
 }
