@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddCityRequest;
 use App\Models\City;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class CityController extends Controller
 {
@@ -24,6 +21,7 @@ class CityController extends Controller
                 'message' => 'City berhasil dikirim!',
                 'redirect' => route('city.index') // halaman awal
             ], 200);
+
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }

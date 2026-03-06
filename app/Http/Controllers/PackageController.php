@@ -12,6 +12,7 @@ class PackageController extends Controller
     {
         $cities = City::with('packages')->get();
         return view('pages.admin.add.package.index', compact('cities'));
+        
     }
     public function storePackage(AddPackageRequest $request)
     {
@@ -22,6 +23,7 @@ class PackageController extends Controller
                 'message' => 'Data berhasil dikirim!',
                 'redirect' => route('package.index'),
             ], 200);
+
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }

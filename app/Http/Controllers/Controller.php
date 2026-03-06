@@ -20,6 +20,7 @@ class Controller extends BaseController
             'user_id' => auth()->id(),
             'url' => request()->fullUrl(),
             'method' => request()->method(),
+            
         ]);
         
         return response()->json([
@@ -27,6 +28,7 @@ class Controller extends BaseController
             'message' => $message,
             'debug' => $e->getMessage()
         ], $code);
+
     }
     public function home()
     {

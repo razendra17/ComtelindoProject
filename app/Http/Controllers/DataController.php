@@ -15,130 +15,19 @@ use Yajra\DataTables\Facades\DataTables;
 
 class DataController extends Controller
 {
-
-    protected $statusService;
-
-    public function __construct(StatusService $statusService)
-    {
-        $this->statusService = $statusService;
-    }
-
-    // Data pages        
-    public function index()
-    {
-        try {
-
-            $cities = City::orderBy('name')->get();
-            $packages = Package::orderBy('name')->get();
-            $reason = Constant::rejectionMessage;
-            return view('pages.admin.data.index', compact('cities', 'packages', 'reason'));
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-    // data for datatables yajra
-    public function indexTables(Request $request)
-    {
-        try {
-            $data = Data::with('package.city');
-            // FILTER STATUS
-            if ($request->status) {
-                $data->where('status', $request->status);
-            }
-
-            // FILTER CITY
-            if ($request->city_id) {
-                $data->whereHas('package.city', function ($q) use ($request) {
-                    $q->where('id', $request->city_id);
-                });
-            }
-
-            // FILTER PACKAGE
-            if ($request->package_id) {
-                $data->where('package_id', $request->package_id);
-            }
-
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('status', function ($row) {
-                    return view('pages.admin.data.partials.status-badge', compact('row'))->render();
-                })
-                ->addColumn('action', function ($row) {
-                    return view('pages.admin.data.partials.action', compact('row'))->render();
-                })
-                ->rawColumns(['status', 'action'])
-                ->make(true);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-    // data datails
-    public function details($slug)
-    {
-        try {
-            $id = explode('-', $slug);
-            $id = end($id);
-
-            $data = Data::with('package.city')->findOrFail($id);
-            $package = $data->package;
-            $city = $package->city;
-
-            return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-
-    // dashboard approval 
-    public function approve($id)
-    {
-        try {
-            $data = Data::findOrFail($id);
-            $this->statusService->approve($data);
-            return response()->json([
-                'success' => true,
-                'message' => 'Package approved successfully'
-            ]);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-    //dashboard rejection
-    public function reject(RejectDataRequest $request, $id)
-    {
-        try {
-            $reason = $request->validated()['reason'];
-            $data = Data::findOrFail($id);
-
-            $this->statusService->reject($data, $reason);
-
-            return response()->json([
-                'error' => false,
-                'message' => 'Request berhasil di tolak',
-            ]);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
-
-
     // Main page, use for user temp package
     public function userIndex()
     {
         $cities = City::with('packages')->get();
         $user = auth()->user();
         return view('pages.user.index', compact('cities'));
+
     }
 
     // temp user area, get from selected user package
     public function area(Package $package, $slug)
     {
         try {
-
             $id = explode('-', $slug);
             $id = end($id);
 
@@ -151,6 +40,7 @@ class DataController extends Controller
                 'long' => $city->longitude,
                 'slug' => $slug
             ]);
+
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -161,8 +51,8 @@ class DataController extends Controller
     {
         $packages = Package::where('city_id', $cityId)->get();
         return view('pages.user.assets.Package', compact('packages'))->render();
+        
     }
-
 
     // temp user store adress
     public function storeAddress(Request $request, $slug)
@@ -213,27 +103,15 @@ class DataController extends Controller
                 'message' => 'Data berhasil dikirim!',
                 'redirect' => route('redirect.index') // halaman awal
             ], 200);
+
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
     }
 
-    //dashboard deletion data
-    public function destroy($id)
-    {
-        try {
-            $data = Data::findOrFail($id);
-            $data->delete();
-            return response()->json([
-                'error' => false,
-                'message' => 'Data berhasil dihapus'
-            ]);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, 'internal server error', 500);
-        }
-    }
     public function redirect()
     {
         return view('pages.user.redirect');
+
     }
 }

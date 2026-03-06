@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDataController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
@@ -39,7 +40,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('/add', 'indexCity')->name('city.index');
         Route::post('/add', 'storeCity')->name('city.store');
     });
-    Route::controller(DataController::class)->prefix('data')->group(function () {
+    Route::controller(AdminDataController::class)->prefix('data')->group(function () {
         Route::get('/', 'index')->name('dataadmin.index');
         Route::get('/datas', 'indexTables')->name('dashboard.data');
         Route::put('/{id}/approve', 'approve');

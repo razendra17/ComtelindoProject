@@ -62,4 +62,5 @@ class Data extends Model
             ->limit(3)
             ->get();
     }
+    
 }

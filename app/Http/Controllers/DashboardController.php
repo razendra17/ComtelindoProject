@@ -40,8 +40,10 @@ class DashboardController extends Controller
                 'totals',
                 'dominantReasons'
             ));
+
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
+            
         }
     }
 }
