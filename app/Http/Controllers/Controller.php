@@ -42,7 +42,7 @@ class Controller extends BaseController
         }
     }
 
-    private function getIdFromSlug($slug)
+    public function getIdFromSlug($slug)
     {
         return (int) last(explode('-', $slug));
     }
