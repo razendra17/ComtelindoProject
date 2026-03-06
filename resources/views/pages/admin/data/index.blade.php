@@ -139,7 +139,7 @@
                 serverSide: true,
                 paging: true,
                 dom: 'rtp',
-                
+
                 ajax: {
                     url: "{{ route('dashboard.data') }}",
                     data: function(d) {
@@ -250,7 +250,7 @@
             $(document).on('click', '.status-option', function() {
 
                 selectedStatus = $(this).data('value');
-                table.ajax.reload();
+                table.ajax.reload(null, false);
                 renderActiveFilters();
 
                 $('.filter-dropdown').addClass('hidden');
@@ -263,7 +263,7 @@
             $(document).on('click', '.city-option', function() {
 
                 selectedCity = $(this).data('value');
-                table.ajax.reload();
+                table.ajax.reload(null, false);
                 renderActiveFilters();
 
                 $('.filter-dropdown').addClass('hidden');
@@ -276,7 +276,7 @@
             $(document).on('click', '.package-option', function() {
 
                 selectedPackage = $(this).data('value');
-                table.ajax.reload();
+                table.ajax.reload(null, false);
                 renderActiveFilters();
 
                 $('.filter-dropdown').addClass('hidden');
@@ -294,7 +294,7 @@
                 if (type === 'city') selectedCity = '';
                 if (type === 'package') selectedPackage = '';
 
-                table.ajax.reload();
+                table.ajax.reload(null, false);
                 renderActiveFilters();
             });
 
@@ -320,6 +320,13 @@
                     confirmText: 'Ya, approve!',
                     onConfirm: function() {
 
+                        // toastr loading dulu
+                        let loadingToast = toastr.info('Sedang mengirim email...',
+                            'Processing', {
+                                timeOut: 0,
+                                extendedTimeOut: 0
+                            });
+
                         $.ajax({
                             url: `/admin/data/${id}/approve`,
                             type: "PUT",
@@ -327,15 +334,21 @@
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
                             },
                             success: function() {
-                                table.ajax.reload();
+
+                                table.ajax.reload(null, false);
+
+                                toastr.clear(loadingToast); // hapus loading
+
                                 toastr.success(
-                                    'Pengajuan berhasil disetujui & berhasil mengirim email ke user'
+                                    'Pengajuan berhasil disetujui & email berhasil dikirim!'
                                 );
                             },
                             error: function() {
+
+                                toastr.clear(loadingToast);
+
                                 toastr.error(
-                                    'Gagal menyetujui & gagal mengirim email!'
-                                );
+                                    'Gagal menyetujui & gagal mengirim email!');
                             }
                         });
 
@@ -365,7 +378,7 @@
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
                             },
                             success: function() {
-                                table.ajax.reload();
+                                table.ajax.reload(null, false);
                                 toastr.success('Data berhasil dihapus!');
                             },
                             error: function() {
@@ -413,6 +426,15 @@
                     confirmText: 'Ya, reject!',
                     onConfirm: function() {
 
+                        let loadingToast = toastr.info('Sedang mengirim email...',
+                            'Processing', {
+                                timeOut: 0,
+                                extendedTimeOut: 0
+                            });
+
+                        $('#rejectModal').addClass('hidden').removeClass(
+                            'flex');
+
                         $.ajax({
                             url: `/admin/data/${id}/reject`,
                             type: "PUT",
@@ -423,19 +445,24 @@
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
                             },
                             success: function() {
-                                $('#rejectModal').addClass('hidden').removeClass(
-                                    'flex');
-                                table.ajax.reload();
+
+
+                                table.ajax.reload(null, false);
+
+                                toastr.clear(loadingToast);
+
                                 toastr.success(
-                                    'Request berhasil ditolak & berhasil mengirim email!'
+                                    'Request berhasil ditolak & email berhasil dikirim!'
                                 );
                             },
                             error: function() {
+
+                                toastr.clear(loadingToast);
+
                                 toastr.error(
-                                    'Gagal reject & gagal emngirim email!');
+                                    'Gagal reject & gagal mengirim email!');
                             }
                         });
-
                     }
                 });
 
