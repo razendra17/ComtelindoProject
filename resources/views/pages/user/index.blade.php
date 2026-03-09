@@ -34,8 +34,6 @@
 
             let citySelected = false; // default belum pilih kota
 
-            // Saat pertama kali load → modal paksa muncul
-            $('#city-modal').removeClass('hidden');
 
             // Tombol buka modal manual
             $('#city-open-modal').on('click', function() {

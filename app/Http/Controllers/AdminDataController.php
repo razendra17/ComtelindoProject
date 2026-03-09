@@ -42,7 +42,18 @@ class AdminDataController extends Controller
     public function indexTables(DatatablesRequest $request)
     {
         try {
-            $data = $request->getFilter(Data::with('package.city'));
+
+            $data = $request->getFilter(
+                Data::with('package.city')
+                    ->orderByRaw("
+                    CASE 
+                        WHEN status = 'pending' THEN 1
+                        WHEN status = 'approved' THEN 2
+                        WHEN status = 'rejected' THEN 3
+                    END
+                ")
+                    ->orderBy('created_at', 'desc')
+            );
 
             return DataTables::of($data)
                 ->addIndexColumn()
