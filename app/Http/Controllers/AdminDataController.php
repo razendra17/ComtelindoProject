@@ -32,7 +32,6 @@ class AdminDataController extends Controller
             $reason = Constant::rejectionMessage;
 
             return view('pages.admin.data.index', compact('cities', 'packages', 'reason'));
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -42,7 +41,18 @@ class AdminDataController extends Controller
     public function indexTables(DatatablesRequest $request)
     {
         try {
-            $data = $request->getFilter(Data::with('package.city'));
+
+            $data = $request->getFilter(
+                Data::with('package.city')
+                    ->orderByRaw("
+                    CASE 
+                        WHEN status = 'pending' THEN 1
+                        WHEN status = 'approved' THEN 2
+                        WHEN status = 'rejected' THEN 3
+                    END
+                ")
+                    ->orderBy('created_at', 'desc')
+            );
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -54,7 +64,6 @@ class AdminDataController extends Controller
                 })
                 ->rawColumns(['status', 'action'])
                 ->make(true);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -71,7 +80,6 @@ class AdminDataController extends Controller
             $city = $package->city;
 
             return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -89,7 +97,6 @@ class AdminDataController extends Controller
                 'success' => true,
                 'message' => 'Package approved successfully'
             ]);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -108,7 +115,6 @@ class AdminDataController extends Controller
                 'error' => false,
                 'message' => 'Request berhasil di tolak',
             ]);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -124,7 +130,6 @@ class AdminDataController extends Controller
                 'error' => false,
                 'message' => 'Data berhasil dihapus'
             ]);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
