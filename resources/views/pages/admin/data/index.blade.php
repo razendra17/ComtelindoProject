@@ -107,10 +107,10 @@
                     <thead>
                         <tr class="bg-gray-300 text-gray-700">
                             <th class="px-5 py-3 text-left rounded-l-xl">No</th>
-                            <th class="px-5 py-3 text-left">Costumer id</th>
                             <th class="px-5 py-3 text-left">Package name</th>
                             <th class="px-5 py-3 text-left">City</th>
                             <th class="px-5 py-3 text-left">Status</th>
+                            <th class="px-5 py-3 text-left">Created</th>
                             <th class="px-5 py-3 text-left rounded-r-xl">Action</th>
                         </tr>
                     </thead>
@@ -157,10 +157,6 @@
                         searchable: false
                     },
                     {
-                        data: 'customer_id',
-                        name: 'customer_id'
-                    },
-                    {
                         data: 'package.name',
                         name: 'package.name'
                     },
@@ -170,7 +166,11 @@
                     },
                     {
                         data: 'status',
-                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'created',
+                        name: 'created_at',
                         searchable: false
                     },
                     {

@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Models\Data;
 use App\Models\Package;
 use App\Services\StatusService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -32,7 +33,6 @@ class AdminDataController extends Controller
             $reason = Constant::rejectionMessage;
 
             return view('pages.admin.data.index', compact('cities', 'packages', 'reason'));
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -49,12 +49,14 @@ class AdminDataController extends Controller
                 ->addColumn('status', function ($row) {
                     return view('pages.admin.data.partials.status-badge', compact('row'))->render();
                 })
+                ->addColumn('created', function ($row) {
+                    return Carbon::parse($row->created_at)->shortAbsoluteDiffForHumans();
+                })
                 ->addColumn('action', function ($row) {
                     return view('pages.admin.data.partials.action', compact('row'))->render();
                 })
                 ->rawColumns(['status', 'action'])
                 ->make(true);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -71,7 +73,6 @@ class AdminDataController extends Controller
             $city = $package->city;
 
             return view('pages.admin.data.details.index', compact('slug', 'data', 'package', 'city'));
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -89,7 +90,6 @@ class AdminDataController extends Controller
                 'success' => true,
                 'message' => 'Package approved successfully'
             ]);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -108,7 +108,6 @@ class AdminDataController extends Controller
                 'error' => false,
                 'message' => 'Request berhasil di tolak',
             ]);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -124,7 +123,6 @@ class AdminDataController extends Controller
                 'error' => false,
                 'message' => 'Data berhasil dihapus'
             ]);
-
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
