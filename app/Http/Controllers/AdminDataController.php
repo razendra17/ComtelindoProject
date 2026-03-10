@@ -44,7 +44,7 @@ class AdminDataController extends Controller
         try {
 
             $data = $request->getFilter(
-                Data::with('package.city')->orderStatus()->latest()
+                Data::with('package.city')->latest()
                 );
 
             return DataTables::of($data)
