@@ -22,6 +22,7 @@ class StoreDataRequest extends FormRequest
             'latitude' => 'required',
             'longitude' => 'required',
             'package_id' => 'required|exists:packages,id',
+            'address_detail' => 'nullable|string|max:255',
         ];
     }
 

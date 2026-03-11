@@ -94,7 +94,13 @@ class DataController extends Controller
 
             $data = $request->validated();
 
-            $data['number'] = '+62' . ltrim($data['number'], '0');
+            // gabungin alamat utama + alamat detail
+            if ($request->address_detail) {
+                $data['address'] = $data['address'] . ', ' . $request->address_detail;
+            }
+
+            // format nomor hp
+            $data['number'] = '62' . ltrim($data['number'], '0');
 
             Data::create($data);
 
