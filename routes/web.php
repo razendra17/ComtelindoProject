@@ -52,7 +52,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 // Users routes
 Route::controller(DataController::class)->prefix('user')->group(function () {
-    Route::get('/redirect', 'redirect')->name('redirect.index');
     Route::get('/data', 'userIndex')->name('data.index');
     Route::get('/area/{slug}/personal', 'personalForms')->name('personal.index');
     Route::post('/area/{slug}/personal', 'dataStore')->name('personal.store');

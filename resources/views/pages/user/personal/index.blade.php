@@ -1,3 +1,4 @@
+@include('pages.user.modal.thanks')
 @extends('layouts.app')
 
 @section('content')
@@ -200,7 +201,7 @@
         $(document).ready(function() {
 
             $('#personalForm').on('submit', function(e) {
-                e.preventDefault(); // CEGAH RELOAD
+                e.preventDefault(); // CEGAH RELOAD PAGE
 
                 let form = $(this);
 
@@ -208,27 +209,38 @@
                     url: form.attr('action'),
                     type: "POST",
                     data: form.serialize(),
+
                     success: function(response) {
 
+                        // notifikasi sukses
                         toastr.success(response.message);
 
+                        // tampilkan popup setelah sebentar
                         setTimeout(function() {
-                            window.location.href = response.redirect;
-                        }, 1000); // delay 1 detik biar toastr sempat kebaca
+                            $('#successModal')
+                                .removeClass('hidden')
+                                .addClass('flex');
+                        }, 700);
+
                     },
+
                     error: function(xhr) {
 
                         if (xhr.status === 422) {
 
                             let errors = xhr.responseJSON.errors;
 
-                            // ambil error pertama saja
+                            // ambil error pertama
                             let firstError = Object.values(errors)[0][0];
 
                             toastr.error(firstError);
+
                         } else {
+
                             toastr.error("Terjadi kesalahan server");
+
                         }
+
                     }
                 });
 
