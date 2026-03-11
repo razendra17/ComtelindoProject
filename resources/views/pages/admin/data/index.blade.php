@@ -110,7 +110,7 @@
                             <th class="px-5 py-3 text-left">Package name</th>
                             <th class="px-5 py-3 text-left">City</th>
                             <th class="px-5 py-3 text-left">Status</th>
-                            <th class="px-5 py-3 text-left">Created</th>
+                            <th class="px-5 py-3 text-left">Submitted At</th>
                             <th class="px-5 py-3 text-left rounded-r-xl">Action</th>
                         </tr>
                     </thead>
@@ -172,7 +172,7 @@
                         orderable: false,
                     },
                     {
-                        data: 'created',
+                        data: 'submitted_at',
                         name: 'created_at',
                         orderable: false,
                     },

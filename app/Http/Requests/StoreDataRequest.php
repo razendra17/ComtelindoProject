@@ -17,7 +17,7 @@ class StoreDataRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'number' => ['required', 'regex:/^(\+62|62|0)[0-9]{9,13}$/'],
+            'number' => 'required|digits_between:9,13',
             'address' => 'required|string',
             'latitude' => 'required',
             'longitude' => 'required',

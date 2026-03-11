@@ -63,7 +63,7 @@ class DataController extends Controller
                 'temp.longitude' => $request->longitude,
             ]);
 
-            return redirect()->route('personal.index', ['slug'=>$slug]);
+            return redirect()->route('personal.index', ['slug' => $slug]);
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
@@ -91,11 +91,16 @@ class DataController extends Controller
     public function dataStore(StoreDataRequest $request)
     {
         try {
-            Data::create($request->validated());
+
+            $data = $request->validated();
+
+            $data['number'] = '+62' . ltrim($data['number'], '0');
+
+            Data::create($data);
 
             return response()->json([
                 'message' => 'Data berhasil dikirim!',
-                'redirect' => route('redirect.index') // halaman awal
+                'redirect' => route('redirect.index')
             ], 200);
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);

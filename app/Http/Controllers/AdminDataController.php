@@ -52,8 +52,8 @@ class AdminDataController extends Controller
                 ->addColumn('status', function ($row) {
                     return view('pages.admin.data.partials.status-badge', compact('row'))->render();
                 })
-                ->addColumn('created', function ($row) {
-                    return Carbon::parse($row->created_at)->shortAbsoluteDiffForHumans();
+                ->addColumn('submitted_at', function ($row) {
+                    return Carbon::parse($row->created_at)->format('y-m-d');
                 })
                 ->addColumn('action', function ($row) {
                     return view('pages.admin.data.partials.action', compact('row'))->render();

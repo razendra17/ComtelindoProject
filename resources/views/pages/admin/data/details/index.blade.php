@@ -6,7 +6,7 @@
     {{-- Title --}}
     <div class="flex justify-center mb-10">
         <div class="bg-gray-300 text-gray-600 font-semibold px-10 py-2 rounded-full shadow-sm">
-            Details of {{ $data->customer_id }} submission
+            Details of {{ $data->customer_id }} Submission
         </div>
     </div>
 
@@ -19,7 +19,7 @@
 
             <div class=" absolute inset-0 flex items-center justify-center pointer-events-none">
                 <span class="text-gray-600 font-medium">
-                    map from city and adress
+                    Map from City and Adress
                 </span>
             </div>
         </div>
@@ -28,16 +28,16 @@
         <div class="bg-gray-300 rounded-2xl p-6 shadow">
 
             <div class="space-y-2 text-gray-700 text-sm">
-                <p><span class="font-semibold">customer id:</span> {{ $data->customer_id }}</p>
-                <p><span class="font-semibold">name:</span> {{ $data->name }}</p>
-                <p><span class="font-semibold">package:</span> {{ $package->name }}</p>
-                <p><span class="font-semibold">city:</span> {{ $city->name }}</p>
-                <p><span class="font-semibold">address:</span> {{ $data->address }}</p>
+                <p><span class="font-semibold">Customer ID:</span> {{ $data->customer_id }}</p>
+                <p><span class="font-semibold">Name:</span> {{ $data->name }}</p>
+                <p><span class="font-semibold">Package:</span> {{ $package->name }}</p>
+                <p><span class="font-semibold">City:</span> {{ $city->name }}</p>
+                <p><span class="font-semibold">Adress:</span> {{ $data->address }}</p>
 
                 <div class="pt-4">
                     <p class="font-semibold">Contact</p>
-                    <p>phone number: {{ $data->number }}</p>
-                    <p>email: {{ $data->email }}</p>
+                    <p>Phone Number: {{ $data->number }}</p>
+                    <p>Email: {{ $data->email }}</p>
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                   text-gray-600 text-sm font-medium
                   px-8 py-2 rounded-full
                   shadow-inner transition duration-200">
-            back
+            Back
         </a>
     </div>
 

@@ -56,7 +56,11 @@
 
             });
 
-            // Modal Paket
+
+            // ===============================
+            // MODAL DETAIL PAKET
+            // ===============================
+
             $(document).on('click', '.package-card', function() {
 
                 const pkg = JSON.parse($(this).attr('data-package'));
@@ -69,10 +73,18 @@
                 );
 
                 const slug = pkg.name.replace(/\s+/g, '-').toLowerCase();
-                document.getElementById('choose-package').href = `/user/area/${slug}-${pkg.id}`;
+
+                document.getElementById('choose-package').href =
+                    `/user/area/${slug}-${pkg.id}`;
 
                 $('#packageModal').removeClass('hidden');
+
             });
+
+
+            // ===============================
+            // CLOSE MODAL PAKET
+            // ===============================
 
             $('#close-modal').on('click', function() {
                 $('#packageModal').addClass('hidden');
