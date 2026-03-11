@@ -2,7 +2,8 @@
 @section('content')
     <form action="{{ route('area.store', $slug) }}" method="POST">
         @csrf
-        <div class="min-h-screen bg-gray-100 pb-24">
+
+        <div class="min-h-[85vh] bg-gray-100">
 
             <!-- HEADER -->
             <div class="bg-white shadow-sm px-4 md:px-8 py-4">
@@ -11,7 +12,10 @@
 
                     <!-- Title -->
                     <div class="flex items-center gap-3">
-                        <span><a href="{{ url()->previous() }}"class="text-xl cursor-pointer">←</a></span>
+                        <span>
+                            <a href="{{ url()->previous() }}" class="text-xl cursor-pointer">←</a>
+                        </span>
+
                         <h1 class="font-semibold text-lg">
                             Atur Lokasi Pemasangan
                         </h1>
@@ -48,34 +52,46 @@
 
 
             <!-- CONTENT -->
-            <div class="p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-6">
 
                 <!-- LEFT: MAP -->
-                <div class="lg:col-span-8 bg-white rounded-xl shadow-sm overflow-hidden relative">
+                <div class="lg:col-span-8 bg-white lg:rounded-xl lg:shadow-sm overflow-hidden relative h-full lg:h-auto">
 
                     <!-- SEARCH BAR -->
-                    <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-center">
+                    <div class="absolute top-3 left-3 right-3 z-10">
                         <input id="searchAddress" type="text" placeholder="Cari alamat"
-                            class="w-[80%] bg-white rounded-full px-5 py-3 shadow focus:outline-none focus:ring-2 focus:ring-red-400 ">
+                            class=" w-full md:w-[80%] mx-auto block bg-white rounded-full px-4 py-2.5 text-sm shadow focus:outline-none focus:ring-2 focus:ring-red-400">
                     </div>
 
                     <!-- MAP -->
-                    <div id="map" class="h-[350px] md:h-[500px] w-full z-1"></div>
+                    <div id="map" class="h-[55vh] lg:h-[500px] w-full z-0"></div>
+
+                    <div class="p-4 bg-white lg:hidden">
+                        <button type="submit"
+                            class="w-full bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-md transition">
+                            Simpan Alamat
+                        </button>
+                    </div>
 
                 </div>
 
-                <!-- RIGHT: FORM -->
-                <div class="lg:col-span-4">
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm space-y-6">
+
+
+                <!-- RIGHT: FORM -->
+                <div class="hidden lg:block lg:col-span-4">
+
+                    <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm space-y-5">
 
                         <!-- INFO BOX -->
-                        <div class="bg-blue-100 border border-blue-300 text-blue-700 p-4 rounded-lg text-sm">
+                        <div
+                            class="bg-blue-100 border border-blue-300 text-blue-700 p-3 md:p-4 rounded-lg text-xs md:text-sm">
                             Ketersediaan paket dan harga dapat berubah sesuai titik lokasi pemasangan.
                         </div>
 
                         <!-- ADDRESS FIELD -->
                         <div>
+
                             <label class="block font-semibold mb-2">
                                 Alamat Lengkap*
                             </label>
@@ -84,10 +100,12 @@
                                 Lengkapi alamat dengan Kel, Kec, RT/RW, dan Kode Pos
                             </p>
 
-                            <textarea name="address" id="adress" rows="4" maxlength="200"
+                            <textarea name="address" id="adress" rows="3" maxlength="200"
                                 class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-400"
                                 placeholder="Masukkan alamat lengkap..."></textarea>
+
                         </div>
+
                     </div>
 
                     <input type="hidden" name="latitude" id="latitude">
@@ -96,21 +114,12 @@
                 </div>
 
             </div>
-
-
         </div>
 
-
-        <!-- BOTTOM FIXED BUTTON -->
-        <div class=" bg-white p-4 shadow-inner">
-            <div class="max-w-7xl mx-auto flex justify-center md:justify-end">
-                <button type="submit"
+        <div class="hidden lg:block bg-white p-4 shadow-inner">
+            <div class="max-w-7xl mx-auto flex justify-center md:justify-end"> <button type="submit"
                     class="w-full md:w-auto bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-md transition">
-                    Simpan Alamat
-                </button>
-            </div>
-        </div>
-
+                    Simpan Alamat </button> </div>
         </div>
     </form>
 @endsection
@@ -123,8 +132,8 @@
             let lat = {{ $lat }}
             let lng = {{ $long }}
             var map = L.map('map', {
-        zoomControl: true,     
-    }).setView([lat, lng], 13);
+                zoomControl: false,
+            }).setView([lat, lng], 13);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'

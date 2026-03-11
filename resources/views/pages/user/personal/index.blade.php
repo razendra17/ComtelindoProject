@@ -1,37 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-white shadow-sm px-4 md:px-8 py-4">
+    <!-- HEADER -->
+    <div class="bg-white shadow-sm px-4 md:px-8 py-3 md:py-4">
 
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
 
             <!-- Title -->
             <div class="flex items-center gap-3">
-                <span><a href="{{ url()->previous() }}"class="text-xl cursor-pointer">←</a></span>
-                <h1 class="font-semibold text-lg">
+                <a href="{{ url()->previous() }}" class="text-lg md:text-xl">←</a>
+
+                <h1 class="font-semibold text-base md:text-lg">
                     Data diri anda
                 </h1>
             </div>
 
-            <!-- STEP PROGRESS -->
-            <div class="flex items-center gap-4 text-xs sm:text-sm overflow-x-auto">
+            <!-- STEP -->
+            <div class="flex items-center gap-3 text-xs sm:text-sm overflow-x-auto">
 
-                <div class="flex items-center gap-2 text-gray-400 font-medium whitespace-nowrap">
-                    <span class="w-6 h-6 flex items-center justify-center rounded-full border border-gray-400">
+                <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
+                    <span class="w-5 h-5 flex items-center justify-center rounded-full border text-xs">
                         1
                     </span>
                     Lokasi
                 </div>
 
                 <div class="flex items-center gap-2 text-green-600 whitespace-nowrap">
-                    <span class="w-6 h-6 flex items-center justify-center rounded-full border-2 border-green-600">
+                    <span class="w-5 h-5 flex items-center justify-center rounded-full border-2 border-green-600 text-xs">
                         2
                     </span>
                     Data Diri
                 </div>
 
                 <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
-                    <span class="w-6 h-6 flex items-center justify-center rounded-full border border-gray-400">
+                    <span class="w-5 h-5 flex items-center justify-center rounded-full border text-xs">
                         3
                     </span>
                     Kirim
@@ -41,167 +43,158 @@
 
         </div>
     </div>
-    <div class="min-h-screen flex items-center justify-center px-4 py-10">
 
-        <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+    <!-- CONTENT -->
+    <div class="min-h-screen px-4 py-6 md:py-10">
 
-            <!-- LEFT SIDE (Hidden on Mobile) -->
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+
+            <!-- LEFT SIDE -->
             <div class="hidden lg:flex flex-col gap-6">
 
-                <!-- Gambar Box -->
-                <div class=" rounded-2xl h-64 flex items-center justify-center text-black font-semibold">
-                    <img src="{{ asset('assets/Gemini_Generated_Image_jily1ojily1ojily-removebg-preview.png') }}"
-                        alt="" srcset="">
+                <div class="rounded-2xl h-64 flex items-center justify-center">
+                    <img src="{{ asset('assets/Gemini_Generated_Image_jily1ojily1ojily-removebg-preview.png') }}">
                 </div>
 
-                <!-- Icon Block -->
-                <div class="bg-white p-6 rounded-xl shadow-md space-y-8">
+                <div class="bg-white p-6 rounded-xl shadow-md space-y-6">
 
-                    <!-- Icon Block -->
                     <div class="flex gap-x-5">
-                        <svg class="shrink-0 mt-1 size-6 text-[#DE5727]" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
+                        <svg class="shrink-0 mt-1 size-6 text-[#DE5727]" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                         </svg>
 
-                        <div class="grow">
-                            <h3 class="text-lg font-semibold text-gray-800">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">
                                 Your One Stop Internet Solutions
                             </h3>
-                            <p class="mt-1 text-gray-500">
-                                Solusi jaringan satu atap untuk mendukung aktivitas Anda dengan layanan internet
-                                berkualitas,
-                                dan infrastruktur jaringan yang terpercaya.
+                            <p class="text-gray-500 text-sm">
+                                Solusi jaringan satu atap untuk mendukung aktivitas Anda.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Icon Block -->
                     <div class="flex gap-x-5">
-                        <svg class="shrink-0 mt-1 size-6 text-[#DE5727]" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
+                        <svg class="shrink-0 mt-1 size-6 text-[#DE5727]" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                             <circle cx="9" cy="7" r="4" />
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                         </svg>
 
-                        <div class="grow">
-                            <h3 class="text-lg font-semibold text-gray-800">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">
                                 Internet Cepat Anti Lelet
                             </h3>
-                            <p class="mt-1 text-gray-500">
-                                Internetmu lelet? Nikmati internet cepat anti lelet yang Intynet berikan.
-
+                            <p class="text-gray-500 text-sm">
+                                Nikmati internet cepat anti lelet dari Intynet.
                             </p>
                         </div>
                     </div>
 
                 </div>
+
             </div>
 
-            <!-- RIGHT SIDE (Form) -->
-            <div class="w-full bg-white rounded-2xl shadow-xl p-3">
 
-                <h2 class="text-2xl font-bold text-center text-[#DE5727] mb-6">
+            <!-- FORM -->
+            <div class="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6">
+
+                <h2 class="text-xl md:text-2xl font-bold text-center text-[#DE5727] mb-5 md:mb-6">
                     Data Pelanggan
                 </h2>
 
-                <form id="personalForm" action="{{ route('personal.store', $slug) }}" method="POST" class="space-y-5">
+                <form id="personalForm" action="{{ route('personal.store', $slug) }}" method="POST" class="space-y-4 md:space-y-5">
                     @csrf
 
                     <!-- Nama -->
                     <div>
-                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
-                            Nama Lengkap <span class="bintang">*</span>
+                        <label class="text-sm font-medium text-[#DE5727]">
+                            Nama Lengkap *
                         </label>
+
                         <input type="text" name="name" placeholder="Nama Lengkap Anda"
-                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720]  placeholder:text-gray-400">
+                            class="mt-1 w-full px-3 py-2 text-sm border border-[#ED9720] rounded-lg focus:ring-2 focus:ring-[#ED9720]">
                     </div>
 
                     <!-- Email -->
                     <div>
-                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
-                            Email <span class="bintang">*</span>
+                        <label class="text-sm font-medium text-[#DE5727]">
+                            Email *
                         </label>
-                        <input type="email" name="email" placeholder="Example@mail.com"
-                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720]  placeholder:text-gray-400">
+
+                        <input type="email" name="email" placeholder="example@mail.com"
+                            class="mt-1 w-full px-3 py-2 text-sm border border-[#ED9720] rounded-lg focus:ring-2 focus:ring-[#ED9720]">
                     </div>
 
                     <!-- Nomor HP -->
                     <div>
-                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
-                            Nomor Hp <span class="bintang">*</span>
+                        <label class="text-sm font-medium text-[#DE5727]">
+                            Nomor Hp *
                         </label>
 
-                        <div class="flex">
+                        <div class="flex mt-1">
+
                             <span
-                                class="inline-flex items-center px-3 text-sm text-gray-700 bg-gray-100 border border-r-0 border-[#ED9720] rounded-l-lg">
+                                class="px-3 flex items-center text-sm bg-gray-100 border border-r-0 border-[#ED9720] rounded-l-lg">
                                 +62
                             </span>
-                            <input type="tel" name="number" placeholder="Contoh : 85754313659"
-                                class="w-full px-4 py-2 border border-[#ED9720] rounded-r-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720] placeholder:text-gray-400"
-                                pattern="[0-9]*" required>
+
+                            <input type="tel" name="number" placeholder="857xxxx"
+                                class="w-full px-3 py-2 text-sm border border-[#ED9720] rounded-r-lg focus:ring-2 focus:ring-[#ED9720]">
                         </div>
                     </div>
 
-                    <!-- Alamat dari Map (readonly) -->
+                    <!-- Alamat -->
                     <div>
-                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
+                        <label class="text-sm font-medium text-[#DE5727]">
                             Alamat
                         </label>
 
-                        <textarea class="w-full px-4 py-2 border border-[#ED9720] rounded-lg bg-gray-100" readonly>{{ $address }}</textarea>
+                        <textarea class="h-32 mt-1 w-full px-3 py-2 text-sm border border-[#ED9720] rounded-lg bg-gray-100" readonly>{{ $address }}</textarea>
 
                         <input type="hidden" name="address" value="{{ $address }}">
                     </div>
 
-
-                    <!-- Alamat Detail -->
+                    <!-- Detail -->
                     <div>
-                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
-                            Alamat Detail (Warna rumah, gang, patokan dll)
+                        <label class="text-sm font-medium text-[#DE5727]">
+                            Alamat Detail
                         </label>
 
-                        <textarea name="address_detail" placeholder="Contoh: Rumah warna biru, gang sebelah masjid"
-                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg"></textarea>
+                        <textarea name="address_detail" placeholder="Rumah warna biru, dekat masjid"
+                            class="mt-1 w-full px-3 py-2 text-sm border border-[#ED9720] rounded-lg"></textarea>
                     </div>
 
-                    <!-- Package -->
+                    <!-- Paket -->
                     <div>
-                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
+                        <label class="text-sm font-medium text-[#DE5727]">
                             Paket
                         </label>
 
                         <input type="text" value="{{ $package->name }}"
-                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg bg-gray-100" readonly>
+                            class="mt-1 w-full px-3 py-2 text-sm border border-[#ED9720] rounded-lg bg-gray-100" readonly>
 
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
                     </div>
+
                     <input type="hidden" name="latitude" value="{{ $latitude }}">
+                    <input type="hidden" name="longitude" value="{{ $longitude }}">
+
+                    <!-- BUTTON -->
+                    <button type="submit"
+                        class="w-full mt-4 bg-[#DE5727] text-white text-sm md:text-base font-semibold py-2.5 md:py-3 rounded-xl hover:bg-[#c94e1f] transition">
+                        Lanjutkan
+                    </button>
+
+                </form>
+
             </div>
+
         </div>
-        <input type="hidden" name="longitude" value="{{ $longitude }}">
-    </div>
 
-
-
-    <button type="submit"
-        class="w-full bg-[#DE5727] text-white font-semibold py-2.5 rounded-xl hover:bg-[#c94e1f] transition">
-        Submit
-    </button>
-
-
-    </form>
-    </div>
-
-    </div>
     </div>
 @endsection
-@section('script')
 @section('script')
     <script>
         $(document).ready(function() {
