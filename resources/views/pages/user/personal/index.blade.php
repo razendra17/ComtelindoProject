@@ -148,7 +148,7 @@
                         </div>
                     </div>
 
-                    <!-- Alamat -->
+                    <!-- Alamat dari Map (readonly) -->
                     <div>
                         <label class="block text-sm font-medium text-[#DE5727] mb-1">
                             Alamat
@@ -157,6 +157,17 @@
                         <textarea class="w-full px-4 py-2 border border-[#ED9720] rounded-lg bg-gray-100" readonly>{{ $address }}</textarea>
 
                         <input type="hidden" name="address" value="{{ $address }}">
+                    </div>
+
+
+                    <!-- Alamat Detail -->
+                    <div>
+                        <label class="block text-sm font-medium text-[#DE5727] mb-1">
+                            Alamat Detail (Warna rumah, gang, patokan dll)
+                        </label>
+
+                        <textarea name="address_detail" placeholder="Contoh: Rumah warna biru, gang sebelah masjid"
+                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg"></textarea>
                     </div>
 
                     <!-- Package -->
