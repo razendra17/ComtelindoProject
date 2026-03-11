@@ -6,42 +6,17 @@
             class="w-full rounded-3xl object-cover">
     </div>
 
-    <div class="max-w-5xl w-full px-4 mx-auto mt-6 relative">
-
-        <button id="city-toggle"
-            class="w-full border border-amber-500 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-
-            <div class="px-4 py-3 text-left">
-                <p class="font-medium text-black">
-                    Pilih Kota anda
-                </p>
-                <p id="current-city" class="text-gray-600 text-sm mt-1"></p>
-            </div>
-
-        </button>
-
-        <!-- DROPDOWN -->
-        <div id="cityDropdown" class="hidden absolute top-0 right-[-280px] w-64 bg-white rounded-2xl shadow-xl p-4 z-50">
-
-            <p class="font-semibold mb-2">Pilih Kota</p>
-
-            <select id="citySelect"
-                class="w-full border rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                <option value="">Pilih Kota</option>
-
-                @foreach ($cities as $city)
-                    <option value="{{ $city->id }}">
-                        {{ $city->name }}
-                    </option>
-                @endforeach
-            </select>
-
-            <button id="select-location" class="mt-3 w-full bg-amber-400 hover:bg-amber-500 text-white rounded-xl py-2">
-                Pilih lokasi
-            </button>
-
-        </div>
-
+    <!-- Button Pilih Kota -->
+    <div class="max-w-5xl justify-center items-center mx-auto flex mt-6">
+        <select id="citySelect"
+            class="w-5xl border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
+            <option value="">Pilih Kota</option>
+            @foreach ($cities as $city)
+                <option value="{{ $city->id }}">
+                    {{ $city->name }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <!-- Package List -->
@@ -54,40 +29,15 @@
     <script>
         $(document).ready(function() {
 
-            let citySelected = false;
-
-            // ===============================
-            // TOGGLE DROPDOWN KOTA
-            // ===============================
-
-            $('#city-toggle').on('click', function(e) {
-                e.stopPropagation();
-                $('#cityDropdown').toggleClass('hidden');
-            });
-
-            // klik di luar dropdown → close
-            $(document).on('click', function() {
-                $('#cityDropdown').addClass('hidden');
-            });
-
-            // klik di dalam dropdown jangan close
-            $('#cityDropdown').on('click', function(e) {
-                e.stopPropagation();
-            });
+            let citySelected = false; // default belum pilih kota
+            // Pilih lokasi
 
 
-            // ===============================
-            // PILIH KOTA
-            // ===============================
+            $('#citySelect').on('change', function() {
 
-            $('#select-location').on('click', function() {
+                let cityId = $(this).val();
 
-                let cityId = $('#citySelect').val();
-
-                if (!cityId) {
-                    toastr.error('Pilih kota dulu!', 'Lokasi Belum Dipilih');
-                    return;
-                }
+                let cityName = $(this).find('option:selected').text();
 
                 $.ajax({
                     url: '/user/by-city/' + cityId,
@@ -100,12 +50,9 @@
 
                         $('#packageList').html(response);
 
-                        $('#cityDropdown').addClass('hidden');
+                        $('#current-city').text(cityName);
                     }
                 });
-
-                let cityName = $('#citySelect option:selected').text();
-                $('#current-city').text(cityName);
 
             });
 

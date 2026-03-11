@@ -136,8 +136,16 @@
                         <label class="block text-sm font-medium text-[#DE5727] mb-1">
                             Nomor Hp <span class="bintang">*</span>
                         </label>
-                        <input type="tel" name="number" placeholder="+62"
-                            class="w-full px-4 py-2 border border-[#ED9720] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720] placeholder:text-gray-400">
+
+                        <div class="flex">
+                            <span
+                                class="inline-flex items-center px-3 text-sm text-gray-700 bg-gray-100 border border-r-0 border-[#ED9720] rounded-l-lg">
+                                +62
+                            </span>
+                            <input type="tel" name="number" placeholder="Contoh : 85754313659"
+                                class="w-full px-4 py-2 border border-[#ED9720] rounded-r-lg focus:outline-none focus:ring-2 focus:ring-[#ED9720] placeholder:text-gray-400"
+                                pattern="[0-9]*" required>
+                        </div>
                     </div>
 
                     <!-- Alamat -->
@@ -162,24 +170,24 @@
 
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
                     </div>
-                        <input type="hidden" name="latitude" value="{{ $latitude }}">
-                    </div>
-                    </div>
-                        <input type="hidden" name="longitude" value="{{ $longitude }}">
-                    </div>
-
-
-
-                    <button type="submit"
-                        class="w-full bg-[#DE5727] text-white font-semibold py-2.5 rounded-xl hover:bg-[#c94e1f] transition">
-                        Submit
-                    </button>
-                    
-
-                </form>
+                    <input type="hidden" name="latitude" value="{{ $latitude }}">
             </div>
-
         </div>
+        <input type="hidden" name="longitude" value="{{ $longitude }}">
+    </div>
+
+
+
+    <button type="submit"
+        class="w-full bg-[#DE5727] text-white font-semibold py-2.5 rounded-xl hover:bg-[#c94e1f] transition">
+        Submit
+    </button>
+
+
+    </form>
+    </div>
+
+    </div>
     </div>
 @endsection
 @section('script')
@@ -188,37 +196,37 @@
         $(document).ready(function() {
 
             $('#personalForm').on('submit', function(e) {
-                    e.preventDefault(); // CEGAH RELOAD
+                e.preventDefault(); // CEGAH RELOAD
 
-                    let form = $(this);
+                let form = $(this);
 
-                    $.ajax({
-                            url: form.attr('action'),
-                            type: "POST",
-                            data: form.serialize(),
-                            success: function(response) {
+                $.ajax({
+                    url: form.attr('action'),
+                    type: "POST",
+                    data: form.serialize(),
+                    success: function(response) {
 
-                                toastr.success(response.message);
+                        toastr.success(response.message);
 
-                                setTimeout(function() {
-                                    window.location.href = response.redirect;
-                                }, 1000); // delay 1 detik biar toastr sempat kebaca
-                        },
-                        error: function(xhr) {
+                        setTimeout(function() {
+                            window.location.href = response.redirect;
+                        }, 1000); // delay 1 detik biar toastr sempat kebaca
+                    },
+                    error: function(xhr) {
 
-                            if (xhr.status === 422) {
+                        if (xhr.status === 422) {
 
-                                let errors = xhr.responseJSON.errors;
+                            let errors = xhr.responseJSON.errors;
 
-                                // ambil error pertama saja
-                                let firstError = Object.values(errors)[0][0];
+                            // ambil error pertama saja
+                            let firstError = Object.values(errors)[0][0];
 
-                                toastr.error(firstError);
-                            } else {
-                                toastr.error("Terjadi kesalahan server");
-                            }
+                            toastr.error(firstError);
+                        } else {
+                            toastr.error("Terjadi kesalahan server");
                         }
-                    });
+                    }
+                });
 
             });
 

@@ -132,7 +132,7 @@
 
             let selectedCity = '';
             let selectedPackage = '';
-            let selectedStatus = '';
+            let selectedStatus = 'pending';
 
             let table = $('#packageTable').DataTable({
                 processing: true,
@@ -182,10 +182,13 @@
                 pageLength: 5,
             });
 
+            $(document).ready(function() {
+                renderActiveFilters();
+            });
+
             // ===============================
             // UNIVERSAL DROPDOWN SYSTEM
             // ===============================
-
             $(document).on('click', '.filter-btn', function(e) {
                 e.stopPropagation();
 
@@ -198,54 +201,6 @@
             $(document).on('click', function() {
                 $('.filter-dropdown').addClass('hidden');
             });
-
-            // ===============================
-            // ACTIVE FILTER INDICATOR
-            // ===============================
-            function renderActiveFilters() {
-
-                let container = $('#activeFilters');
-                container.empty();
-
-                if (selectedStatus) {
-                    container.append(`
-            <span class="filter-badge filter-status">
-                Status: ${capitalize(selectedStatus)}
-                <button class="remove-filter filter-remove" data-type="status">✕</button>
-            </span>
-        `);
-                }
-
-                if (selectedCity) {
-                    let cityText = $('.city-option[data-value="' + selectedCity + '"]').text().trim();
-
-                    container.append(`
-            <span class="filter-badge filter-city">
-                City: ${cityText}
-                <button class="remove-filter filter-remove" data-type="city">✕</button>
-            </span>
-        `);
-                }
-
-                if (selectedPackage) {
-                    let packageText = $('.package-option[data-value="' + selectedPackage + '"]').text().trim();
-
-                    container.append(`
-            <span class="filter-badge filter-package">
-                Package: ${packageText}
-                <button class="remove-filter filter-remove" data-type="package">✕</button>
-            </span>
-        `);
-                }
-            }
-
-            function capitalize(text) {
-                return text.charAt(0).toUpperCase() + text.slice(1);
-            }
-
-            // ===============================
-            // STATUS FILTER
-            // ===============================
 
             $(document).on('click', '.status-option', function() {
 
@@ -297,6 +252,59 @@
                 table.ajax.reload(null, false);
                 renderActiveFilters();
             });
+            // ===============================
+            // ACTIVE FILTER INDICATOR
+            // ===============================
+            function renderActiveFilters() {
+                const container = $('#activeFilters');
+                container.empty();
+
+                const filters = [{
+                        value: selectedStatus,
+                        type: 'status',
+                        label: 'Status',
+                        text: capitalize(selectedStatus)
+                    },
+                    {
+                        value: selectedCity,
+                        type: 'city',
+                        label: 'City',
+                        text: getText('.city-option', selectedCity)
+                    },
+                    {
+                        value: selectedPackage,
+                        type: 'package',
+                        label: 'Package',
+                        text: getText('.package-option', selectedPackage)
+                    }
+                ];
+
+                filters.forEach(f => addFilter(container, f.value, f.type, f.label, f.text));
+            }
+
+            function addFilter(container, value, type, label, text) {
+                if (!value) return;
+
+                container.append(`
+        <span class="filter-badge filter-${type}">
+            ${label}: ${text}
+            <button class="remove-filter filter-remove" data-type="${type}">✕</button>
+        </span>
+    `);
+            }
+
+            function getText(selector, value) {
+                return $(`${selector}[data-value="${value}"]`).text().trim();
+            }
+
+            function capitalize(text) {
+                return text.charAt(0).toUpperCase() + text.slice(1);
+            }
+
+            // ===============================
+            // STATUS FILTER
+            // ===============================
+
 
             // ===============================
             // SEARCH

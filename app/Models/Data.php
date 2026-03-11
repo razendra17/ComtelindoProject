@@ -44,16 +44,4 @@ class Data extends Model
             ->limit(3)
             ->get();
     }
-
-    public function scopeOrderStatus($query){
-        return $query->orderByRaw("
-        CASE 
-            WHEN status = 'pending' THEN 1
-            WHEN status = 'approved' THEN 2
-            WHEN status = 'rejected' THEN 3
-        END
-    ")
-        ->orderBy('created_at', 'desc');
-    }
-    
 }

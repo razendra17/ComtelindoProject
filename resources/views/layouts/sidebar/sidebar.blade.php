@@ -86,13 +86,7 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Data</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23] group">
-                        <i class="fa-regular fa-envelope"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
-                    </a>
-                </li>
+             
                <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
