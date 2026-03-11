@@ -158,20 +158,23 @@
                     },
                     {
                         data: 'package.name',
-                        name: 'package.name'
+                        name: 'package.name',
+                        orderable: false,
                     },
                     {
                         data: 'package.city.name',
-                        name: 'package.city.name'
+                        name: 'package.city.name',
+                        orderable: false,
                     },
                     {
                         data: 'status',
-                        searchable: false
+                        searchable: false,
+                        orderable: false,
                     },
                     {
                         data: 'created',
                         name: 'created_at',
-                        searchable: false
+                        orderable: false,
                     },
                     {
                         data: 'action',

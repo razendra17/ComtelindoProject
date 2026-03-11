@@ -11,17 +11,10 @@
         <div class="w-full max-w-6xl">
 
             {{-- ROW 1 --}}
-            <div class="grid grid-cols-3 gap-6 mb-6">
-
-                {{-- Total Pengajuan --}}
-                <div class="bg-white rounded-2xl shadow-md p-6">
-                    <p class="text-gray-400 text-sm mb-2">Total Pengajuan</p>
-                    <h2 class="text-3xl font-semibold text-amber-500">{{ $alldata }} data</h2>
-                </div>
-
+            <div class="mb-3 w-[100%]">
                 {{-- Graph --}}
-                <div class="col-span-2 bg-white rounded-2xl shadow-md p-6">
-                    <h2 class="text-lg font-semibold mb-4">Total Pengajuan</h2>
+                <div class="col-span-2 bg-white rounded-2xl shadow-md p-6  ">
+                    <h2 class="text-lg font-semibold mb-4">Total Pengajuan: {{ $alldata }} data</h2>
                     <canvas id="pengajuanChart"></canvas>
                 </div>
 

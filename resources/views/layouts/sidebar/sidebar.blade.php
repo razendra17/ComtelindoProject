@@ -62,17 +62,17 @@
                     <ul id="dropdown-example" class="hidden py-2 space-y-2">
                         <li>
 
-                             <a href="{{ route('city.index') }}"
+                            <a href="{{ route('city.index') }}"
                                 class="pl-10 flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
                                 <i class="fa-regular fa-map px-2"></i>Cities</a>
                         </li>
                         <li>
-                              <a href="{{ route('package.index') }}"
+                            <a href="{{ route('package.index') }}"
                                 class="pl-10 flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
                                 <i class="fa-regular fa-folder px-2"></i></i>Package</a>
                         </li>
                         <li>
-                              <a href="{{ route('data.index') }}"
+                            <a href="{{ route('data.index') }}"
                                 class="pl-10 flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
                                 <i class="fa-regular fa-hard-drive px-2"></i></i>Data</a>
                         </li>
@@ -87,13 +87,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23] group">
-                        <i class="fa-regular fa-envelope"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
-                    </a>
-                </li>
-               <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit"
