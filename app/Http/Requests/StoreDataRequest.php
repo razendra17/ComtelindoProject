@@ -33,7 +33,7 @@ class StoreDataRequest extends FormRequest
             'email.required' => 'Email wajib diisi',
             'email.email' => 'Format email tidak valid',
             'number.required' => 'Nomor HP wajib diisi',
-            'number.regex' => 'Format nomor HP tidak valid',
+            'number.digits_between' => 'Format nomor HP tidak valid',
             'address.required' => 'Alamat wajib ada',
         ];
     }

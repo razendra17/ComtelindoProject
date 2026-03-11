@@ -105,16 +105,11 @@ class DataController extends Controller
             Data::create($data);
 
             return response()->json([
-                'message' => 'Data berhasil dikirim!',
-                'redirect' => route('redirect.index')
+                'message' => 'Data berhasil dikirim!'
             ], 200);
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
         }
     }
 
-    public function redirect()
-    {
-        return view('pages.user.redirect');
-    }
 }
