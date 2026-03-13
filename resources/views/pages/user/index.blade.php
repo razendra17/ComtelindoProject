@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <!-- Banner -->
-    <div class="max-w-5xl w-full px-4 py-3 mx-auto flex justify-center">
+    <div class="max-w-5xl w-full py-3 mx-auto flex justify-center">
         <img src="{{ asset('assets/Gemini_Generated_Image_8es1qg8es1qg8es1.png') }}" alt=""
             class="w-full rounded-3xl object-cover">
     </div>

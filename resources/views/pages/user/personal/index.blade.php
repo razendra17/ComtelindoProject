@@ -46,9 +46,9 @@
     </div>
 
     <!-- CONTENT -->
-    <div class="min-h-screen px-4 py-6 md:py-10">
+    <div class="min-h-screen py-6 md:py-10">
 
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+        <div class="w-full lg:max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-8 items-start">
 
             <!-- LEFT SIDE -->
             <div class="hidden lg:flex flex-col gap-6">
@@ -99,7 +99,7 @@
 
 
             <!-- FORM -->
-            <div class="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6">
+            <div class="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-6 md:p-6">
 
                 <h2 class="text-xl md:text-2xl font-bold text-center text-[#DE5727] mb-5 md:mb-6">
                     Data Pelanggan
