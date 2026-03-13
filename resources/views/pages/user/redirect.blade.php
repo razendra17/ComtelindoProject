@@ -1,2 +1,0 @@
-
-hapus file ini jing
