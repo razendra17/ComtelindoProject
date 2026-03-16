@@ -1,20 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-8 flex justify-center">
-        <h1 class="text-3xl font-bold text-gray-800 tracking-wide">
-            DASHBOARD
-        </h1>
-    </div>
-    <div class="min-h-screen bg-gray-200/60 backdrop-blur-md flex justify-center p-6 rounded-3xl">
+    <div class="min-h-screen backdrop-blur-md flex justify-center p-6 rounded-3xl">
 
         <div class="w-full max-w-6xl">
 
             {{-- ROW 1 --}}
-            <div class="mb-3 w-[100%]">
+            <div class="mb-3 w-[100vh]">
                 {{-- Graph --}}
-                <div class="col-span-2 bg-white rounded-2xl shadow-md p-6  ">
-                    <h2 class="text-lg font-semibold mb-4">Total Pengajuan: {{ $alldata }} data</h2>
+                <div class="col-span-2 bg-white rounded-2xl shadow-md p-6 ">
+                    <p class="text-lg mb-4">Total Pengajuan: {{ $alldata }} data</p>
                     <canvas id="pengajuanChart"></canvas>
                 </div>
 

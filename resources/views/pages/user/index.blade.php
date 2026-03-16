@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('content')
     <!-- Banner -->
-    <div class="max-w-5xl w-full py-3 mx-auto flex justify-center">
+    <div class="max-w-5xl w-[full] mx-auto flex justify-center lg:py-3">
         <img src="{{ asset('assets/Gemini_Generated_Image_8es1qg8es1qg8es1.png') }}" alt=""
-            class="w-full rounded-3xl object-cover">
+            class="w-full  lg:rounded-3xl object-cover">
     </div>
 
     <!-- Button Pilih Kota -->
-    <div class="max-w-5xl justify-center items-center mx-auto flex mt-6">
+    <div class=" px-3 justify-center items-center mx-auto flex mt-6">
         <select id="citySelect"
             class="w-5xl border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
             <option value="">Pilih Kota</option>

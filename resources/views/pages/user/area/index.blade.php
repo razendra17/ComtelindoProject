@@ -2,118 +2,110 @@
 @section('content')
     <form action="{{ route('area.store', $slug) }}" method="POST">
         @csrf
+        <!-- HEADER -->
+        <div class=" bg-white shadow-sm px-4 md:px-8 py-4">
 
-        <div class="min-h-[85vh] bg-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
-            <!-- HEADER -->
-            <div class="bg-white shadow-sm px-4 md:px-8 py-4">
+                <!-- Title -->
+                <div class="flex items-center gap-3">
+                    <span>
+                        <a href="{{ url()->previous() }}" class="text-xl cursor-pointer">←</a>
+                    </span>
 
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <h1 class="font-semibold text-lg">
+                        Atur Lokasi Pemasangan
+                    </h1>
+                </div>
 
-                    <!-- Title -->
-                    <div class="flex items-center gap-3">
-                        <span>
-                            <a href="{{ url()->previous() }}" class="text-xl cursor-pointer">←</a>
+                <!-- STEP PROGRESS -->
+                <div class="flex items-center gap-4 text-xs sm:text-sm overflow-x-auto">
+
+                    <div class="flex items-center gap-2 text-green-600 font-medium whitespace-nowrap">
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full border-2 border-green-600">
+                            1
                         </span>
-
-                        <h1 class="font-semibold text-lg">
-                            Atur Lokasi Pemasangan
-                        </h1>
+                        Lokasi
                     </div>
 
-                    <!-- STEP PROGRESS -->
-                    <div class="flex items-center gap-4 text-xs sm:text-sm overflow-x-auto">
-
-                        <div class="flex items-center gap-2 text-green-600 font-medium whitespace-nowrap">
-                            <span class="w-6 h-6 flex items-center justify-center rounded-full border-2 border-green-600">
-                                1
-                            </span>
-                            Lokasi
-                        </div>
-
-                        <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
-                            <span class="w-6 h-6 flex items-center justify-center rounded-full border">
-                                2
-                            </span>
-                            Data Diri
-                        </div>
-
-                        <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
-                            <span class="w-6 h-6 flex items-center justify-center rounded-full border">
-                                3
-                            </span>
-                            Kirim
-                        </div>
-
+                    <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full border">
+                            2
+                        </span>
+                        Data Diri
                     </div>
 
-                </div>
-            </div>
-
-
-            <!-- CONTENT -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-6">
-
-                <!-- LEFT: MAP -->
-                <div class="lg:col-span-8 bg-white lg:rounded-xl lg:shadow-sm overflow-hidden relative h-full lg:h-auto">
-
-                    <!-- SEARCH BAR -->
-                    <div class="absolute top-3 left-3 right-3 z-10">
-                        <input id="searchAddress" type="text" placeholder="Cari alamat"
-                            class=" w-full md:w-[80%] mx-auto block bg-white rounded-full px-4 py-2.5 text-sm shadow focus:outline-none focus:ring-2 focus:ring-red-400">
+                    <div class="flex items-center gap-2 text-gray-400 whitespace-nowrap">
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full border">
+                            3
+                        </span>
+                        Kirim
                     </div>
-
-                    <!-- MAP -->
-                    <div id="map" class="h-[55vh] lg:h-[500px] w-full z-0"></div>
-
-                    <div class="p-4 bg-white lg:hidden">
-                        <button type="submit"
-                            class="w-full bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-md transition">
-                            Simpan Alamat
-                        </button>
-                    </div>
-
-                </div>
-
-
-
-
-                <!-- RIGHT: FORM -->
-                <div class="hidden lg:block lg:col-span-4">
-
-                    <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm space-y-5">
-
-                        <!-- INFO BOX -->
-                        <div
-                            class="bg-blue-100 border border-blue-300 text-blue-700 p-3 md:p-4 rounded-lg text-xs md:text-sm">
-                            Ketersediaan paket dan harga dapat berubah sesuai titik lokasi pemasangan.
-                        </div>
-
-                        <!-- ADDRESS FIELD -->
-                        <div>
-
-                            <label class="block font-semibold mb-2">
-                                Alamat Lengkap*
-                            </label>
-
-                            <p class="text-xs text-gray-500 mb-2">
-                                Lengkapi alamat dengan Kel, Kec, RT/RW, dan Kode Pos
-                            </p>
-
-                            <textarea name="address" id="adress" rows="3" maxlength="200"
-                                class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-400"
-                                placeholder="Masukkan alamat lengkap..."></textarea>
-
-                        </div>
-
-                    </div>
-
-                    <input type="hidden" name="latitude" id="latitude">
-                    <input type="hidden" name="longitude" id="longitude">
 
                 </div>
 
             </div>
+        </div>
+
+
+        <!-- CONTENT -->
+        <div class="min-h-screen grid grid-cols-1 lg:grid-cols-12 lg:gap-6">
+
+            <!-- LEFT: MAP -->
+            <div class="lg:col-span-8 bg-white lg:rounded-xl lg:shadow-sm overflow-hidden relative h-full lg:h-screen">
+
+                <!-- SEARCH BAR -->
+                <div class="absolute top-3 left-3 right-3 z-10">
+                    <input id="searchAddress" type="text" placeholder="Cari alamat"
+                        class=" w-full md:w-[80%] mx-auto block bg-white rounded-full px-4 py-2.5 text-sm shadow focus:outline-none focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <!-- MAP -->
+                <div id="map" class="h-[70vh] lg:h-[500px] w-full z-0"></div>
+
+                <div class="p-4 bg-white lg:hidden">
+                    <button type="submit"
+                        class="w-full bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-md transition">
+                        Simpan Alamat
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: FORM -->
+            <div class="hidden lg:block lg:col-span-4">
+
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm space-y-5">
+
+                    <!-- INFO BOX -->
+                    <div class="bg-blue-100 border border-blue-300 text-blue-700 p-3 md:p-4 rounded-lg text-xs md:text-sm">
+                        Ketersediaan paket dan harga dapat berubah sesuai titik lokasi pemasangan.
+                    </div>
+
+                    <!-- ADDRESS FIELD -->
+                    <div>
+
+                        <label class="block font-semibold mb-2">
+                            Alamat Lengkap*
+                        </label>
+
+                        <p class="text-xs text-gray-500 mb-2">
+                            Lengkapi alamat dengan Kel, Kec, RT/RW, dan Kode Pos
+                        </p>
+
+                        <textarea name="address" id="adress" rows="3" maxlength="200"
+                            class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-400"
+                            placeholder="Masukkan alamat lengkap..."></textarea>
+
+                    </div>
+
+                </div>
+
+                <input type="hidden" name="latitude" id="latitude">
+                <input type="hidden" name="longitude" id="longitude">
+
+            </div>
+
         </div>
 
         <div class="hidden lg:block bg-white p-4 shadow-inner">
