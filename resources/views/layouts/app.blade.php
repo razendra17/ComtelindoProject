@@ -8,7 +8,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('app-hxm.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -16,22 +15,20 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen">
 
-    <div class="bg-[#f5f5f5] flex-1 py-0.5">
-        @include('layouts.header.index')    
+    @include('layouts.header.index')
 
-        <div class="relative max-w-[96%] mx-auto bg-[#ffffff] px-6 py-6 overflow-hidden flex flex-col shadow-xl flex-1">
-            @include('layouts.sidebar.sidebar')
+    <div class=" min-h-[100vh] max-w-screen mx-auto overflow-hidden lg:flex shadow-xl flex-1 ">
+        @include('layouts.sidebar.sidebar')
 
-            <main class="flex-grow">
-                @yield('content')
+        <main class="flex-grow flex-col">
+            @yield('content')
 
-                <div class="flex my-auto mx-auto">
-                    @yield('modal')
-                </div>
-            </main>
-        </div>
+            <div class="flex my-auto mx-auto">
+                @yield('modal')
+            </div>
+        </main>
     </div>
 
     @include('layouts.footer.index')

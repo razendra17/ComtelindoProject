@@ -1,5 +1,5 @@
 
-<footer class="bg-gray-100">
+<footer class=" bg-[#ffffff] ">
     <div class="max-w-7xl w-full mx-auto px-4 py-8">
 
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">

@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-h-screen bg-gray-100 p-6">
+    <div class="min-h-scree p-6">
 
-        <div class="bg-gray-200 rounded-2xl shadow-inner p-6">
+        <div class="ml-auto relative min-w-[100vh] py-3">
+            <input type="text" id="searchInput" placeholder="search id here"
+                class="w-full h-[8vh] pl-4 pr-4 py-2 rounded-xl bg-white text-sm text-gray-500 placeholder-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-sm">
+        </div>
+
 
             {{-- FILTER TOP --}}
             <div class="flex flex-col gap-4 mb-5">
@@ -91,17 +95,10 @@
 
             </div>
 
-            <div class="ml-auto relative w-72">
-                <input type="text" id="searchInput" placeholder="search id here"
-                    class="w-full pl-4 pr-4 py-2 rounded-xl bg-white text-sm text-gray-500 placeholder-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-sm">
-            </div>
-
-        </div>
-
         {{-- TABLE --}}
-        <div class="p-4">
+        <div class="">
 
-            <div class="bg-gray-100 rounded-2xl p-3">
+            <div class=" rounded-2xl p-3">
 
                 <table id="packageTable" class="w-full border-separate border-spacing-y-3 text-sm text-gray-700 ">
                     <thead>

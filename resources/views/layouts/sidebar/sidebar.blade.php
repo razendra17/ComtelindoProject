@@ -1,7 +1,7 @@
 @hasrole('admin')
-    <!-- drawer init and show -->
-    <div class="text-left">
-        <button class="text-[#eb8e23]   focus:ring-2 focus:ring-orange shadow-xs rounded-base p-2.5 focus:outline-none"
+    {{-- <!-- drawer init and show -->
+    <div class="text-left p-3">
+        <button class="text-[#eb8e23]   focus:ring-2 focus:ring-orange shadow-md rounded-base p-2.5 focus:outline-none"
             type="button" data-drawer-target="drawer-navigation" data-drawer-backdrop="false"
             data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
             <svg xmlns="https://www.svgrepo.com/svg/524617/hamburger-menu" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
@@ -9,33 +9,22 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </button>
-    </div>
+    </div> --}}
 
     <!-- drawer component -->
     <div id="drawer-navigation"
-        class="absolute top-0 left-0 z-40
-       w-64 h-full
-       transition-transform duration-300
-       -translate-x-full
-       bg-white shadow-2xl"
-        tabindex="-1" aria-labelledby="drawer-navigation-label">
-        <div class="border-b border-default p-3 flex items-center justify-center">
-            <span class="self-center text-lg whitespace-nowrap text-body">Admin Panel</span>
-            <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation"
-                class="text-body bg-transparent hover:text-heading hover:bg-neutral-tertiary rounded-base w-9 h-9 absolute top-2.5 end-2.5 flex items-center justify-center">
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 18 17.94 6M18 18 6.06 6" />
-                </svg>
-                <span class="sr-only">Close menu</span>
-            </button>
-        </div>
-        <div class="py-5 overflow-y-auto">
+        class="w-[38vh] min-h-screen
+        bg-[#ffffff] shadow-md
+        transition-all duration-300" tabindex="-1"
+        aria-labelledby="drawer-navigation-label">
+        <div class="py-5 overflow-y-auto text-black/60 overflow-hidden">
             <ul class="space-y-2 font-medium">
                 <li>
                     <a href="{{ route('dashboard.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
+                        class="flex items-center px-3 py-3 rounded-base
+                    transition-all duration-200 ease-in-out
+                    hover:bg-neutral-tertiary hover:text-[#eb8e23]
+                    hover:translate-x-1">
                         <svg class="w-5 h-5 transition duration-75 group-hover:text-[#eb8e23]" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
@@ -49,7 +38,10 @@
                 </li>
                 <li>
                     <button type="button"
-                        class="flex items-center w-full justify-between px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23] group"
+                    class="flex w-full items-center px-3 py-3 rounded-base
+                    transition-all duration-200 ease-in-out
+                    hover:bg-neutral-tertiary hover:text-[#eb8e23]
+                    hover:translate-x-1"
                         aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                         <i class="fa-regular fa-square-plus"></i>
                         <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Add</span>
@@ -63,17 +55,26 @@
                         <li>
 
                             <a href="{{ route('city.index') }}"
-                                class="pl-10 flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
+                            class="flex items-center px-3 py-1 rounded-base
+                            transition-all duration-200 ease-in-out
+                            hover:bg-neutral-tertiary hover:text-[#eb8e23]
+                            hover:translate-x-1">
                                 <i class="fa-regular fa-map px-2"></i>Cities</a>
                         </li>
                         <li>
                             <a href="{{ route('package.index') }}"
-                                class="pl-10 flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
+                            class="flex items-center px-3 py-1 rounded-base
+                            transition-all duration-200 ease-in-out
+                            hover:bg-neutral-tertiary hover:text-[#eb8e23]
+                            hover:translate-x-1">
                                 <i class="fa-regular fa-folder px-2"></i></i>Package</a>
                         </li>
                         <li>
                             <a href="{{ route('data.index') }}"
-                                class="pl-10 flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23]">
+                            class="flex items-center px-3 py-1 rounded-base
+                            transition-all duration-200 ease-in-out
+                            hover:bg-neutral-tertiary hover:text-[#eb8e23]
+                            hover:translate-x-1">
                                 <i class="fa-regular fa-hard-drive px-2"></i></i>Data</a>
                         </li>
                     </ul>
@@ -81,17 +82,23 @@
 
                 <li>
                     <a href="{{ route('dataadmin.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#eb8e23] group">
+                    class="flex items-center px-3 py-3 rounded-base
+                    transition-all duration-200 ease-in-out
+                    hover:bg-neutral-tertiary hover:text-[#eb8e23]
+                    hover:translate-x-1">
                         <i class="fa-regular fa-hard-drive group-hover:text-[#eb8e23]"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Data</span>
                     </a>
                 </li>
-             
-               <li>
+
+                <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit"
-                            class="flex items-start px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-[#ff2020] group w-full">
+                        class="flex w-full items-center px-3 py-3 rounded-base
+                        transition-all duration-200 ease-in-out
+                        hover:bg-neutral-tertiary hover:text-[#eb2323]
+                        hover:translate-x-1">
                             <div>
                                 <i class="fa-regular fa-circle-user"></i>
                                 <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
@@ -99,8 +106,6 @@
                         </button>
                     </form>
                 </li>
-
-
             </ul>
         </div>
     </div>
