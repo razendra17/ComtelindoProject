@@ -121,3 +121,55 @@ table.dataTable thead th {
 .filter-remove {
     @apply font-bold cursor-pointer;
 }
+
+.ts-control{
+    border-radius: 12px !important;
+    padding: 12px !important;
+}
+
+.ts-dropdown{
+    border-radius: 12px !important;
+}
+
+.city-select + .ts-wrapper .ts-control{
+    border-radius:16px;
+    padding:14px 16px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    transition:all .25s ease;
+}
+
+.city-select + .ts-wrapper .ts-control:hover{
+    border-color:#fb923c;
+}
+
+.ts-dropdown{
+    border-radius:16px !important;
+    overflow:hidden;
+    border:1px solid #eee;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+
+    opacity:0;
+    transform:translateY(-10px) scale(.98);
+    transition:all .25s cubic-bezier(.4,0,.2,1) !important;
+}
+
+.ts-wrapper.dropdown-active .ts-dropdown{
+    opacity:1 !important;
+    transform:translateY(0) scale(1) !important;
+}
+
+.ts-wrapper.dropdown-active .ts-dropdown{
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
+
+.ts-dropdown .option{
+    padding:12px 16px;
+    transition:all .2s;
+}
+
+.ts-dropdown .option:hover{
+    background:#fff7ed;
+    color:#ea580c;
+}
