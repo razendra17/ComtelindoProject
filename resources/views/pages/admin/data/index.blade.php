@@ -3,115 +3,170 @@
 @section('content')
     <div class="min-h-scree p-6">
 
-        <div class="ml-auto relative min-w-[100vh] py-3">
-            <input type="text" id="searchInput" placeholder="search id here"
-                class="w-full h-[8vh] pl-4 pr-4 py-2 rounded-xl bg-white text-sm text-gray-500 placeholder-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-sm">
-        </div>
+        @include('pages.admin.data.partials.searchbar')
 
+        {{-- FILTER TOP --}}
+        <div class="flex flex-col gap-4 mb-5">
 
-            {{-- FILTER TOP --}}
-            <div class="flex flex-col gap-4 mb-5">
+            {{-- FILTER BUTTONS --}}
+            <div class="flex items-center gap-3">
 
-                {{-- FILTER BUTTONS --}}
-                <div class="flex items-center gap-3">
-
-                    {{-- STATUS --}}
-                    <div class="relative">
+                {{-- STATUS --}}
+                <div class="relative">
+                    <div class="relative group">
                         <button type="button" data-target="#filterStatusDropdown"
-                            class="filter-btn px-4 py-2 bg-white rounded-lg text-sm font-medium text-gray-600 shadow-sm border border-gray-300 hover:bg-gray-50 transition">
+                            class="filter-btn flex items-center gap-2 px-4 py-2 bg-white rounded-lg text-sm font-medium text-gray-600 shadow-sm border
+                          border-gray-300 transition transform duration-200 ease-out hover:scale-110 hover:shadow-md hover:text-white hover:bg-amber-500">
+
                             Status
+
+                            <svg class="dropdown-arrow w-4 h-4 transition-transform duration-200"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+
+                            </svg>
+
                         </button>
-
-                        <div id="filterStatusDropdown"
-                            class="filter-dropdown hidden absolute mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                            <ul class="text-sm text-gray-700">
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer status-option" data-value="">
-                                    All
-                                </li>
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer status-option" data-value="pending">
-                                    Pending
-                                </li>
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer status-option" data-value="approved">
-                                    Approved
-                                </li>
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer status-option" data-value="rejected">
-                                    Rejected
-                                </li>
-                            </ul>
+                        <div
+                            class="filter-tooltip absolute left-1/2 -translate-x-1/2 top-full mt-2 opacity-0 pointer-events-none
+                                bg-gray-800 text-white text-xs px-3 py-1 rounded-md whitespace-nowrap translate-y-1 
+                                transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
+                            Filter berdasarkan status pesanan
                         </div>
+
                     </div>
-
-                    {{-- CITY --}}
-                    <div class="relative">
-                        <button type="button" data-target="#filterCityDropdown"
-                            class="filter-btn px-4 py-2 bg-white rounded-lg text-sm font-medium text-gray-600 shadow-sm border border-gray-300">
-                            City
-                        </button>
-
-                        <div id="filterCityDropdown"
-                            class="filter-dropdown hidden absolute mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
-                            <ul class="text-sm text-gray-700 max-h-60 overflow-y-auto">
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer city-option" data-value="">
-                                    All
-                                </li>
-
-                                @foreach ($cities as $city)
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer city-option"
-                                        data-value="{{ $city->id }}">
-                                        {{ $city->name }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    <div id="filterStatusDropdown"
+                        class="filter-dropdown hidden absolute mt-2 w-40 bg-white rounded-xl shadow-lg border border-gray-200 z-50 origin-top transform transition-all duration-200 scale-95 opacity-0">
+                        <ul class="text-sm text-gray-700">
+                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer status-option" data-value="">
+                                All
+                            </li>
+                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer status-option" data-value="pending">
+                                Pending
+                            </li>
+                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer status-option" data-value="approved">
+                                Approved
+                            </li>
+                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer status-option" data-value="rejected">
+                                Rejected
+                            </li>
+                        </ul>
                     </div>
-
-                    {{-- PACKAGE --}}
-                    <div class="relative">
-                        <button type="button" data-target="#filterPackageDropdown"
-                            class="filter-btn px-4 py-2 bg-white rounded-lg text-sm font-medium text-gray-600 shadow-sm border border-gray-300">
-                            Package
-                        </button>
-
-                        <div id="filterPackageDropdown"
-                            class="filter-dropdown hidden absolute mt-2 w-56 bg-white rounded-lg shadow-lg border z-50">
-                            <ul class="text-sm text-gray-700 max-h-60 overflow-y-auto">
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer package-option" data-value="">
-                                    All
-                                </li>
-
-                                @foreach ($packages as $package)
-                                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer package-option"
-                                        data-value="{{ $package->id }}">
-                                        {{ $package->name }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
 
-                <div id="activeFilters" class="flex flex-wrap gap-2"></div>
+                {{-- CITY --}}
+                <div class="relative">
+                    <div class="relative group">
+
+                        <button type="button" data-target="#filterCityDropdown"
+                            class="filter-btn flex items-center gap-2 px-4 py-2 bg-white rounded-lg text-sm font-medium text-gray-600 shadow-sm border
+                          border-gray-300 transition transform duration-200 ease-out hover:scale-110 hover:shadow-md hover:text-white hover:bg-amber-500">
+
+                            Cities
+
+                            <svg class="dropdown-arrow w-4 h-4 transition-transform duration-200"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+
+                            </svg>
+
+                        </button>
+                        <div
+                            class="filter-tooltip absolute left-1/2 -translate-x-1/2 top-full mt-2 opacity-0 pointer-events-none
+                                bg-gray-800 text-white text-xs px-3 py-1 rounded-md whitespace-nowrap translate-y-1 
+                                transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
+                            Filter berdasarkan Kota pesanan
+                        </div>
+
+                    </div>
+
+                    <div id="filterCityDropdown"
+                        class="filter-dropdown hidden absolute mt-2 w-40 bg-white rounded-xl shadow-lg border border-gray-200 z-50 origin-top transform transition-all duration-200 scale-95 opacity-0">
+                        <ul class="text-sm text-gray-700 max-h-60 overflow-y-auto">
+                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer city-option" data-value="">
+                                All
+                            </li>
+
+                            @foreach ($cities as $city)
+                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer city-option"
+                                    data-value="{{ $city->id }}">
+                                    {{ $city->name }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+
+                {{-- PACKAGE --}}
+                <div class="relative">
+                    <div class="relative group">
+
+                        <button type="button" data-target="#filterPackageDropdown"
+                            class="filter-btn flex items-center gap-2 px-4 py-2 bg-white rounded-lg text-sm font-medium text-gray-600 shadow-sm border
+                          border-gray-300 transition transform duration-200 ease-out hover:scale-110 hover:shadow-md hover:text-white hover:bg-amber-500">
+
+                            Package
+
+                            <svg class="dropdown-arrow w-4 h-4 transition-transform duration-200"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+
+                            </svg>
+
+                        </button>
+                        <div
+                            class="filter-tooltip absolute left-1/2 -translate-x-1/2 top-full mt-2 opacity-0 pointer-events-none
+                                bg-gray-800 text-white text-xs px-3 py-1 rounded-md whitespace-nowrap translate-y-1 
+                                transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
+                            Filter berdasarkan Package pesanan
+                        </div>
+
+                    </div>
+                    <div id="filterPackageDropdown"
+                        class="filter-dropdown hidden absolute mt-2 w-40 bg-white rounded-xl shadow-lg border border-gray-200 z-50 origin-top transform transition-all duration-200 scale-95 opacity-0">
+                        <ul class="text-sm text-gray-700 max-h-60 overflow-y-auto">
+                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer package-option" data-value="">
+                                All
+                            </li>
+
+                            @foreach ($packages as $package)
+                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer package-option"
+                                    data-value="{{ $package->id }}">
+                                    {{ $package->name }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
 
             </div>
+
+            <div id="activeFilters" class="flex flex-wrap gap-2"></div>
+
+        </div>
 
         {{-- TABLE --}}
         <div class="">
 
             <div class=" rounded-2xl p-3">
 
-                <table id="packageTable" class="w-full border-separate border-spacing-y-3 text-sm text-gray-700 ">
+             <table id="packageTable" class="w-full border-separate border-spacing-y-2 text-sm text-gray-700">
                     <thead>
-                        <tr class="bg-gray-300 text-gray-700">
-                            <th class="px-5 py-3 text-left rounded-l-xl">No</th>
-                            <th class="px-5 py-3 text-left">Package name</th>
-                            <th class="px-5 py-3 text-left">City</th>
-                            <th class="px-5 py-3 text-left">Status</th>
-                            <th class="px-5 py-3 text-left">Submitted At</th>
-                            <th class="px-5 py-3 text-left rounded-r-xl">Action</th>
+                       <tr class="bg-amber-500 text-white shadow-sm">
+                            <th class="px-5 py-4 text-left rounded-l-xl">No</th>
+                            <th class="px-5 py-4 text-left">Package name</th>
+                            <th class="px-5 py-4 text-left">City</th>
+                            <th class="px-5 py-4 text-left">Status</th>
+                            <th class="px-5 py-4 text-left">Submitted At</th>
+                            <th class="px-5 py-4 text-left rounded-r-xl">Action</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody
+                        class="[&>tr]:bg-white [&>tr]:transition [&>tr]:duration-200 [&>tr:hover]:shadow-md [&>tr:hover]:scale-[1.01] [&>tr:hover]:bg-gray-50">
+                    </tbody>
                 </table>
 
             </div>
@@ -171,6 +226,7 @@
                     {
                         data: 'submitted_at',
                         name: 'created_at',
+                        searchable: false,
                         orderable: false,
                     },
                     {
@@ -187,28 +243,110 @@
             });
 
             // ===============================
-            // UNIVERSAL DROPDOWN SYSTEM
+            // UNIVERSAL DROPDOWN SYSTEM (ARROW FIX)
             // ===============================
+
             $(document).on('click', '.filter-btn', function(e) {
+
                 e.stopPropagation();
 
                 let target = $(this).data('target');
+                let dropdown = $(target);
+                let arrow = $(this).find('.dropdown-arrow');
 
-                $('.filter-dropdown').not(target).addClass('hidden');
-                $(target).toggleClass('hidden');
+                // reset semua arrow dulu
+                $('.dropdown-arrow').removeClass('rotate-180');
+
+                // tutup dropdown lain
+                $('.filter-dropdown').not(dropdown).each(function() {
+
+                    $(this)
+                        .removeClass('scale-100 opacity-100')
+                        .addClass('scale-95 opacity-0');
+
+                    let el = $(this);
+
+                    setTimeout(function() {
+                        el.addClass('hidden');
+                    }, 200);
+
+                });
+
+                // buka dropdown
+                if (dropdown.hasClass('hidden')) {
+
+                    dropdown.removeClass('hidden');
+
+                    setTimeout(function() {
+
+                        dropdown
+                            .removeClass('scale-95 opacity-0')
+                            .addClass('scale-100 opacity-100');
+
+                    }, 10);
+
+                    arrow.addClass('rotate-180');
+                    $(this).find('.filter-tooltip').addClass('opacity-0');
+
+                }
+                // tutup dropdown jika klik tombol lagi
+                else {
+
+                    dropdown
+                        .removeClass('scale-100 opacity-100')
+                        .addClass('scale-95 opacity-0');
+                    $(this).find('.filter-tooltip').removeClass('opacity-0');
+
+                    setTimeout(function() {
+                        dropdown.addClass('hidden');
+                    }, 200);
+
+                }
+
             });
 
+
+            // klik di luar dropdown
             $(document).on('click', function() {
-                $('.filter-dropdown').addClass('hidden');
+
+                $('.filter-dropdown').each(function() {
+
+                    $(this)
+                        .removeClass('scale-100 opacity-100')
+                        .addClass('scale-95 opacity-0');
+
+                    let el = $(this);
+
+                    setTimeout(function() {
+                        el.addClass('hidden');
+                    }, 200);
+
+                });
+
+                // reset arrow juga
+                $('.dropdown-arrow').removeClass('rotate-180');
+
             });
 
-            $(document).on('click', '.status-option', function() {
 
-                selectedStatus = $(this).data('value');
-                table.ajax.reload(null, false);
-                renderActiveFilters();
+            // klik luar dropdown
+            $(document).on('click', function() {
 
-                $('.filter-dropdown').addClass('hidden');
+                $('.filter-dropdown').each(function() {
+
+                    $(this)
+                        .removeClass('scale-100 opacity-100')
+                        .addClass('scale-95 opacity-0');
+                    $('.dropdown-arrow').removeClass('rotate-180');
+
+                    let el = $(this);
+
+                    setTimeout(function() {
+                        el.addClass('hidden');
+                    }, 200);
+
+                });
+
             });
 
             // ===============================
@@ -222,6 +360,21 @@
                 renderActiveFilters();
 
                 $('.filter-dropdown').addClass('hidden');
+            });
+
+            // ===============================
+            // STATUS FILTER
+            // ===============================
+
+            $(document).on('click', '.status-option', function() {
+
+                selectedStatus = $(this).data('value');
+
+                table.ajax.reload(null, false);
+                renderActiveFilters();
+
+                $('.filter-dropdown').addClass('hidden');
+
             });
 
             // ===============================
