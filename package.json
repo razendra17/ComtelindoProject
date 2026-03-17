@@ -6,8 +6,19 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@alpinejs/persist": "^3.15.8",
+    "@fullcalendar/core": "^6.1.20",
+    "@fullcalendar/daygrid": "^6.1.20",
+    "@fullcalendar/interaction": "^6.1.20",
+    "@fullcalendar/list": "^6.1.20",
+    "@fullcalendar/timegrid": "^6.1.20",
     "@tailwindcss/vite": "^4.2.0",
+    "alpinejs": "^3.15.8",
+    "apexcharts": "^5.10.4",
+    "dropzone": "^6.0.0-beta.2",
+    "flatpickr": "^4.6.13",
     "flowbite": "^4.0.1",
+    "jsvectormap": "^1.7.0",
     "tailwindcss": "^4.2.0"
   },
   "devDependencies": {

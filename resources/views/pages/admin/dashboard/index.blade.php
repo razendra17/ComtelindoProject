@@ -1,111 +1,48 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-h-screen backdrop-blur-md flex justify-center p-6 rounded-3xl">
+    <!-- ===== Main Content Start ===== -->
+        <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+          <div class="grid grid-cols-12 gap-4 md:gap-6">
+            <div class="col-span-12 space-y-6 xl:col-span-7">
+              <!-- Metric Group One -->
+              @include('pages.admin.dashboard.partials.metric-group.metric-group-01')
+              <!-- Metric Group One -->
 
-        <div class="w-full max-w-6xl">
-
-            {{-- ROW 1 --}}
-            <div class="mb-3 w-[100vh]">
-                {{-- Graph --}}
-                <div class="col-span-2 bg-white rounded-2xl shadow-md p-6 ">
-                    <p class="text-lg mb-4">Total Pengajuan: {{ $alldata }} data</p>
-                    <canvas id="pengajuanChart"></canvas>
-                </div>
-
+              <!-- ====== Chart One Start -->
+              @include('pages.admin.dashboard.partials.chart.chart-01')
+              <!-- ====== Chart One End -->
+            </div>
+            <div class="col-span-12 xl:col-span-5">
+              <!-- ====== Chart Two Start -->
+              @include('pages.admin.dashboard.partials.chart.chart-02')
+              <!-- ====== Chart Two End -->
+            </div>
+            
+            <div class="col-span-12">
+              <!-- ====== Chart Three Start -->
+              @include('pages.admin.dashboard.partials.chart.chart-03')
+              <!-- ====== Chart Three End -->
             </div>
 
-            {{-- ROW 2 --}}
-            <div class="grid grid-cols-2 gap-6">
-
-                {{-- Pengajuan --}}
-                <div class="bg-white rounded-2xl shadow-md p-6">
-                    <p class="text-gray-400 text-sm mb-4">Pengajuan</p>
-
-                    <div class="grid grid-cols-2 gap-4">
-
-                        {{-- Disetujui --}}
-                        <div class="border-2 border-green-400 rounded-2xl p-4 shadow-sm">
-                            <p class="text-green-500 text-sm mb-3">Disetujui</p>
-                            <div class="bg-green-500 text-white text-center py-6 rounded-xl shadow-md">
-                                <p class="text-lg font-semibold">{{ $approved }} data</p>
-                            </div>
-                        </div>
-
-                        {{-- Menunggu --}}
-                        <div class="border-2 border-amber-400 rounded-2xl p-4 shadow-sm">
-                            <p class="text-amber-500 text-sm mb-3">Menunggu</p>
-                            <div class="bg-amber-400 text-white text-center py-6 rounded-xl shadow-md">
-                                <p class="text-lg font-semibold">{{ $pending }} data</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                {{-- Pengajuan Ditolak --}}
-                <div class="bg-white rounded-2xl shadow-md p-6">
-                    <p class="text-gray-400 text-sm mb-4">Pengajuan di tolak</p>
-
-                    <div class="flex gap-4">
-
-                        {{-- Total Ditolak --}}
-                        <div class="bg-red-500 text-white rounded-2xl flex items-center justify-center w-28 shadow-md">
-                            <p class="text-lg font-semibold">{{ $rejected }} data</p>
-                        </div>
-
-                        {{-- Alasan Dominan --}}
-                        <div class="space-y-2 w-full">
-                            @forelse ($dominantReasons as $reason)
-                                <div class="border border-red-300 rounded-lg p-2 text-xs text-red-400 text-center">
-                                    {{ $reason->rejection }} ({{ $reason->total }})
-                                </div>
-                            @empty
-                                <div class="text-xs text-gray-400 text-center">
-                                    Belum ada data penolakan
-                                </div>
-                            @endforelse
-                        </div>
-
-                    </div>
-                </div>
-
+            <div class="col-span-12 xl:col-span-5">
+              <!-- ====== Map One Start -->
+              @include('pages.admin.dashboard.partials.map-01')
+              <!-- ====== Map One End -->
             </div>
 
+            <div class="col-span-12 xl:col-span-7">
+              <!-- ====== Table One Start -->
+              <include src="./partials/table/table-01.html" />
+              @include('pages.admin.dashboard.partials.table.table-01')
+              <!-- ====== Table One End -->
+            </div>
+          </div>
         </div>
-
+      </main>
+      <!-- ===== Main Content End ===== -->
     </div>
-@endsection
-
-@section('script')
-    <script>
-        const ctx = document.getElementById('pengajuanChart');
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: @json($labels),
-                datasets: [{
-                    label: 'Total Pengajuan',
-                    data: @json($totals),
-                    borderWidth: 2,
-                    tension: 0.4,
-                    fill: true,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
+    <!-- ===== Content Area End ===== -->
+  </div>
+  <!-- ===== Page Wrapper End ===== -->
 @endsection

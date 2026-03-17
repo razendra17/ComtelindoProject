@@ -1,19 +1,8 @@
 @hasrole('admin')
-    {{-- <!-- drawer init and show -->
-    <div class="text-left p-3">
-        <button class="text-[#eb8e23]   focus:ring-2 focus:ring-orange shadow-md rounded-base p-2.5 focus:outline-none"
-            type="button" data-drawer-target="drawer-navigation" data-drawer-backdrop="false"
-            data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
-            <svg xmlns="https://www.svgrepo.com/svg/524617/hamburger-menu" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </button>
-    </div> --}}
 
     <!-- drawer component -->
     <div id="drawer-navigation"
-        class="w-[38vh] min-h-screen
+        class="w-[30vh] min-h-screen
         bg-[#ffffff] shadow-md
         transition-all duration-300" tabindex="-1"
         aria-labelledby="drawer-navigation-label">
