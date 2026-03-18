@@ -153,9 +153,9 @@
 
             <div class=" rounded-2xl p-3">
 
-             <table id="packageTable" class="w-full border-separate border-spacing-y-2 text-sm text-gray-700">
+                <table id="packageTable" class="w-full border-separate border-spacing-y-2 text-sm text-gray-700">
                     <thead>
-                       <tr class="bg-amber-500 text-white shadow-sm">
+                        <tr class="bg-amber-500 text-white shadow-sm">
                             <th class="px-5 py-4 text-left rounded-l-xl">No</th>
                             <th class="px-5 py-4 text-left">Package name</th>
                             <th class="px-5 py-4 text-left">City</th>
@@ -634,22 +634,42 @@
         // ===============================
         // SWEET ALERT WRAPPER
         // ===============================
-
         function confirmAction(options) {
             Swal.fire({
-                title: options.title || 'Yakin?',
-                text: options.text || '',
+                title: options.title || 'Konfirmasi',
+                text: options.text || 'Apakah kamu yakin ingin melanjutkan?',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: options.confirmText || 'Ya',
-                cancelButtonText: 'Batal'
+                confirmButtonText: options.confirmText || 'Ya, lanjutkan',
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#f59e0b',
+                cancelButtonColor: '#f3f4f6',
+                background: '#ffffff',
+                color: '#1f2937',
+                borderRadius: '20px', 
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp animate__faster'
+                },
+
+                customClass: {
+                    popup: 'shadow-2xl p-6',
+                    title: 'text-lg font-semibold tracking-tight',
+                    htmlContainer: 'text-sm text-gray-500 mt-2',
+                    confirmButton: 'px-5 py-2.5 rounded-xl font-medium',
+                    cancelButton: 'px-5 py-2.5 rounded-xl font-medium text-gray-700'
+                },
+
+                buttonsStyling: false
             }).then((result) => {
                 if (result.isConfirmed) {
                     options.onConfirm();
                 }
             });
         }
+    
+        
     </script>
 @endsection

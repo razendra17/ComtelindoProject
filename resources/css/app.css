@@ -173,3 +173,38 @@ table.dataTable thead th {
     background:#fff7ed;
     color:#ea580c;
 }
+
+.swal2-popup {
+    font-family: 'Inter', sans-serif;
+}
+
+.swal2-confirm {
+    background-color: #f59e0b !important;
+    color: white !important;
+}
+
+.swal2-confirm:hover {
+    background-color: #d97706 !important; /* amber-600 */
+}
+
+.swal2-cancel {
+    background-color: #f3f4f6 !important;
+    color: #374151 !important;
+}
+
+.swal2-cancel:hover {
+    background-color: #e5e7eb !important;
+}
+
+.swal2-popup {
+    border-radius: 20px !important;
+    padding: 24px !important;
+}
+
+.swal2-confirm {
+    border-radius: 12px !important;
+}
+
+.swal2-cancel {
+    border-radius: 12px !important;
+}
