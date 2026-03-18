@@ -9,7 +9,7 @@ const chart01 = () => {
         data: chartData,
       },
     ],
-    colors: ["#465fff"],
+    colors: ["#FFA500"],
     chart: {
       fontFamily: "Outfit, sans-serif",
       type: "bar",

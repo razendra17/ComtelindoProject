@@ -4,7 +4,7 @@ import ApexCharts from "apexcharts";
 const chart02 = () => {
   const chartTwoOptions = {
     series: [75.55],
-    colors: ["#465FFF"],
+    colors: ["#FFA500"],
     chart: {
       fontFamily: "Outfit, sans-serif",
       type: "radialBar",
@@ -43,7 +43,7 @@ const chart02 = () => {
     },
     fill: {
       type: "solid",
-      colors: ["#465FFF"],
+      colors: ["#FFA500"],
     },
     stroke: {
       lineCap: "round",

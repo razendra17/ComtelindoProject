@@ -31,12 +31,12 @@ const map01 = () => {
     markerStyle: {
       initial: {
         strokeWidth: 1,
-        fill: "#465fff",
+        fill: "#FFA500",
         fillOpacity: 1,
         r: 4,
       },
       hover: {
-        fill: "#465fff",
+        fill: "#FFA500",
         fillOpacity: 1,
       },
     },

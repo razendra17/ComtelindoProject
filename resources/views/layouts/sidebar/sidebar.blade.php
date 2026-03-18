@@ -1,12 +1,11 @@
 @hasrole('admin')
-
     <!-- drawer component -->
     <div id="drawer-navigation"
-        class="w-[30vh] min-h-screen
-        bg-[#ffffff] shadow-md
-        transition-all duration-300" tabindex="-1"
+        class="w-[40vh] min-h-screen
+         shadow-md
+        transition-all duration-300 pl-5 py-5" tabindex="-1"
         aria-labelledby="drawer-navigation-label">
-        <div class="py-5 overflow-y-auto text-black/60 overflow-hidden">
+        <div class="pt-5 overflow-y-auto text-black/60 overflow-hidden bg-[#ffffff] h-full rounded-[30px]">
             <ul class="space-y-2 font-medium">
                 <li>
                     <a href="{{ route('dashboard.index') }}"
@@ -27,7 +26,7 @@
                 </li>
                 <li>
                     <button type="button"
-                    class="flex w-full items-center px-3 py-3 rounded-base
+                        class="flex w-full items-center px-3 py-3 rounded-base
                     transition-all duration-200 ease-in-out
                     hover:bg-neutral-tertiary hover:text-[#eb8e23]
                     hover:translate-x-1"
@@ -44,7 +43,7 @@
                         <li>
 
                             <a href="{{ route('city.index') }}"
-                            class="flex items-center px-3 py-1 rounded-base
+                                class="flex items-center px-3 py-1 rounded-base
                             transition-all duration-200 ease-in-out
                             hover:bg-neutral-tertiary hover:text-[#eb8e23]
                             hover:translate-x-1">
@@ -52,7 +51,7 @@
                         </li>
                         <li>
                             <a href="{{ route('package.index') }}"
-                            class="flex items-center px-3 py-1 rounded-base
+                                class="flex items-center px-3 py-1 rounded-base
                             transition-all duration-200 ease-in-out
                             hover:bg-neutral-tertiary hover:text-[#eb8e23]
                             hover:translate-x-1">
@@ -60,7 +59,7 @@
                         </li>
                         <li>
                             <a href="{{ route('data.index') }}"
-                            class="flex items-center px-3 py-1 rounded-base
+                                class="flex items-center px-3 py-1 rounded-base
                             transition-all duration-200 ease-in-out
                             hover:bg-neutral-tertiary hover:text-[#eb8e23]
                             hover:translate-x-1">
@@ -71,7 +70,7 @@
 
                 <li>
                     <a href="{{ route('dataadmin.index') }}"
-                    class="flex items-center px-3 py-3 rounded-base
+                        class="flex items-center px-3 py-3 rounded-base
                     transition-all duration-200 ease-in-out
                     hover:bg-neutral-tertiary hover:text-[#eb8e23]
                     hover:translate-x-1">
@@ -84,7 +83,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit"
-                        class="flex w-full items-center px-3 py-3 rounded-base
+                            class="flex w-full items-center px-3 py-3 rounded-base
                         transition-all duration-200 ease-in-out
                         hover:bg-neutral-tertiary hover:text-[#eb2323]
                         hover:translate-x-1">

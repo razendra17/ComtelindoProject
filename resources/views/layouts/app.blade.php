@@ -17,7 +17,7 @@
 
 </head>
 
-<body class="min-h-screen">
+<body class="min-h-screen bg-[#e9e9e9]">
 
     @include('layouts.header.index')
 

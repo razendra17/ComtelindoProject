@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- ===== Main Content Start ===== -->
-        <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6 bg-[#ff6b09]">
+        <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6 bg-[#e4e4e4]">
           <div class="grid grid-cols-12 gap-4 md:gap-6">
             <div class="col-span-12 space-y-6 xl:col-span-7">
               <!-- Metric Group One -->

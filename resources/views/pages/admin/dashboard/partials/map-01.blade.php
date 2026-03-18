@@ -60,7 +60,7 @@
         <div class="flex w-full max-w-[140px] items-center gap-3">
           <div class="relative block h-2 w-full max-w-[100px] rounded-sm bg-gray-200 dark:bg-gray-800">
             <div
-              class="absolute left-0 top-0 h-full rounded-sm bg-brand-500"
+              class="absolute left-0 top-0 h-full rounded-sm bg-[#FFA500]"
               style="width: {{ $item['percentage'] }}%"
             ></div>
           </div>
