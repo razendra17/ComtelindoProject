@@ -30,16 +30,16 @@ class DashboardDataRequest extends FormRequest
     }
 
     public function startDate()
-    {
-        return $this->start_date
-            ? Carbon::parse($this->start_date)->startOfDay()
-            : Carbon::now()->subDays(7)->startOfDay();
-    }
+{
+    return $this->start_date
+        ? Carbon::parse($this->start_date)->startOfDay()
+        : Carbon::now()->startOfYear(); // 👈 FIX
+}
 
-    public function endDate()
-    {
-        return $this->end_date
-            ? Carbon::parse($this->end_date)->endOfDay()
-            : Carbon::now()->endOfDay();
-    }
+public function endDate()
+{
+    return $this->end_date
+        ? Carbon::parse($this->end_date)->endOfDay()
+        : Carbon::now()->endOfYear(); // 👈 FIX
+}
 }
