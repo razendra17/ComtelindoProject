@@ -14,17 +14,14 @@
 
     <!-- CHART -->
     <div class="relative flex items-center justify-center h-[160px]">
-      <canvas id="chartTwo"></canvas>
-
-      <!-- CENTER VALUE -->
-      <div class="absolute text-center">
-        <p class="text-3xl font-bold text-gray-800">
-          {{ $current }}
-        </p>
-        <p class="text-xs text-gray-500">
-          dari 15
-        </p>
+      <div  id="chartTwo">
       </div>
+    </div>
+
+    <div class="text-center">
+      <p class="text-xs text-gray-500">
+        dari {{ $target }}
+      </p>
     </div>
 
     <!-- STATUS -->

@@ -159,4 +159,68 @@ class DashboardController extends Controller
             return $this->errorResponse($e, 'internal server error', 500);
         }
     }
+
+    public function statistics(Request $request)
+{
+    $filter = $request->filter ?? 'month';
+
+    if ($filter == 'day') {
+
+        $labels = range(0,23);
+
+        $totals = Data::selectRaw('HOUR(created_at) as hour, COUNT(*) as total')
+            ->whereDate('created_at', today())
+            ->groupBy('hour')
+            ->pluck('total','hour')
+            ->toArray();
+
+        $data = [];
+        for ($i=0;$i<24;$i++){
+            $data[] = $totals[$i] ?? 0;
+        }
+
+        $totals = $data;
+    }
+
+    if ($filter == 'week') {
+
+        $labels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+        $totals = Data::selectRaw('DAYOFWEEK(created_at) as day, COUNT(*) as total')
+            ->whereBetween('created_at',[now()->startOfWeek(),now()->endOfWeek()])
+            ->groupBy('day')
+            ->pluck('total','day')
+            ->toArray();
+
+        $data = [];
+        for ($i=1;$i<=7;$i++){
+            $data[] = $totals[$i] ?? 0;
+        }
+
+        $totals = $data;
+    }
+
+    if ($filter == 'month') {
+
+        $labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        $totals = Data::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            ->whereYear('created_at',now()->year)
+            ->groupBy('month')
+            ->pluck('total','month')
+            ->toArray();
+
+        $data = [];
+        for ($i=1;$i<=12;$i++){
+            $data[] = $totals[$i] ?? 0;
+        }
+
+        $totals = $data;
+    }
+
+    return response()->json([
+        'labels'=>$labels,
+        'totals'=>$totals
+    ]);
+}
 }

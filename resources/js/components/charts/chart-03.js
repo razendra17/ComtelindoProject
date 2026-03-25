@@ -1,109 +1,74 @@
 import ApexCharts from "apexcharts";
 
-// ===== chartThree
-const chart03 = () => {
-  const chartThreeOptions = {
-    series: [
-      {
-        name: "Pengajuan",
-        data: chartData,
-      },
-    ],
-    legend: {
-      show: false,
-      position: "top",
-      horizontalAlign: "left",
-    },
-    colors: ["#FFA500", "#FFA500"],
-    chart: {
-      fontFamily: "Outfit, sans-serif",
-      height: 310,
-      type: "area",
-      toolbar: {
-        show: false,
-      },
-    },
-    fill: {
-      gradient: {
-        enabled: true,
-        opacityFrom: 0.55,
-        opacityTo: 0,
-      },
-    },
-    stroke: {
-      curve: "straight",
-      width: ["2", "2"],
-    },
+window.chart = null;
 
-    markers: {
-      size: 0,
-    },
-    labels: {
-      show: false,
-      position: "top",
-    },
-    grid: {
-      xaxis: {
-        lines: {
-          show: false,
-        },
-      },
-      yaxis: {
-        lines: {
-          show: true,
-        },
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    tooltip: {
-      x: {
-        format: "dd MMM yyyy",
-      },
-    },
+const chartOptions = {
+  series: [
+    {
+      name: "Pengajuan",
+      data: chartData
+    }
+  ],
+
+  colors: ["#FFA500"],
+
+  chart: {
+    fontFamily: "Outfit, sans-serif",
+    height: 310,
+    type: "area",
+    toolbar: {
+      show: false
+    }
+  },
+
+  fill: {
+    gradient: {
+      enabled: true,
+      opacityFrom: 0.55,
+      opacityTo: 0
+    }
+  },
+
+  stroke: {
+    curve: "smooth",
+    width: 2
+  },
+
+  markers: {
+    size: 4
+  },
+
+  grid: {
     xaxis: {
-      type: "category",
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-      tooltip: false,
+      lines: { show: false }
     },
     yaxis: {
-      title: {
-        style: {
-          fontSize: "0px",
-        },
-      },
-    },
-  };
+      lines: { show: true }
+    }
+  },
 
-  const chartSelector = document.querySelectorAll("#chartThree");
+  dataLabels: {
+    enabled: false
+  },
 
-  if (chartSelector.length) {
-    const chartThree = new ApexCharts(
-      document.querySelector("#chartThree"),
-      chartThreeOptions,
-    );
-    chartThree.render();
+  xaxis: {
+    type: "category",
+    categories: chartLabels,
+    axisBorder: { show: false },
+    axisTicks: { show: false }
   }
 };
+
+const chart03 = () => {
+
+  const chartSelector = document.querySelector("#chartThree");
+
+  if (!chartSelector) return;
+
+  window.chart = new ApexCharts(chartSelector, chartOptions);
+  window.chart.render();
+};
+
+
 
 export default chart03;

@@ -31,6 +31,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     });
     Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
         Route::get('/', 'index')->name('dashboard.index');
+        Route::get('/statistic', 'statistics')->name('dashboard.stat');
     });
     Route::controller(PackageController::class)->prefix('package')->group(function () {
         Route::get('/add', 'indexPackage')->name('package.index');
@@ -51,8 +52,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 });
 
 // Users routes
-Route::controller(DataController::class)->prefix('user')->group(function () {
-    Route::get('/data', 'userIndex')->name('data.index');
+Route::controller(DataController::class)->group(function () {
+    Route::get('/', 'userIndex')->name('data.index');
     Route::get('/area/{slug}/personal', 'personalForms')->name('personal.index');
     Route::post('/area/{slug}/personal', 'dataStore')->name('personal.store');
     Route::get('/area/{slug}', 'area')->name('area.index');

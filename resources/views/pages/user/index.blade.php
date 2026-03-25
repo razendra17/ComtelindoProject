@@ -78,7 +78,7 @@
                 let cityName = $(this).find('option:selected').text();
 
                 $.ajax({
-                    url: '/user/by-city/' + cityId,
+                    url: '/by-city/' + cityId,
                     type: 'GET',
                     success: function(response) {
 
@@ -123,7 +123,7 @@
                 const slug = pkg.name.replace(/\s+/g, '-').toLowerCase();
 
                 document.getElementById('choose-package').href =
-                    `/user/area/${slug}-${pkg.id}`;
+                    `/area/${slug}-${pkg.id}`;
 
                 $('#packageModal').removeClass('hidden');
 

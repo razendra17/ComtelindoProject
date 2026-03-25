@@ -1,9 +1,11 @@
 import ApexCharts from "apexcharts";
 
+const percent =Number (((current / target)*100).toFixed(2));
+// const percent =Number (((total / target) * 100).toFixed(2));
 // ===== chartTwo
 const chart02 = () => {
   const chartTwoOptions = {
-    series: [75.55],
+    series: [percent],
     colors: ["#FFA500"],
     chart: {
       fontFamily: "Outfit, sans-serif",
