@@ -24,23 +24,12 @@ class DataSeeder extends Seeder
         ]);
 
         City::create([
-            'name' => 'Samarinda',
+            'name' => 'Bontang',
             'area' => 'kalimantan Timur',
-            'latitude' => -0.502106,
-            'longitude' => 117.153709,
+            'latitude' => 0.133333,
+            'longitude' =>  117.500000,
         ]);
-        City::create([
-            'name' => 'Jakarta',
-            'area' => 'Jawa Barat',
-            'latitude' =>  -6.200000,
-            'longitude' => 106.816666,
-        ]);
-        City::create([
-            'name' => 'Tenggarong',
-            'area' => 'kalimantan Timur',
-            'latitude' => -0.4329135,
-            'longitude' => 116.989678,
-        ]);
+
         $package = Package::create([
             'name' => 'Intynet Maxima',
             'price' => 299000,
@@ -60,21 +49,21 @@ class DataSeeder extends Seeder
             'price' => 199000,
             'speed' => 20,
             'device' => 3,
-            'city_id' => 3
+            'city_id' => 1
         ]);
         $package = Package::create([
             'name' => 'Intynet Starter',
             'price' => 149000,
             'speed' => 10,
             'device' => 3,
-            'city_id' => 3
+            'city_id' => 2
         ]);
         $package = Package::create([
             'name' => 'Intynet Ultima',
             'price' => 380000,
             'speed' => 100,
             'device' => 15,
-            'city_id' => 4
+            'city_id' => 1
         ]);
     }
 }

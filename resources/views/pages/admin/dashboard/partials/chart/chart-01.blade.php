@@ -3,7 +3,7 @@
 >
   <div class="flex items-center justify-between">
     <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
-      Monthly Sales
+      Monthly Request
     </h3>
   </div>
 
@@ -17,7 +17,9 @@
   </div>
 </div>
 
+@section('script')
 <script>
     const chartLabels = @json($labels);
     const chartData = @json($totals);
 </script>
+@endsection

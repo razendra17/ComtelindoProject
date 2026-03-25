@@ -1,52 +1,131 @@
-<div
-  class="rounded-2xl border border-gray-200 bg-white px-5 pt-5 pb-5 sm:px-6 sm:pt-6 dark:border-gray-800 dark:bg-white/[0.03]"
->
-  <div class="mb-6 flex flex-col gap-5 sm:flex-row sm:justify-between">
-    <div class="w-full">
-      <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
-        Statistics
-      </h3>
-      <p class="text-theme-sm mt-1 text-gray-500 dark:text-gray-400">
-        Target you’ve set for each month
-      </p>
-    </div>
+<div class="rounded-2xl border border-gray-200 bg-white px-5 pt-5 pb-5 sm:px-6 sm:pt-6">
 
-    <div class="flex w-full items-start gap-3 sm:justify-end">
-      <div class="relative max-w-41">
-        <input
-          class="datepicker text-theme-sm shadow-theme-xs h-10 w-full max-w-11 rounded-lg border border-gray-200 bg-white py-2.5 pr-4 pl-[34px] font-medium text-gray-700 focus:ring-0 focus:outline-hidden focus-visible:outline-hidden xl:max-w-fit xl:pl-11 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
-          placeholder="Select dates"
-          data-class="flatpickr-right"
-          readonly="readonly"
-        />
-        <div
-          class="pointer-events-none absolute inset-0 right-auto left-3 flex items-center"
-        >
-          <svg
-            class="fill-gray-700 dark:fill-gray-400"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M6.66683 1.54199C7.08104 1.54199 7.41683 1.87778 7.41683 2.29199V3.00033H12.5835V2.29199C12.5835 1.87778 12.9193 1.54199 13.3335 1.54199C13.7477 1.54199 14.0835 1.87778 14.0835 2.29199V3.00033L15.4168 3.00033C16.5214 3.00033 17.4168 3.89576 17.4168 5.00033V7.50033V15.8337C17.4168 16.9382 16.5214 17.8337 15.4168 17.8337H4.5835C3.47893 17.8337 2.5835 16.9382 2.5835 15.8337V7.50033V5.00033C2.5835 3.89576 3.47893 3.00033 4.5835 3.00033L5.91683 3.00033V2.29199C5.91683 1.87778 6.25262 1.54199 6.66683 1.54199ZM6.66683 4.50033H4.5835C4.30735 4.50033 4.0835 4.72418 4.0835 5.00033V6.75033H15.9168V5.00033C15.9168 4.72418 15.693 4.50033 15.4168 4.50033H13.3335H6.66683ZM15.9168 8.25033H4.0835V15.8337C4.0835 16.1098 4.30735 16.3337 4.5835 16.3337H15.4168C15.693 16.3337 15.9168 16.1098 15.9168 15.8337V8.25033Z"
-              fill=""
-            />
-          </svg>
+    <!-- HEADER -->
+    <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
+
+        <div>
+            <h3 class="text-lg font-semibold text-gray-800">
+                Statistics
+            </h3>
+            <p class="text-sm text-gray-500 mt-1">
+                Data pengajuan berdasarkan waktu
+            </p>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="custom-scrollbar max-w-full overflow-x-auto">
-    <div id="chartThree" class="-ml-4 min-w-[700px] pl-2"></div>
-  </div>
-</div>
 
+        <!-- FILTER BUTTON -->
+        <div class="flex gap-2">
+            <button class="filter-btn px-4 py-1.5 rounded-lg bg-amber-500 text-white" data-filter="month">
+                Month
+            </button>
+            <button class="filter-btn px-4 py-1.5 rounded-lg bg-gray-200 text-gray-700" data-filter="week">
+                Week
+            </button>
+            <button class="filter-btn px-4 py-1.5 rounded-lg bg-gray-200 text-gray-700" data-filter="day">
+                Day
+            </button>
+        </div>
+
+    </div>
+
+    <!-- CHART -->
+    <div class="w-full">
+        <canvas id="chartThree" height="100"></canvas>
+    </div>
+
+</div>
 <script>
-  const chartLabels = @json($labels);
-  const chartData = @json($totals);
+let chart;
+
+// format jam hanya untuk day
+function formatHourLabels(labels, filter) {
+    if (filter !== 'day') return labels; // 🔥 selain day, balik normal
+
+    return labels.map(h => String(h).padStart(2, '0') + ':00');
+}
+
+function renderChart(labels, data, filter = 'month') {
+    const ctx = document.getElementById('chartThree').getContext('2d');
+
+    if (chart) chart.destroy();
+
+    // 🔥 format berdasarkan filter
+    const finalLabels = formatHourLabels(labels, filter);
+
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: finalLabels,
+            datasets: [{
+                label: 'Pengajuan',
+                data: data,
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245,158,11,0.12)',
+                borderWidth: 3,
+                pointRadius: 5,
+                pointBackgroundColor: '#f59e0b',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        },
+        plugins: [{
+            id: 'valueLabel',
+            afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+
+                chart.data.datasets.forEach((dataset, i) => {
+                    const meta = chart.getDatasetMeta(i);
+
+                    meta.data.forEach((point, index) => {
+                        const value = dataset.data[index];
+
+                        ctx.save();
+                        ctx.fillStyle = '#f59e0b';
+                        ctx.font = '11px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(value, point.x, point.y - 10);
+                        ctx.restore();
+                    });
+                });
+            }
+        }]
+    });
+}
+
+
+// 🔥 LOAD AWAL (default month)
+renderChart(@json($labels), @json($totals), 'month');
+
+
+// 🔥 FILTER TANPA RELOAD
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.className = "filter-btn px-4 py-1.5 rounded-lg bg-gray-200 text-gray-700";
+        });
+
+        this.className = "filter-btn px-4 py-1.5 rounded-lg bg-amber-500 text-white";
+
+        const filter = this.dataset.filter;
+
+        fetch(`?filter=${filter}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+            renderChart(res.labels, res.totals, filter); // 🔥 kirim filter
+        });
+    });
+});
 </script>

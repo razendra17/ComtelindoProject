@@ -9,16 +9,31 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    // dashboard index page
     public function index(DashboardDataRequest $request)
     {
         try {
-            //filter waktu
+
+            // ===============================
+            //  FILTER (default = month)
+            // ===============================
+            $filter = request('filter', 'month');
+
             $start = $request->startDate();
             $end = $request->endDate();
 
+            // ===============================
+            //  STATUS SUMMARY
+            // ===============================
             $statusCounts = Data::statusSummary();
 
+            $alldata  = $statusCounts->sum();
+            $approved = $statusCounts[Constant::status['approved']] ?? 0;
+            $rejected = $statusCounts[Constant::status['rejected']] ?? 0;
+            $pending  = $statusCounts[Constant::status['pending']] ?? 0;
+
+            // ===============================
+            //  CITY STATS
+            // ===============================
             $cityStats = Data::with('package.city')
                 ->get()
                 ->groupBy(function ($item) {
@@ -38,17 +53,60 @@ class DashboardController extends Controller
                 ];
             });
 
-            $alldata  = $statusCounts->sum();
-            $approved = $statusCounts[Constant::status['approved']] ?? 0;
-            $rejected = $statusCounts[Constant::status['rejected']] ?? 0;
-            $pending  = $statusCounts[Constant::status['pending']] ?? 0;
-            $data = Data::with('package.city')->get();
+            // ===============================
+            //  CHART DATA (DINAMIS)
+            // ===============================
+            if ($filter === 'day') {
+                $chartData = Data::selectRaw('HOUR(created_at) as label, COUNT(*) as total')
+                    ->whereDate('created_at', now())
+                    ->groupBy('label')
+                    ->orderBy('label')
+                    ->get();
+            } elseif ($filter === 'week') {
+                $chartData = Data::selectRaw('DAYNAME(created_at) as label, COUNT(*) as total')
+                    ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+                    ->groupBy('label')
+                    ->get();
+            } else { // month
+                $chartData = Data::selectRaw('DATE(created_at) as label, COUNT(*) as total')
+                    ->whereMonth('created_at', now()->month)
+                    ->groupBy('label')
+                    ->orderBy('label')
+                    ->get();
+            }
 
-            $chartData = Data::dashboardData($start, $end);
-
-            $labels = $chartData->pluck('nama_bulan');
+            $labels = $chartData->pluck('label');
             $totals = $chartData->pluck('total');
 
+            // ===============================
+            //  AJAX RESPONSE
+            // ===============================
+            if (request()->ajax()) {
+                return response()->json([
+                    'labels' => $labels,
+                    'totals' => $totals
+                ]);
+            }
+
+            // ===============================
+            //  REQUEST TARGET 
+            // ===============================
+            $target = 15;
+
+            $current = Data::whereMonth('created_at', now()->month)->count();
+
+            $lastMonth = Data::whereMonth('created_at', now()->subMonth()->month)->count();
+
+            $percentageChange = $lastMonth > 0
+                ? round((($current - $lastMonth) / $lastMonth) * 100)
+                : 0;
+
+            $remaining = max($target - $current, 0);
+
+            // ===============================
+            //  DATA LAIN
+            // ===============================
+            $data = Data::with('package.city')->get();
             $dominantReasons = Data::dominantReason();
 
             return view('pages.admin.dashboard.index', compact(
@@ -60,7 +118,12 @@ class DashboardController extends Controller
                 'pending',
                 'labels',
                 'totals',
-                'dominantReasons'
+                'dominantReasons',
+                'filter',
+                'target',
+                'current',
+                'remaining',
+                'percentageChange'
             ));
         } catch (\Exception $e) {
             return $this->errorResponse($e, 'internal server error', 500);
