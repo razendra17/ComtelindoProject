@@ -5,12 +5,8 @@ const chart03 = () => {
   const chartThreeOptions = {
     series: [
       {
-        name: "Sales",
-        data: [180, 190, 170, 160, 175, 165, 170, 205, 230, 210, 240, 235],
-      },
-      {
-        name: "Revenue",
-        data: [40, 30, 50, 40, 55, 40, 70, 100, 110, 120, 150, 140],
+        name: "Pengajuan",
+        data: chartData,
       },
     ],
     legend: {
@@ -18,7 +14,7 @@ const chart03 = () => {
       position: "top",
       horizontalAlign: "left",
     },
-    colors: ["#465FFF", "#9CB9FF"],
+    colors: ["#FFA500", "#FFA500"],
     chart: {
       fontFamily: "Outfit, sans-serif",
       height: 310,

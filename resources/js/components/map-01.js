@@ -2,62 +2,47 @@ import jsVectorMap from "jsvectormap";
 import "jsvectormap/dist/maps/world";
 
 const map01 = () => {
-  const mapSelectorOne = document.querySelectorAll("#mapOne");
+  const mapSelectorOne = document.querySelector("#mapOne");
 
-  if (mapSelectorOne.length) {
-    const mapOne = new jsVectorMap({
-      selector: "#mapOne",
-      map: "world",
-      zoomButtons: false,
+  if (!mapSelectorOne) return;
 
-      regionStyle: {
-        initial: {
-          fontFamily: "Outfit",
-          fill: "#D9D9D9",
-        },
-        hover: {
-          fillOpacity: 1,
-          fill: "#465fff",
-        },
-      },
-      markers: [
-        {
-          name: "Egypt",
-          coords: [26.8206, 30.8025],
-        },
-        {
-          name: "United Kingdom",
-          coords: [55.3781, 3.436],
-        },
-        {
-          name: "United States",
-          coords: [37.0902, -95.7129],
-        },
+  const markers = (users || [])
+    .filter(item => item.latitude && item.longitude)
+    .map(item => ({
+      name: item.package?.city?.name ?? "Tidak diketahui",
+      coords: [
+        parseFloat(item.latitude),
+        parseFloat(item.longitude)
       ],
+     
+    }));
 
-      markerStyle: {
-        initial: {
-          strokeWidth: 1,
-          fill: "#465fff",
-          fillOpacity: 1,
-          r: 4,
-        },
-        hover: {
-          fill: "#465fff",
-          fillOpacity: 1,
-        },
-        selected: {},
-        selectedHover: {},
-      },
+  new jsVectorMap({
+    selector: "#mapOne",
+    map: "world",
 
-      onRegionTooltipShow: function (tooltip, code) {
-        if (code === "EG") {
-          tooltip.selector.innerHTML =
-            tooltip.text() + " <b>(Hello Russia)</b>";
-        }
+    focusOn: {
+      region: "ID",
+      animate: true,
+    },
+
+    zoom: 5,
+
+    markerStyle: {
+      initial: {
+        strokeWidth: 1,
+        fill: "#FFA500",
+        fillOpacity: 1,
+        r: 4,
       },
-    });
-  }
+      hover: {
+        fill: "#FFA500",
+        fillOpacity: 1,
+      },
+    },
+
+    markers: markers,
+  });
 };
 
 export default map01;

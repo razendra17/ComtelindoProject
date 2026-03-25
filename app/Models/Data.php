@@ -29,11 +29,15 @@ class Data extends Model
     }
     public static function dashboardData($start, $end)
     {
-        return self::selectRaw('DATE(created_at) as tanggal, COUNT(*) as total')
-            ->whereBetween('created_at', [$start, $end])
-            ->groupBy('tanggal')
-            ->orderBy('tanggal')
-            ->get();
+        return self::select(
+            DB::raw('MONTH(created_at) as bulan'),
+            DB::raw('MONTHNAME(created_at) as nama_bulan'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->whereBetween('created_at', [$start, $end])
+        ->groupBy('bulan', 'nama_bulan')
+        ->orderBy('bulan')
+        ->get();
     }
     public static function dominantReason()
     {
@@ -44,4 +48,6 @@ class Data extends Model
             ->limit(3)
             ->get();
     }
+
+    
 }

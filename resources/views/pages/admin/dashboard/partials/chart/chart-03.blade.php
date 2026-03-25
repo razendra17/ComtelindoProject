@@ -12,33 +12,6 @@
     </div>
 
     <div class="flex w-full items-start gap-3 sm:justify-end">
-      <div
-        x-data="{selected: 'overview'}"
-        class="inline-flex w-fit items-center gap-0.5 rounded-lg bg-gray-100 p-0.5 dark:bg-gray-900"
-      >
-        <button
-          @click="selected = 'overview'"
-          :class="selected === 'overview' ? 'shadow-theme-xs text-gray-900 dark:text-white bg-white dark:bg-gray-800' : 'text-gray-500 dark:text-gray-400'"
-          class="text-theme-sm rounded-md px-3 py-2 font-medium hover:text-gray-900 dark:hover:text-white"
-        >
-          Overview
-        </button>
-        <button
-          @click="selected = 'sales'"
-          :class="selected === 'sales' ? 'shadow-theme-xs text-gray-900 dark:text-white bg-white dark:bg-gray-800' : 'text-gray-500 dark:text-gray-400'"
-          class="text-theme-sm rounded-md px-3 py-2 font-medium hover:text-gray-900 dark:hover:text-white"
-        >
-          Sales
-        </button>
-        <button
-          @click="selected = 'revenue'"
-          :class="selected === 'revenue' ? 'shadow-theme-xs text-gray-900 dark:text-white bg-white dark:bg-gray-800' : 'text-gray-500 dark:text-gray-400'"
-          class="text-theme-sm rounded-md px-3 py-2 font-medium hover:text-gray-900 dark:hover:text-white"
-        >
-          Revenue
-        </button>
-      </div>
-
       <div class="relative max-w-41">
         <input
           class="datepicker text-theme-sm shadow-theme-xs h-10 w-full max-w-11 rounded-lg border border-gray-200 bg-white py-2.5 pr-4 pl-[34px] font-medium text-gray-700 focus:ring-0 focus:outline-hidden focus-visible:outline-hidden xl:max-w-fit xl:pl-11 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
@@ -72,3 +45,8 @@
     <div id="chartThree" class="-ml-4 min-w-[700px] pl-2"></div>
   </div>
 </div>
+
+<script>
+  const chartLabels = @json($labels);
+  const chartData = @json($totals);
+</script>

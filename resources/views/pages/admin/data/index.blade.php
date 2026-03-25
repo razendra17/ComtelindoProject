@@ -151,7 +151,7 @@
         {{-- TABLE --}}
         <div class="">
 
-            <div class=" rounded-2xl p-3">
+            {{-- <div class=" rounded-2xl p-3">
 
                 <table id="packageTable" class="w-full border-separate border-spacing-y-2 text-sm text-gray-700">
                     <thead>
@@ -169,7 +169,27 @@
                     </tbody>
                 </table>
 
+            </div> --}}
+
+
+
+            <div class="bg-white rounded-3xl pb-3">
+                <table id="packageTable" class="custom-table w-full text-sm text-left rtl:text-right bg-[#FFA500] rounded-2xl">
+                    <thead class="text-white">
+                        <tr>
+                            <th class="px-5 py-4 text-left rounded-l-xl">No</th>    
+                            <th class="px-5 py-4 text-left">Package name</th>
+                            <th class="px-5 py-4 text-left">City</th>
+                            <th class="px-5 py-4 text-left">Status</th>
+                            <th class="px-5 py-4 text-left">Submitted At</th>
+                            <th class="px-5 py-4 text-left rounded-r-xl">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white rounded-b-3xl">
+                    </tbody>
+                </table>
             </div>
+
 
         </div>
     </div>
