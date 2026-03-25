@@ -56,27 +56,56 @@ class DashboardController extends Controller
             // ===============================
             //  CHART DATA (DINAMIS)
             // ===============================
+            $filter = request('filter', 'month');
+
             if ($filter === 'day') {
+
                 $chartData = Data::selectRaw('HOUR(created_at) as label, COUNT(*) as total')
                     ->whereDate('created_at', now())
                     ->groupBy('label')
                     ->orderBy('label')
                     ->get();
+
+                $labels = collect(range(0, 23));
+                $totals = array_fill(0, 24, 0);
+
+                foreach ($chartData as $item) {
+                    $totals[$item->label] = $item->total;
+                }
             } elseif ($filter === 'week') {
-                $chartData = Data::selectRaw('DAYNAME(created_at) as label, COUNT(*) as total')
+
+                $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+                $chartData = Data::selectRaw('DAYOFWEEK(created_at) as label, COUNT(*) as total')
                     ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
                     ->groupBy('label')
                     ->get();
+
+                $labels = $days;
+                $totals = array_fill(0, 7, 0);
+
+                foreach ($chartData as $item) {
+                    $index = $item->label - 2;
+                    if ($index < 0) $index = 6;
+                    $totals[$index] = $item->total;
+                }
             } else { // month
-                $chartData = Data::selectRaw('DATE(created_at) as label, COUNT(*) as total')
-                    ->whereMonth('created_at', now()->month)
+
+                $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+                $chartData = Data::selectRaw('MONTH(created_at) as label, COUNT(*) as total')
+                    ->whereYear('created_at', now()->year)
                     ->groupBy('label')
                     ->orderBy('label')
                     ->get();
-            }
 
-            $labels = $chartData->pluck('label');
-            $totals = $chartData->pluck('total');
+                $labels = $months;
+                $totals = array_fill(0, 12, 0);
+
+                foreach ($chartData as $item) {
+                    $totals[$item->label - 1] = $item->total;
+                }
+            }
 
             // ===============================
             //  AJAX RESPONSE
@@ -118,6 +147,7 @@ class DashboardController extends Controller
                 'pending',
                 'labels',
                 'totals',
+                'filter',
                 'dominantReasons',
                 'filter',
                 'target',

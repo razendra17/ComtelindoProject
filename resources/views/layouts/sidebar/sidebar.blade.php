@@ -2,7 +2,6 @@
     <!-- drawer component -->
     <div id="drawer-navigation"
         class="w-[40vh] min-h-screen
-         shadow-md
         transition-all duration-300 pl-5 py-5" tabindex="-1"
         aria-labelledby="drawer-navigation-label">
         <div class="pt-5 overflow-y-auto text-black/60 overflow-hidden bg-[#ffffff] h-full rounded-[30px]">

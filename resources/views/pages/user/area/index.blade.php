@@ -49,7 +49,7 @@
 
 
         <!-- CONTENT -->
-        <div class="min-h-screen grid grid-cols-1 lg:grid-cols-12 lg:gap-6">
+        <div class="min-h-screen grid grid-cols-1 lg:grid-cols-12 lg:gap-6 p-3">
 
             <!-- LEFT: MAP -->
             <div class="lg:col-span-8 bg-white lg:rounded-xl lg:shadow-sm overflow-hidden relative h-full lg:h-screen">
@@ -61,7 +61,7 @@
                 </div>
 
                 <!-- MAP -->
-                <div id="map" class="h-[70vh] lg:h-[500px] w-full z-0"></div>
+                <div id="map" class="h-[70vh] lg:h-[100vh] w-full z-0"></div>
 
                 <div class="p-4 bg-white lg:hidden">
                     <button type="submit"

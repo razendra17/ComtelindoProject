@@ -1,6 +1,6 @@
-<div class="rounded-2xl border border-gray-200 bg-gray-100">
+<div class="rounded-2xl border border-gray-200 bg-gray-100 h-full flex flex-col">
   
-  <div class="rounded-2xl bg-white px-6 py-6">
+  <div class="rounded-t-2xl bg-white px-6 py-6 h-full">
 
     <!-- HEADER -->
     <div class="mb-4">
@@ -22,7 +22,7 @@
           {{ $current }}
         </p>
         <p class="text-xs text-gray-500">
-          dari {{ $target }}
+          dari 15
         </p>
       </div>
     </div>
