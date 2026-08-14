@@ -1,7 +1,7 @@
 * text=auto eol=lf
 
 *.php diff=php
-*.blade.php diff=html
+*.blade.php diff=html linguist-language=PHP
 *.css diff=css
 *.html diff=html
 *.md diff=markdown
